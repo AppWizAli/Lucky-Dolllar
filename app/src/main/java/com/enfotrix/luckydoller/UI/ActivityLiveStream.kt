@@ -1,11 +1,12 @@
-package com.enfotrix.luckydoller
+package com.enfotrix.luckydoller.UI
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.enfotrix.luckydoller.R
 
-class MainActivity : AppCompatActivity() {
+class ActivityLiveStream : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_live_stream)
     }
 }

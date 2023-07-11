@@ -13,7 +13,16 @@
         android:theme="@style/Theme.LuckyDoller"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".UI.ActivityLiveStream"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ActivityBid"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ActivityResult"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ActivitySplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +30,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".UI.ActivitySignup"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ActivityLogin"
+            android:exported="false" />
+        <activity
+            android:name=".UI.MainActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

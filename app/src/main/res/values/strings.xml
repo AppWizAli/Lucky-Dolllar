@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Lucky Doller</string>
+    <string name="login"><b><u>Login</u></b></string>
 </resources>
