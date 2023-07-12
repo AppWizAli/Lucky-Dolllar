@@ -96,7 +96,7 @@ class ActivityBid : AppCompatActivity() {
         utils.startLoadingAnimation()
 
 
-        db.collection("Admin").get()
+        db.collection(constants.ADMIN_COLLECTION).get()
             .addOnCompleteListener{
                 if(it.isSuccessful){
                     var bidStatus:String=""

@@ -10,6 +10,7 @@ public class Constants  {
     ///////////////////////////// COLLECTIONS NAME //////////////////////////
 
     public var USERS_COLLECTION="Users"
+    public var ADMIN_COLLECTION="Admin"
     public var BIDS_COLLECTION="Bids"
     public var NOMINEE_COLLECTION="Nominees"
     public var ACCOUNTS_COLLECTION="Accounts"
@@ -23,6 +24,8 @@ public class Constants  {
 
     ///////////////////////////  KEYS  ///////////////////
     public var USER_CNIC= "cnic"
+    public var BIDS_GAMECTG= "gameCtg"
+    public var BIDS_GAMESUBCTG= "gameSubCtg"
     public var INVESTOR_PIN= "pin"
     public var ACCOUNT_HOLDER= "account_holder"
     public var INVESTOR_ID= "investorID"

@@ -78,7 +78,7 @@ class ActivityResult : AppCompatActivity() {
     fun showResults(gameCtg: String, gameSubCtg: String, date: String) {
 
         Toast.makeText(mContext, date, Toast.LENGTH_SHORT).show()
-        db.collection(constants.BIDS_COLLECTION).whereEqualTo("gameCtg",gameCtg).whereEqualTo("gameSubCtg",gameSubCtg)
+        db.collection(constants.BIDS_COLLECTION).whereEqualTo(constants.BIDS_GAMECTG,gameCtg).whereEqualTo(constants.BIDS_GAMESUBCTG,gameSubCtg)
             .whereEqualTo("createdAt", date).get()
             .addOnCompleteListener{
                 if(it.isSuccessful){
