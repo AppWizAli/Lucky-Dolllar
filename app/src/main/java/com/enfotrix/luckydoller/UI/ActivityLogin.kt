@@ -42,7 +42,7 @@ class ActivityLogin : AppCompatActivity() {
             binding.etPassword.editText?.text.toString())
         }
 
-        binding.btnSignup.setOnClickListener {
+        binding.tvSignUp.setOnClickListener {
 
             startActivity(Intent(mContext,ActivitySignup::class.java))
         }

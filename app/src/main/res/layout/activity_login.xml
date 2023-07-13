@@ -8,9 +8,22 @@
     tools:context=".UI.ActivityLogin">
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login1"
+        android:textColor="@color/black_m"
+        android:textSize="35dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginVertical="30dp"/>
 
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etCNIC"
@@ -74,13 +87,29 @@
 
 
 
-
-    <Button
-        android:id="@+id/btnSignup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="15dp"
-        android:drawableTint="@color/white"
-        android:text="Login" />
+        android:layout_gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create"
+        />
+
+       <TextView
+        android:id="@+id/tvSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signup"
+        android:layout_marginLeft="5dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </LinearLayout>
