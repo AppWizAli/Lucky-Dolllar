@@ -61,9 +61,6 @@ class ActivityResult : AppCompatActivity() {
         val btnResults = dialog.findViewById<Button>(R.id.btnResults)
         val cvDate = dialog.findViewById<CalendarView>(R.id.cvDate)
 
-
-
-
         btnResults.setOnClickListener {
             dialog.dismiss()
 
@@ -82,17 +79,14 @@ class ActivityResult : AppCompatActivity() {
             .whereEqualTo("createdAt", date).get()
             .addOnCompleteListener{
                 if(it.isSuccessful){
-
-
                     val list = ArrayList<ModelBid>()
                     for(document in it.result){
-
                         list.add( document.toObject(ModelBid::class.java))
                     }
                     // adapter
+
                 }
             }
-
     }
 
 

@@ -16,5 +16,10 @@ class ActivityLiveStream : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_stream)
 
+
     }
+
+
+
+
 }
