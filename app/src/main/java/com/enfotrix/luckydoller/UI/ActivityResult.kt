@@ -136,6 +136,7 @@ class ActivityResult : AppCompatActivity() {
 
         })
 
+
         btnResults.setOnClickListener {
             dialog.dismiss()
 
@@ -170,8 +171,6 @@ class ActivityResult : AppCompatActivity() {
                     for(document in it.result){
 
                         if(document.toObject(ModelBid::class.java).equals("Morning")){
-
-
                         }
                         //list.add( document.toObject(ModelBid::class.java))
                         else if(document.toObject(ModelBid::class.java).status.equals("Evening")){

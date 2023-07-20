@@ -17,4 +17,6 @@
     <color name="secondary_l">#32DFDEDE</color>
     <color name="textprimary">#EDF8F5</color>
     <color name="statusbarcolor">#006747</color>
+    <color name="green">#4CAF50</color>
+    <color name="red_n">#ED1B0B</color>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
 import android.view.Window
 import android.widget.AdapterView
@@ -12,8 +13,10 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enfotrix.luckydoller.Adapter.BidAdapter
 import com.enfotrix.luckydoller.Constants
@@ -128,12 +131,65 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
                 if(position==0) {
+                    etBidNumber.setText("")
                     val adapterGameSubCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, gameFirstSubCTG)
                     spGameSubCtg.adapter= adapterGameSubCTG
+
+                    //////////////////////// VALIDATION CODE FOR BID NUMBER ////////////////////////////
+
+                    spGameSubCtg.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+
+                            if(position==0) {
+                                etBidNumber.setText("")
+                                etBidNumber.filters = arrayOf(InputFilter.LengthFilter(1))
+                            }
+                            else if(position==1) {
+                                etBidNumber.setText("")
+                                etBidNumber.filters = arrayOf(InputFilter.LengthFilter(2))
+                            }
+                            else if(position==2) {
+                                etBidNumber.setText("")
+                                etBidNumber.filters = arrayOf(InputFilter.LengthFilter(3))
+                            }
+                            else if(position==3) {
+                                etBidNumber.setText("")
+                                etBidNumber.filters = arrayOf(InputFilter.LengthFilter(4))
+                            }
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    })
+
                 }
                 else if(position==1) {
+                    etBidNumber.setText("")
                     val adapterGameSubCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, gameSecondSubCTG)
                     spGameSubCtg.adapter= adapterGameSubCTG
+
+                    //////////////////////// VALIDATION CODE FOR BID NUMBER ////////////////////////////
+
+                    spGameSubCtg.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                            if(position==0) {
+                                etBidNumber.setText("")
+                                etBidNumber.filters = arrayOf(InputFilter.LengthFilter(2))
+                            }
+                            else if(position==1) {
+                                etBidNumber.setText("")
+                                etBidNumber.filters = arrayOf(InputFilter.LengthFilter(3))
+                            }
+                            else if(position==2) {
+                                etBidNumber.setText("")
+                                etBidNumber.filters = arrayOf(InputFilter.LengthFilter(4))
+                            }
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    })
+
                 }
 
 
@@ -152,6 +208,7 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
         btnBid.setOnClickListener {
             dialog.dismiss()
 
+
             modelBid=ModelBid(
                 sharedPrefManager.getToken(),
                 spGameCtg.selectedItem.toString(),
@@ -163,16 +220,13 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
 
         }
 
-
         dialog.show()
 
     }
 
     private fun saveBid(modelBid: ModelBid) {
 
-
         utils.startLoadingAnimation()
-
 
         db.collection(constants.ADMIN_COLLECTION).get()
             .addOnCompleteListener{
@@ -192,11 +246,18 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
                                 if(it.isSuccessful){
                                     Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
                                     getResult()
+                                    ////////////////// Green Colour Validation Code For Status //////////////////////
+                                    val tvGameStatus = findViewById<TextView>(R.id.tvGameStatus)
+                                    tvGameStatus.setTextColor(ContextCompat.getColor(mContext, R.color.green))
                                 }
                             }
                     }
                     else{
                         Toast.makeText(mContext, "Bidding has been closed by admin ", Toast.LENGTH_SHORT).show()
+
+                        ////////////////// Red Colour Validation Code For Status //////////////////////
+                        val tvGameStatus = findViewById<TextView>(R.id.tvGameStatus)
+                        tvGameStatus.setTextColor(ContextCompat.getColor(mContext, R.color.red))
                     }
 
 
