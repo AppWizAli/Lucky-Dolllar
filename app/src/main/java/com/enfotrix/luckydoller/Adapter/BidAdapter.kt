@@ -15,7 +15,7 @@ import com.enfotrix.luckydoller.databinding.ItemBidBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class BidAdapter( val data: List<ModelBid>, val listener: OnItemClickListener) : RecyclerView.Adapter<BidAdapter.ViewHolder>() {
+class BidAdapter( val data: List<ModelBid>) : RecyclerView.Adapter<BidAdapter.ViewHolder>() {
 
 
     var constant= Constants()

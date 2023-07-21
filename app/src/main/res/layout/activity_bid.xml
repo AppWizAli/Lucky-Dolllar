@@ -10,10 +10,48 @@
 
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvBids"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cd2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@color/secondary_m"
+        android:layout_marginHorizontal="50dp">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@color/secondary_m"
+            app:tabGravity="fill"
+            app:tabInlineLabel="true"
+            android:layout_margin="7dp"
+            app:tabIndicator="@drawable/tab_indicator"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorGravity="stretch"
+            app:tabIndicatorHeight="54dp"
+            app:tabMode="fixed"
+            app:tabTextColor="@color/black_m"
+
+
+            />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="40dp"
+        android:layout_below="@+id/cd2"
+        android:layout_alignParentBottom="true">
+    </androidx.viewpager2.widget.ViewPager2>
+
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnBid"

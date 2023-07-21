@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enfotrix.luckydoller.Adapter.BidAdapter
+import com.enfotrix.luckydoller.Adapter.BidViewPagerAdapter
 import com.enfotrix.luckydoller.Constants
 import com.enfotrix.luckydoller.Models.ModelBid
 import com.enfotrix.luckydoller.Models.ModelUser
@@ -26,6 +27,7 @@ import com.enfotrix.luckydoller.R
 import com.enfotrix.luckydoller.SharedPrefManager
 import com.enfotrix.luckydoller.Utils
 import com.enfotrix.luckydoller.databinding.ActivityBidBinding
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -60,20 +62,20 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
         sharedPrefManager = SharedPrefManager(mContext)
 
 
-        getResult();
+        setupViewPager()
+        setupTabLayout()
 
-        gameCTG.add("First")
-        gameCTG.add("Second")
+        gameCTG.add("فرسٹ")
+        gameCTG.add("سیکنڈ")
 
-        gameFirstSubCTG.add("1")
-        gameFirstSubCTG.add("2")
-        gameFirstSubCTG.add("3")
-        gameFirstSubCTG.add("4")
+        gameFirstSubCTG.add("حرف")
+        gameFirstSubCTG.add("آکرہ")
+        gameFirstSubCTG.add("ٹنڈولا")
+        gameFirstSubCTG.add("پنگہورا")
 
-        gameSecondSubCTG.add("2")
-        gameSecondSubCTG.add("3")
-        gameSecondSubCTG.add("4")
-        binding.rvBids.layoutManager = LinearLayoutManager(mContext)
+        gameSecondSubCTG.add("آکرہ")
+        gameSecondSubCTG.add("ٹنڈولا")
+        gameSecondSubCTG.add("پنگہورا")
 
 
 
@@ -84,29 +86,40 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
 
     }
 
-    private fun getResult() {
-
-
-        utils.startLoadingAnimation()
-        db.collection(constants.BIDS_COLLECTION).get()
-            .addOnCompleteListener{
-                utils.endLoadingAnimation()
-                if(it.isSuccessful){
-
-                    var bids = ArrayList<ModelBid>()
-
-                    for(bid in it.result) bids.add( bid.toObject<ModelBid>())
-                    bids.sortByDescending { it.createdAt }
-                    binding.rvBids.adapter= BidAdapter( bids,this@ActivityBid)
-
-
-                    Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
-                }
-            }
 
 
 
+
+
+    private fun setupTabLayout() {
+        TabLayoutMediator(
+            binding.tabLayout, binding.viewPager
+        ) { tab,
+            position ->
+            if(position==0) tab.text ="Active"
+            else if(position==1) tab.text="Close" }.attach()
     }
+
+    private fun setupViewPager() {
+        val adapter = BidViewPagerAdapter(this, 2)
+        binding.viewPager.adapter = adapter
+    }
+
+    override fun onBackPressed() {
+        val viewPager = binding.viewPager
+        if (viewPager.currentItem == 0) {
+            // If the user is currently looking at the first step, allow the system to handle the
+            // Back button. This calls finish() on this activity and pops the back stack.
+            super.onBackPressed()
+        } else {
+            // Otherwise, select the previous step.
+            viewPager.currentItem = viewPager.currentItem - 1
+        }
+    }
+
+
+
+
 
     private fun showBidDialog() {
 
@@ -123,7 +136,7 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
         val etBidAmount = dialog.findViewById<EditText>(R.id.etBidAmount)
         val btnBid = dialog.findViewById<Button>(R.id.btnBid)
 
-        val adapterGameCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, gameCTG)
+        val adapterGameCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, R.layout.item_spinner_gamectg, gameCTG)
         spGameCtg.adapter= adapterGameCTG
 
 
@@ -132,7 +145,7 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
 
                 if(position==0) {
                     etBidNumber.setText("")
-                    val adapterGameSubCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, gameFirstSubCTG)
+                    val adapterGameSubCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, R.layout.item_spinner_gamectg, gameFirstSubCTG)
                     spGameSubCtg.adapter= adapterGameSubCTG
 
                     //////////////////////// VALIDATION CODE FOR BID NUMBER ////////////////////////////
@@ -165,7 +178,7 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
                 }
                 else if(position==1) {
                     etBidNumber.setText("")
-                    val adapterGameSubCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item, gameSecondSubCTG)
+                    val adapterGameSubCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, R.layout.item_spinner_gamectg, gameSecondSubCTG)
                     spGameSubCtg.adapter= adapterGameSubCTG
 
                     //////////////////////// VALIDATION CODE FOR BID NUMBER ////////////////////////////
@@ -245,7 +258,6 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
                                 utils.endLoadingAnimation()
                                 if(it.isSuccessful){
                                     Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
-                                    getResult()
                                     ////////////////// Green Colour Validation Code For Status //////////////////////
                                     val tvGameStatus = findViewById<TextView>(R.id.tvGameStatus)
                                     tvGameStatus.setTextColor(ContextCompat.getColor(mContext, R.color.green))
