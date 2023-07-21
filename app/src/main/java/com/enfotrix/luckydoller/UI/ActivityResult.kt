@@ -74,6 +74,7 @@ class ActivityResult : AppCompatActivity() {
 
 
         binding.btnGetResult.setOnClickListener { showSelectionDialog() }
+        binding.cardGetResult.setOnClickListener { showSelectionDialog() }
     }
 
     fun convertTimestampToDate(timestamp: Long): String {

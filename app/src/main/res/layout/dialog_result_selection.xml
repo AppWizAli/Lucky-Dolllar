@@ -46,7 +46,8 @@
                                 android:layout_height="wrap_content"
                                 android:padding="15dp"/>
 
-                        </com.google.android.material.card.MaterialCardView><com.google.android.material.card.MaterialCardView
+                        </com.google.android.material.card.MaterialCardView>
+                        <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:strokeWidth="1dp"

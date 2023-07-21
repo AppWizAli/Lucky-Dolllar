@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".UI.MainActivity">
+    tools:context=".UI.MainActivity"
+    android:background="@color/black">
 
 
     <androidx.cardview.widget.CardView
@@ -18,7 +19,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/black_m">
 
 
             <LinearLayout
@@ -36,13 +38,15 @@
                     android:layout_height="wrap_content"
                     android:text="293400"
                     android:textSize="22dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="#FFC107"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="Rs" />
+                    android:text="Rs"
+                    android:textColor="#FFC107"/>
 
             </LinearLayout>
 
@@ -58,8 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginHorizontal="25dp"
-        android:layout_marginTop="15dp">
+        android:layout_marginHorizontal="15dp">
 
 
     <androidx.cardview.widget.CardView
@@ -68,14 +71,17 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
         android:elevation="8dp"
-        android:layout_marginLeft="5dp">
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginVertical="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingHorizontal="15dp"
             android:paddingVertical="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/black_m">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -89,7 +95,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/result"
                 android:textSize="20dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:textColor="#FFC107"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
@@ -97,14 +104,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        android:layout_marginLeft="15dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginVertical="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingHorizontal="15dp"
             android:paddingVertical="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/black_m">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -119,7 +129,8 @@
                 android:text="@string/bid"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
-                android:paddingHorizontal="20dp"/>
+                android:paddingHorizontal="20dp"
+                android:textColor="#FFC107"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
@@ -127,14 +138,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        android:layout_marginLeft="15dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginVertical="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingHorizontal="10dp"
             android:paddingVertical="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/black_m">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -149,7 +163,8 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/livestream"
                 android:textSize="20dp"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:textColor="#FFC107"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -167,12 +182,6 @@
         android:layout_marginTop="25dp"
         android:layout_marginHorizontal="20dp">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp">
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -184,7 +193,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/contact"
                 android:textSize="17dp"
-                android:layout_marginLeft="14dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="#FFC107"
                 />
 
             <GridLayout
@@ -193,30 +203,33 @@
             android:layout_marginTop="10dp"
             android:paddingHorizontal="25dp">
             <ImageView
+                android:id="@+id/facebook"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:src="@drawable/facebook"/>
             <ImageView
+                android:id="@+id/whatsapp"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:src="@drawable/whatsapp"/>
             <ImageView
+                android:id="@+id/twitter"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:src="@drawable/twitter"/>
             <ImageView
+                android:id="@+id/youtube"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:src="@drawable/youtube"/>
             <ImageView
+                android:id="@+id/mail"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:src="@drawable/mail"/>
         </GridLayout>
 
         </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 
