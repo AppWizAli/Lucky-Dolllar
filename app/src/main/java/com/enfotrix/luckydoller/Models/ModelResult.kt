@@ -4,9 +4,11 @@ import com.google.firebase.Timestamp
 
 class ModelResult @JvmOverloads constructor(
     var gameCtg: String = "",
-    var gameSubCtg: String = "",
-    var number: String = "",
-    var position: String = "",
-    var session: String = "",
+    var numberFirst: String = "",
+    var numberSecond: String = "",
+    var numberThird: String = "",
+    var numberFourth: String = "",
+    var result: String = "",
+    var docID: String = "",
     val createdAt: Timestamp = Timestamp.now()
 )

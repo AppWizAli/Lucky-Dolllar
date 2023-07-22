@@ -26,6 +26,9 @@ public class Constants  {
     public var USER_CNIC= "cnic"
     public var BIDS_GAMECTG= "gameCtg"
     public var BIDS_GAMESUBCTG= "gameSubCtg"
+    public var BIDS_CREATED_AT= "createdAt"
+    public var RESULT_COLLECTION="Result"
+
     public var INVESTOR_PIN= "pin"
     public var ACCOUNT_HOLDER= "account_holder"
     public var INVESTOR_ID= "investorID"
