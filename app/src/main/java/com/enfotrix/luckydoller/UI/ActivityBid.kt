@@ -77,13 +77,6 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
         gameSecondSubCTG.add("ٹنڈولا")
         gameSecondSubCTG.add("پنگہورا")
 
-
-
-        binding.btnBid.setOnClickListener{
-            showBidDialog()
-        }
-
-
     }
 
 
@@ -259,8 +252,8 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
                                 if(it.isSuccessful){
                                     Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
                                     ////////////////// Green Colour Validation Code For Status //////////////////////
-                                    val tvGameStatus = findViewById<TextView>(R.id.tvGameStatus)
-                                    tvGameStatus.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+//                                    val tvGameStatus = findViewById<TextView>(R.id.tvGameStatus)
+//                                    tvGameStatus.setTextColor(ContextCompat.getColor(mContext, R.color.green))
                                 }
                             }
                     }
@@ -268,8 +261,8 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
                         Toast.makeText(mContext, "Bidding has been closed by admin ", Toast.LENGTH_SHORT).show()
 
                         ////////////////// Red Colour Validation Code For Status //////////////////////
-                        val tvGameStatus = findViewById<TextView>(R.id.tvGameStatus)
-                        tvGameStatus.setTextColor(ContextCompat.getColor(mContext, R.color.red))
+//                        val tvGameStatus = findViewById<TextView>(R.id.tvGameStatus)
+//                        tvGameStatus.setTextColor(ContextCompat.getColor(mContext, R.color.red))
                     }
 
 

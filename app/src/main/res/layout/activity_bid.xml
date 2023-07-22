@@ -8,38 +8,161 @@
     tools:context=".UI.ActivityBid">
 
 
-
-
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cd2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="6dp"
+        android:layout_marginTop="11dp"
         app:cardCornerRadius="8dp"
-        app:cardBackgroundColor="@color/secondary_m"
+        app:cardBackgroundColor="@color/gray"
         android:layout_marginHorizontal="50dp">
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:background="@color/secondary_m"
+            android:background="@color/gray"
             app:tabGravity="fill"
             app:tabInlineLabel="true"
             android:layout_margin="7dp"
             app:tabIndicator="@drawable/tab_indicator"
-            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorColor="@color/primary_n"
             app:tabIndicatorFullWidth="true"
             app:tabIndicatorGravity="stretch"
             app:tabIndicatorHeight="54dp"
             app:tabMode="fixed"
-            app:tabTextColor="@color/black_m"
+            app:tabTextColor="@color/primary"
 
 
             />
 
     </androidx.cardview.widget.CardView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="85dp"
+        android:background="@color/primary"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="110dp"
+        android:background="@color/primary"
+        />
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="80dp"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="2dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="7dp"
+            android:background="@color/primary"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="گیم"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="17dp"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="7dp"
+            android:background="@color/primary"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="سب گیم"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:textSize="17dp"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="7dp"
+            android:background="@color/primary"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="نمبر"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="18dp"
+            android:textSize="17dp"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="7dp"
+            android:background="@color/primary"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="رقم"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="20dp"
+            android:textSize="17dp"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="7dp"
+            android:background="@color/primary"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="تاریخ"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="23dp"
+            android:textSize="17dp"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="7dp"
+            android:background="@color/primary"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="نتیجہ"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="17dp"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="7dp"
+            android:layout_gravity="right"
+            android:background="@color/primary"
+            />
+
+
+
+
+
+
+
+
+
+
+
+    </GridLayout>
+
 
 
     <androidx.viewpager2.widget.ViewPager2
@@ -52,13 +175,5 @@
     </androidx.viewpager2.widget.ViewPager2>
 
 
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnBid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"/>
 
 </RelativeLayout>

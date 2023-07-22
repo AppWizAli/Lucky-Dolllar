@@ -19,4 +19,5 @@
     <color name="statusbarcolor">#006747</color>
     <color name="green">#4CAF50</color>
     <color name="red_n">#ED1B0B</color>
+    <color name="primary_n">#332F3B</color>
 </resources>
