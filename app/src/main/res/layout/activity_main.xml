@@ -180,52 +180,69 @@
         android:layout_marginTop="25dp"
         android:layout_marginHorizontal="20dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginVertical="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Social Links"
-                android:textSize="17dp"
                 android:layout_marginLeft="10dp"
+                android:text="Social Links"
                 android:textColor="#FFC107"
-                />
+                android:textSize="17dp" />
 
             <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingHorizontal="25dp">
-            <ImageView
-                android:id="@+id/facebook"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:src="@drawable/facebook"/>
-            <ImageView
-                android:id="@+id/whatsapp"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:src="@drawable/whatsapp"/>
-            <ImageView
-                android:id="@+id/twitter"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:src="@drawable/twitter"/>
-            <ImageView
-                android:id="@+id/youtube"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:src="@drawable/youtube"/>
-            <ImageView
-                android:id="@+id/mail"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:src="@drawable/mail"/>
-        </GridLayout>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="10dp">
+
+                <ImageView
+                    android:id="@+id/facebook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="40dp"
+                    android:src="@drawable/facebook" />
+
+                <ImageView
+                    android:id="@+id/whatsapp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="30dp"
+                    android:src="@drawable/whatsapp" />
+
+                <ImageView
+                    android:id="@+id/twitter"
+                    android:layout_marginLeft="35dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:src="@drawable/twitter" />
+            </GridLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="10dp"
+                android:paddingHorizontal="25dp">
+
+                <ImageView
+                    android:id="@+id/youtube"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="70dp"
+                    android:src="@drawable/youtube" />
+
+                <ImageView
+                    android:id="@+id/mail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="30dp"
+                    android:src="@drawable/mail" />
+            </GridLayout>
 
         </LinearLayout>
 

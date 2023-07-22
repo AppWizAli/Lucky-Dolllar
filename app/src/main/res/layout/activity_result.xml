@@ -132,7 +132,8 @@
             android:layout_marginTop="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="90dp">
+                android:layout_height="90dp"
+                android:layout_margin="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -167,18 +168,18 @@
 
         <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp">
             <androidx.cardview.widget.CardView
                 android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_marginBottom="5dp"
-                >
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -189,20 +190,15 @@
                         android:layout_marginLeft="29dp"
                         android:layout_marginTop="10dp"/>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvSecondNumber"
                             android:layout_width="55dp"
                             android:layout_height="wrap_content"
                             android:text="Number"
                             android:textSize="15dp"
-                            android:layout_marginLeft="25dp"
-                            />
+                            android:layout_marginLeft="25dp"/>
 
-                    </LinearLayout>
 
 
 
@@ -214,13 +210,12 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"
                 android:layout_marginBottom="5dp"
-                >
+                android:layout_marginLeft="15dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -231,22 +226,14 @@
                         android:layout_marginLeft="29dp"
                         android:layout_marginTop="10dp"/>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvThirdNumber"
                             android:layout_width="55dp"
                             android:layout_height="wrap_content"
                             android:text="Number"
                             android:textSize="15dp"
-                            android:layout_marginLeft="25dp"
-                            />
-
-                    </LinearLayout>
-
-
+                            android:layout_marginLeft="25dp" />
 
 
                 </LinearLayout>
@@ -256,13 +243,12 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"
                 android:layout_marginBottom="5dp"
-                >
+                android:layout_marginLeft="15dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -273,22 +259,14 @@
                         android:layout_marginLeft="29dp"
                         android:layout_marginTop="10dp"/>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvFourthNumber"
                             android:layout_width="55dp"
                             android:layout_height="wrap_content"
                             android:text="Number"
                             android:textSize="15dp"
-                            android:layout_marginLeft="25dp"
-                            />
-
-                    </LinearLayout>
-
-
+                            android:layout_marginLeft="25dp"/>
 
 
                 </LinearLayout>
@@ -333,7 +311,8 @@
             android:layout_marginTop="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="90dp">
+                android:layout_height="90dp"
+                android:layout_margin="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -355,13 +334,6 @@
                         android:text="Number"
                         android:textSize="20dp"
                         android:layout_marginTop="15dp"/>
-                    <TextView
-                        android:id="@+id/tvEFirstAmount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Date"
-                        android:textSize="20dp"
-                        android:layout_marginTop="5dp"/>
 
                 </LinearLayout>
 
@@ -374,19 +346,20 @@
 
         <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginHorizontal="10dp">
             <androidx.cardview.widget.CardView
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="5dp"
-                >
+                android:layout_marginBottom="5dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
-                    android:orientation="vertical">
+                    android:layout_height="80dp"
+                    android:orientation="vertical"
+                    android:layout_margin="5dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -396,10 +369,7 @@
                         android:layout_marginLeft="29dp"
                         android:layout_marginTop="10dp"/>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvESecondNumber"
                             android:layout_width="55dp"
@@ -408,17 +378,6 @@
                             android:textSize="15dp"
                             android:layout_marginLeft="25dp"/>
 
-                        <TextView
-                            android:id="@+id/tvESecondAmount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="3dp"
-                            android:text="Date"
-                            android:textSize="15dp"/>
-
-                    </LinearLayout>
-
 
 
 
@@ -431,11 +390,11 @@
                 app:cardCornerRadius="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginBottom="5dp"
-                >
+                android:layout_marginBottom="5dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -446,29 +405,16 @@
                         android:layout_marginLeft="29dp"
                         android:layout_marginTop="10dp"/>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvEThirdNumber"
                             android:layout_width="55dp"
                             android:layout_height="wrap_content"
                             android:text="Number"
                             android:textSize="15dp"
-                            android:layout_marginLeft="25dp"
-                            />
+                            android:layout_marginLeft="25dp"/>
 
-                        <TextView
-                            android:id="@+id/tvEThirdAmount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="3dp"
-                            android:text="Date"
-                            android:textSize="15dp" />
 
-                    </LinearLayout>
 
 
 
@@ -482,11 +428,11 @@
                 app:cardCornerRadius="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginBottom="5dp"
-                >
+                android:layout_marginBottom="5dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -497,31 +443,14 @@
                         android:layout_marginLeft="29dp"
                         android:layout_marginTop="10dp"/>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvEFourthNumber"
                             android:layout_width="55dp"
                             android:layout_height="wrap_content"
                             android:text="Number"
                             android:textSize="15dp"
-                            android:layout_marginLeft="25dp"
-                            />
-
-                        <TextView
-                            android:id="@+id/tvEFourthAmount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="3dp"
-                            android:text="Date"
-                            android:textSize="15dp" />
-
-                    </LinearLayout>
-
-
+                            android:layout_marginLeft="25dp"/>
 
 
                 </LinearLayout>

@@ -236,6 +236,12 @@ class ActivityResult : AppCompatActivity() {
         binding.tvThirdNumber.text=""
         binding.tvFourthNumber.text=""
 
+        binding.tvdateTimeResult2.text="No results"
+        binding.tvEFirstNumber.text=""
+        binding.tvESecondNumber.text=""
+        binding.tvEThirdNumber.text=""
+        binding.tvEFourthNumber.text=""
+
 
         utils.startLoadingAnimation()
         db.collection(constants.RESULT_COLLECTION)
@@ -265,6 +271,10 @@ class ActivityResult : AppCompatActivity() {
                             else if(result.result.equals("2")){
                                 binding.tvdateTimeResult2.text="("+SimpleDateFormat("hh:mm dd/MM/yyyy", Locale.getDefault()).format(result.createdAt!!.toDate()).toString()+")"
 
+                                binding.tvEFirstNumber.text=result.numberFirst
+                                binding.tvESecondNumber.text=result.numberSecond
+                                binding.tvEThirdNumber.text=result.numberThird
+                                binding.tvEFourthNumber.text=result.numberFourth
                             }
 
 

@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputFilter
+import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -71,20 +72,40 @@ class ActivityNewBid : AppCompatActivity() {
 
 
         binding.btnBid.setOnClickListener {
+            if (TextUtils.isEmpty(binding.etBidNumber.text.toString())) {
+                binding.etBidNumber.setError("Enter Bid Number")
+            }
+            else if (TextUtils.isEmpty(binding.etBidTransactionID.text.toString())) {
+                binding.etBidTransactionID.setError("Enter ID")
+            }
+            else if (TextUtils.isEmpty(binding.etBidAmount.text.toString())) {
+                binding.etBidAmount.setError("Enter Amount")
+            }
+            else {
+                val bidAmount = binding.etBidAmount.text.toString().toDouble()
 
+                if (bidAmount == 0.0) {
+                    binding.etBidAmount.setError("Bid Amount cannot be zero")
+                }
+                else if (bidAmount % 5 != 0.0) {
+                    binding.etBidAmount.setError("Bid Amount must be a multiple of 5")
+                }
+                else {
+                    modelBid = ModelBid(
+                        sharedPrefManager.getToken(),
+                        binding.spGameCtg.selectedItem.toString(),
+                        binding.spGameSubCtg.selectedItem.toString(),
+                        binding.etBidNumber.text.toString(),
+                        binding.etBidAmount.text.toString(),
+                        "Active",
+                        binding.etBidTransactionID.text.toString()
+                    )
+                    saveBid(modelBid)
+                }
+            }
 
-            modelBid= ModelBid(
-                sharedPrefManager.getToken(),
-                binding.spGameCtg.selectedItem.toString(),
-                binding.spGameSubCtg.selectedItem.toString(),
-                binding.etBidNumber.text.toString(),
-                binding.etBidAmount.text.toString(),
-                "Active",
-                binding.etBidTransactionID.text.toString()
-            )
-            saveBid(modelBid)
+            }
 
-        }
 
         binding.spGameCtg.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -168,6 +189,7 @@ class ActivityNewBid : AppCompatActivity() {
 
 
     private fun saveBid(modelBid: ModelBid) {
+
 
         utils.startLoadingAnimation()
 
