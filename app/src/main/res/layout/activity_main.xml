@@ -5,51 +5,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".UI.MainActivity"
-    android:background="@color/black">
+    tools:context=".UI.MainActivity">
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardLiveStream"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:layout_margin="10dp"
+        android:layout_height="130dp"
+        android:layout_margin="15dp"
         android:elevation="8dp"
         app:cardCornerRadius="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/black_m">
+            android:orientation="vertical">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.3"
+                android:background="@drawable/bg_world"/>
 
-            <LinearLayout
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/live"/>
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Live Stream"
                 android:layout_alignParentTop="true"
-                android:layout_margin="20dp"
-                android:orientation="horizontal">
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:textSize="18dp"
+                android:textColor="#FFC107"/>
 
-
-                <TextView
-                    android:id="@+id/userBalance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="293400"
-                    android:textSize="22dp"
-                    android:textStyle="bold"
-                    android:textColor="#FFC107"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="Rs"
-                    android:textColor="#FFC107"/>
-
-            </LinearLayout>
-
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo_"
+                android:layout_marginLeft="10dp"/>
 
         </RelativeLayout>
 
@@ -80,8 +79,7 @@
             android:layout_height="match_parent"
             android:paddingHorizontal="15dp"
             android:paddingVertical="10dp"
-            android:orientation="vertical"
-            android:background="@color/black_m">
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -100,7 +98,7 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardBid"
+        android:id="@+id/cardBids"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
@@ -113,8 +111,7 @@
             android:layout_height="match_parent"
             android:paddingHorizontal="15dp"
             android:paddingVertical="10dp"
-            android:orientation="vertical"
-            android:background="@color/black_m">
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -126,15 +123,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/bid"
+                android:text="My Bids"
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"
-                android:paddingHorizontal="20dp"
+                android:paddingHorizontal="5dp"
                 android:textColor="#FFC107"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardLiveStream"
+        android:id="@+id/cardNewBid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
@@ -147,21 +144,20 @@
             android:layout_height="match_parent"
             android:paddingHorizontal="10dp"
             android:paddingVertical="10dp"
-            android:orientation="vertical"
-            android:background="@color/black_m">
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="30dp"
-                android:src="@drawable/live"/>
+                android:src="@drawable/bid"/>
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:text="@string/livestream"
+                android:text="New Bid"
                 android:textSize="20dp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="#FFC107"/>
@@ -171,6 +167,8 @@
 
 
     </LinearLayout>
+
+
 
 
 
@@ -191,7 +189,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/contact"
+                android:text="Social Links"
                 android:textSize="17dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="#FFC107"
