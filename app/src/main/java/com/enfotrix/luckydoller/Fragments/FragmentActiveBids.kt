@@ -21,7 +21,6 @@ import com.enfotrix.luckydoller.databinding.FragmentActiveBidsBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-
 class FragmentActiveBids : Fragment() {
 
     // Use proper data binding variable and inflate the layout

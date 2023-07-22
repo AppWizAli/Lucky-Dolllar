@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -14,6 +13,7 @@ import android.widget.Button
 import android.widget.CalendarView
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.enfotrix.luckydoller.Constants
 import com.enfotrix.luckydoller.Models.ModelBid
 import com.enfotrix.luckydoller.Models.ModelResult
@@ -22,13 +22,13 @@ import com.enfotrix.luckydoller.R
 import com.enfotrix.luckydoller.SharedPrefManager
 import com.enfotrix.luckydoller.Utils
 import com.enfotrix.luckydoller.databinding.ActivityResultBinding
+import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
 
 class ActivityResult : AppCompatActivity() {
 
@@ -58,23 +58,96 @@ class ActivityResult : AppCompatActivity() {
         constants= Constants()
         sharedPrefManager = SharedPrefManager(mContext)
 
-        gameCTG.add("First")
-        gameCTG.add("Second")
-
-        gameFirstSubCTG.add("1")
-        gameFirstSubCTG.add("2")
-        gameFirstSubCTG.add("3")
-        gameFirstSubCTG.add("4")
-
-        gameSecondSubCTG.add("2")
-        gameSecondSubCTG.add("3")
-        gameSecondSubCTG.add("4")
 
 
 
 
-        binding.btnGetResult.setOnClickListener { showSelectionDialog() }
-        binding.cardGetResult.setOnClickListener { showSelectionDialog() }
+        setData()
+
+        binding.btnGetResult.setOnClickListener { getResult() }
+
+
+    }
+
+    private fun getResult() {
+
+        //var data=binding.spGameSubCtg.selectedItem.toString()
+
+        val day: Int = binding.dpResult.getDayOfMonth()
+        val month: Int = binding.dpResult.getMonth() + 1
+        val year: Int = binding.dpResult.getYear()
+        val date = String.format("%02d/%02d/%04d", day, month, year)
+        val formattedDate = getFormattedDate(date) // Jul 21, 2023
+
+
+
+
+        showResults(date)
+
+
+
+
+
+        //Toast.makeText(mContext, formattedDate, Toast.LENGTH_SHORT).show()
+
+    }
+
+    fun getFormattedDate(date: String): String {
+        // Assuming date has the format "dd/MM/yyyy"
+        val dateFormatInput = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+        val dateObj = dateFormatInput.parse(date)
+
+        val dateFormatOutput = SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH)
+        return dateFormatOutput.format(dateObj)
+    }
+
+
+    private fun setData() {
+
+        gameCTG.add("فرسٹ")
+        gameCTG.add("سیکنڈ")
+
+        gameFirstSubCTG.add("حرف")
+        gameFirstSubCTG.add("آکرہ")
+        gameFirstSubCTG.add("ٹنڈولا")
+        gameFirstSubCTG.add("پنگہورا")
+
+        gameSecondSubCTG.add("آکرہ")
+        gameSecondSubCTG.add("ٹنڈولا")
+        gameSecondSubCTG.add("پنگہورا")
+
+        val adapterGameCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, R.layout.item_spinner_gamectg,gameCTG)
+        binding.spGameCtg.adapter= adapterGameCTG
+
+        binding.spGameCtg.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                if (position == 0) {
+                    val adapterGameSubCTG: ArrayAdapter<String> = ArrayAdapter<String>(
+                        applicationContext,
+                        R.layout.item_spinner_gamectg,
+                        gameFirstSubCTG
+                    )
+                    binding.spGameSubCtg.adapter = adapterGameSubCTG
+                } else if (position == 1) {
+                    val adapterGameSubCTG: ArrayAdapter<String> = ArrayAdapter<String>(
+                        applicationContext,
+                        R.layout.item_spinner_gamectg,
+                        gameSecondSubCTG
+                    )
+                    binding.spGameSubCtg.adapter = adapterGameSubCTG
+                }
+
+
+
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+
+        })
     }
 
     fun convertTimestampToDate(timestamp: Long): String {
@@ -102,13 +175,8 @@ class ActivityResult : AppCompatActivity() {
         val adapterGameCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, android.R.layout.simple_spinner_item,gameCTG)
         spGameCtg.adapter= adapterGameCTG
 
-        spGameCtg.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
+        /*spGameCtg.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
                 if (position == 0) {
                     val adapterGameSubCTG: ArrayAdapter<String> = ArrayAdapter<String>(
@@ -131,11 +199,9 @@ class ActivityResult : AppCompatActivity() {
 
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
 
-        })
+
+        })*/
 
 
         btnResults.setOnClickListener {
@@ -143,7 +209,7 @@ class ActivityResult : AppCompatActivity() {
 
             /////////////////////////// To Set Text In Text View////////////////////////////////
 
-            binding.tvGameCtg.setText(spGameCtg.selectedItem.toString())
+            /*binding.tvGameCtg.setText(spGameCtg.selectedItem.toString())
             binding.tvGameSubCtg.setText("("+spGameSubCtg.selectedItem.toString()+")")
             binding.tvDate.setText(convertTimestampToDate(cvDate.date))
 
@@ -152,7 +218,7 @@ class ActivityResult : AppCompatActivity() {
                 spGameCtg.selectedItem.toString(),
                 spGameSubCtg.selectedItem.toString(),
                 convertTimestampToDate(cvDate.date)
-            )
+            )*/
 
         }
 
@@ -161,22 +227,58 @@ class ActivityResult : AppCompatActivity() {
 
     }
 
-    fun showResults(gameCtg: String, gameSubCtg: String, date: String) {
+    fun showResults( date: String) {
 
-        Toast.makeText(mContext, date, Toast.LENGTH_SHORT).show()
-        db.collection(constants.BIDS_COLLECTION).whereEqualTo(constants.BIDS_GAMECTG,gameCtg).whereEqualTo(constants.BIDS_GAMESUBCTG,gameSubCtg)
+
+        binding.tvdateTimeResult.text="No results"
+        binding.tvFirstNumber.text=""
+        binding.tvSecondNumber.text=""
+        binding.tvThirdNumber.text=""
+        binding.tvFourthNumber.text=""
+
+
+        utils.startLoadingAnimation()
+        db.collection(constants.RESULT_COLLECTION)
+            //.whereEqualTo(constants.BIDS_GAMECTG,gameCtg)
             .get()
             .addOnCompleteListener{
+                utils.endLoadingAnimation()
                 if(it.isSuccessful){
-                    val list = ArrayList<ModelBid>()
+                    //Toast.makeText(mContext, it.result.size().toString(), Toast.LENGTH_SHORT).show()
+                    val list = ArrayList<ModelResult>()
                     for(document in it.result){
 
-                        if(document.toObject(ModelBid::class.java).equals("Morning")){
+                        var result= document.toObject(ModelResult::class.java)
+                        var date_=SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(result.createdAt!!.toDate()).toString()
+
+                        if(date_.equals(date)){
+
+
+                            if(result.result.equals("1")){
+                                binding.tvdateTimeResult.text="("+SimpleDateFormat("hh:mm dd/MM/yyyy", Locale.getDefault()).format(result.createdAt!!.toDate()).toString()+")"
+
+                                binding.tvFirstNumber.text=result.numberFirst
+                                binding.tvSecondNumber.text=result.numberSecond
+                                binding.tvThirdNumber.text=result.numberThird
+                                binding.tvFourthNumber.text=result.numberFourth
+                            }
+                            else if(result.result.equals("2")){
+                                binding.tvdateTimeResult2.text="("+SimpleDateFormat("hh:mm dd/MM/yyyy", Locale.getDefault()).format(result.createdAt!!.toDate()).toString()+")"
+
+                            }
+
+
+
+                        }
+
+
+
+                        /*if(document.toObject(ModelBid::class.java).equals("Morning")){
                         }
                         //list.add( document.toObject(ModelBid::class.java))
                         else if(document.toObject(ModelBid::class.java).status.equals("Evening")){
 
-                        }
+                        }*/
                     }
 
 
