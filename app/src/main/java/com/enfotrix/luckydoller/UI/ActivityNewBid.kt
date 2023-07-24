@@ -10,6 +10,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.enfotrix.luckydoller.Adapter.BidAdapter
 import com.enfotrix.luckydoller.Constants
 import com.enfotrix.luckydoller.Models.ModelBid
 import com.enfotrix.luckydoller.Models.ModelResult
@@ -21,7 +23,16 @@ import com.enfotrix.luckydoller.databinding.ActivityBidBinding
 import com.enfotrix.luckydoller.databinding.ActivityNewBidBinding
 import com.enfotrix.luckydoller.databinding.ActivityResultBinding
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.util.concurrent.atomic.AtomicInteger
 
 class ActivityNewBid : AppCompatActivity() {
 
@@ -40,7 +51,8 @@ class ActivityNewBid : AppCompatActivity() {
     private lateinit var modelResult: ModelResult
     private lateinit var constants: Constants
     private lateinit var sharedPrefManager : SharedPrefManager
-
+    var bidNumberList = ArrayList<String>()
+    var bids = ArrayList<ModelBid>()
     private var db= Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +77,7 @@ class ActivityNewBid : AppCompatActivity() {
         gameSecondSubCTG.add("ٹنڈولا")
         gameSecondSubCTG.add("پنگہورا")
 
+        binding.rvBids.layoutManager = LinearLayoutManager(mContext)
 
 
         val adapterGameCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, R.layout.item_spinner_gamectg, gameCTG)
@@ -91,20 +104,24 @@ class ActivityNewBid : AppCompatActivity() {
                     binding.etBidAmount.setError("Bid Amount must be a multiple of 5")
                 }
                 else {
-                    modelBid = ModelBid(
-                        sharedPrefManager.getToken(),
-                        binding.spGameCtg.selectedItem.toString(),
-                        binding.spGameSubCtg.selectedItem.toString(),
-                        binding.etBidNumber.text.toString(),
-                        binding.etBidAmount.text.toString(),
-                        "Active",
-                        binding.etBidTransactionID.text.toString()
-                    )
-                    saveBid(modelBid)
+
+                    addBid()
+
+
                 }
             }
 
+        }
+
+
+        binding.btnSaveAll.setOnClickListener {
+            if(bids.size>0){
+                saveBid()
             }
+            else Toast.makeText(mContext, "Please add at least one bid!", Toast.LENGTH_SHORT).show()
+        }
+
+
 
 
         binding.spGameCtg.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
@@ -139,7 +156,9 @@ class ActivityNewBid : AppCompatActivity() {
                             }
                         }
 
-                        override fun onNothingSelected(parent: AdapterView<*>?) {}
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                        }
                     })
 
                 }
@@ -187,8 +206,61 @@ class ActivityNewBid : AppCompatActivity() {
 
     }
 
+    private fun addBid() {
 
-    private fun saveBid(modelBid: ModelBid) {
+
+        bids.add( ModelBid(
+            sharedPrefManager.getToken(),
+            binding.spGameCtg.selectedItem.toString(),
+            binding.spGameSubCtg.selectedItem.toString(),
+            binding.etBidNumber.text.toString(),
+            binding.etBidAmount.text.toString(),
+            "Active",
+            binding.etBidTransactionID.text.toString()
+            )
+        )
+        bids.sortByDescending { it.createdAt }
+        binding.rvBids.adapter= BidAdapter( bids)
+
+    }
+
+    private fun setBidNumber() {
+
+
+        /*bidNumberList.add(binding.etBidNumber.text.toString())
+
+        val listOfNumbers = bidNumberList.joinToString(", ")
+        binding.tvBidNumbers.text = listOfNumbers
+
+        binding.etBidNumber.text.clear()*/
+
+/*        bidNumberList.add(binding.etBidNumber.text.toString())
+        for (number in bidNumberList.indices) {
+
+            listOfNumbers +number.toString()+", "
+
+        }
+        binding.tvBidNumbers.text =listOfNumbers*/
+
+    }
+
+    private fun setBid() {
+
+        /*val numberList = arrayListOf("1", "2", "3")
+        modelBid = ModelBid(
+            sharedPrefManager.getToken(),
+            binding.spGameCtg.selectedItem.toString(),
+            binding.spGameSubCtg.selectedItem.toString(),
+            numberList,
+            binding.etBidAmount.text.toString(),
+            "Active",
+            binding.etBidTransactionID.text.toString()
+        )
+        saveBid(modelBid)*/
+    }
+
+
+    private fun saveBid() {
 
 
         utils.startLoadingAnimation()
@@ -205,18 +277,32 @@ class ActivityNewBid : AppCompatActivity() {
 
                     if(bidStatus=="Active"){
 
-                        db.collection(constants.BIDS_COLLECTION).add(modelBid)
-                            .addOnCompleteListener{
-                                utils.endLoadingAnimation()
-                                if(it.isSuccessful){
-                                    Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
-                                    startActivity(Intent(mContext, MainActivity::class.java))
-                                    finish()
-                                    ////////////////// Green Colour Validation Code For Status //////////////////////
-//                                    val tvGameStatus = findViewById<TextView>(R.id.tvGameStatus)
-//                                    tvGameStatus.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+
+                        saveDataToFirestore(bids)
+                        /*for(bid in bids){
+
+                            db.collection(constants.BIDS_COLLECTION).add(bid)
+                                .addOnCompleteListener{
+                                    if(it.isSuccessful){
+
+                                    }
                                 }
-                            }
+                        }
+
+                        // t1
+                        Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(mContext, MainActivity::class.java))
+                        finish()
+                        utils.endLoadingAnimation()*/
+
+
+
+
+
+
+
+
+
                     }
                     else{
                         Toast.makeText(mContext, "Bidding has been closed by admin ", Toast.LENGTH_SHORT).show()
@@ -231,5 +317,58 @@ class ActivityNewBid : AppCompatActivity() {
             }
 
     }
+
+
+
+
+
+    fun saveDataToFirestore(bids: List<ModelBid>) {
+        val job = Job()
+        val scope = CoroutineScope(Dispatchers.IO + job)
+
+        val completedCount = AtomicInteger(0)
+
+        scope.launch {
+            // Use async to concurrently save all bids
+            val tasks = bids.map { bid ->
+                async {
+                    try {
+                        db.collection(constants.BIDS_COLLECTION).add(bid).await()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        // Handle the case when data saving failed (optional)
+                    }
+                }
+            }
+
+            // Await all tasks to complete
+            tasks.awaitAll()
+
+            // All data is saved, continue with the next steps
+            continueExecution()
+        }
+
+        // Cancel the coroutine job if needed (e.g., if the activity is destroyed)
+        /*scope.invokeOnCompletion {
+            if (it is CancellationException) {
+                // Coroutine job was canceled
+            }
+        }*/
+    }
+
+    fun continueExecution() {
+        // The loop has completed, continue with your next steps here
+
+        // t1
+        utils.endLoadingAnimation()
+        Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(mContext, MainActivity::class.java))
+        finish()
+    }
+
+
+
+
+
 
 }

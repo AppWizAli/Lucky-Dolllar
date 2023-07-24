@@ -215,14 +215,14 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
             dialog.dismiss()
 
 
-            modelBid=ModelBid(
+            /*modelBid=ModelBid(
                 sharedPrefManager.getToken(),
                 spGameCtg.selectedItem.toString(),
                 spGameSubCtg.selectedItem.toString(),
                 etBidNumber.text.toString(),
                 etBidAmount.text.toString(),
                 "Active")
-            saveBid(modelBid)
+            saveBid(modelBid)*/
 
         }
 

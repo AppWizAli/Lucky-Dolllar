@@ -1,21 +1,15 @@
 package com.enfotrix.luckydoller.Adapter
 
-import android.R
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-
 import com.enfotrix.luckydoller.Constants
 import com.enfotrix.luckydoller.Models.ModelBid
 import com.enfotrix.luckydoller.databinding.ItemBidBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class BidAdapter( val data: List<ModelBid>) : RecyclerView.Adapter<BidAdapter.ViewHolder>() {
+class TempBidAdapter( val data: List<ModelBid>) : RecyclerView.Adapter<TempBidAdapter.ViewHolder>() {
 
 
     var constant= Constants()
@@ -38,11 +32,11 @@ class BidAdapter( val data: List<ModelBid>) : RecyclerView.Adapter<BidAdapter.Vi
 
 
             itemBinding.tvGameBidAmount.text=modelBid.amount
-            itemBinding.tvGameBidNumber.text=modelBid.number
+            //itemBinding.tvGameBidNumber.text=modelBid.number
             itemBinding.tvGameCtg.text=modelBid.gameCtg
             itemBinding.tvGameDate.text= SimpleDateFormat("hh:mm a dd/MM/yy", Locale.getDefault()).format(modelBid.createdAt.toDate()).toString()
             itemBinding.tvGameResult.text=modelBid.result
-            //itemBinding.tvGameStatus.text=modelBid.status
+//            itemBinding.tvGameStatus.text=modelBid.status
             itemBinding.tvGameSubCtg.text=modelBid.gameSubCtg
 
 

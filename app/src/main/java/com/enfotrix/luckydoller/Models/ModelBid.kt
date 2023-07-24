@@ -7,7 +7,7 @@ class ModelBid  @JvmOverloads constructor(
     var userID: String = "",
     var gameCtg: String = "",
     var gameSubCtg: String = "",
-    var number: String = "",
+    val number: String = "",
     var amount: String = "",
     var status: String = "",
     var transactionID: String = "",
