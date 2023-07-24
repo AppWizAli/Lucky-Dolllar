@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -128,6 +130,7 @@ class ActivityNewBid : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
                 if(position==0) {
+                    binding.etBidAmount.filters = arrayOf(InputFilter.LengthFilter(6))
                     binding.etBidNumber.setText("")
                     val adapterGameSubCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, R.layout.item_spinner_gamectg, gameFirstSubCTG)
                     binding.spGameSubCtg.adapter= adapterGameSubCTG
@@ -141,7 +144,7 @@ class ActivityNewBid : AppCompatActivity() {
                             if(position==0) {
                                 binding.etBidNumber.setText("")
                                 binding. etBidNumber.filters = arrayOf(InputFilter.LengthFilter(1))
-                            }
+                                }
                             else if(position==1) {
                                 binding.etBidNumber.setText("")
                                 binding.etBidNumber.filters = arrayOf(InputFilter.LengthFilter(2))
@@ -154,7 +157,7 @@ class ActivityNewBid : AppCompatActivity() {
                                 binding.etBidNumber.setText("")
                                 binding.etBidNumber.filters = arrayOf(InputFilter.LengthFilter(4))
                             }
-                        }
+                            }
 
                         override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -164,6 +167,7 @@ class ActivityNewBid : AppCompatActivity() {
                 }
                 else if(position==1) {
                     binding.etBidNumber.setText("")
+                    binding.etBidAmount.filters = arrayOf(InputFilter.LengthFilter(6))
                     val adapterGameSubCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, R.layout.item_spinner_gamectg, gameSecondSubCTG)
                     binding.spGameSubCtg.adapter= adapterGameSubCTG
 
@@ -270,9 +274,7 @@ class ActivityNewBid : AppCompatActivity() {
                 if(it.isSuccessful){
                     var bidStatus:String=""
                     for(admin in it.result){
-
                         bidStatus= admin.getString("bidStatus").toString()
-
                     }
 
                     if(bidStatus=="Active"){
@@ -297,14 +299,9 @@ class ActivityNewBid : AppCompatActivity() {
 
 
 
-
-
-
-
-
-
                     }
                     else{
+                        utils.endLoadingAnimation()
                         Toast.makeText(mContext, "Bidding has been closed by admin ", Toast.LENGTH_SHORT).show()
 
                         ////////////////// Red Colour Validation Code For Status //////////////////////
@@ -314,6 +311,8 @@ class ActivityNewBid : AppCompatActivity() {
 
 
                 }
+            }.addOnFailureListener{
+                Toast.makeText(mContext, "Error Saving Bid", Toast.LENGTH_SHORT).show()
             }
 
     }

@@ -88,8 +88,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_gravity="center_horizontal"
-                        android:text="745"
                         android:layout_marginLeft="5dp"
+                        android:text="745"
                         android:textColor="@color/primary"
                         android:textSize="20dp" />
 
