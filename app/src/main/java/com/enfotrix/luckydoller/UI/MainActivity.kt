@@ -100,7 +100,23 @@ class MainActivity : AppCompatActivity() {
             }
  */
 
-        db.collection("SocialLinks").document("4o7GvF2Fyaf33gljZAqf")
+        db.collection(constants.ADMIN_COLLECTION).document("Dg33Yix08jocNtRCPF2D")
+            .get()
+            .addOnSuccessListener {
+                if(it.exists()){
+                    val announcement = it.getString("announcement")
+
+                    if(!announcement.isNullOrEmpty()){
+                        binding.tvAnnouncement.setText(announcement)
+                    }
+
+                }
+            }.addOnFailureListener{
+                Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT).show()
+            }
+
+
+        db.collection(constants.SOCIAL_LINKS_COLLECTION).document("4o7GvF2Fyaf33gljZAqf")
          .get()
             .addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.exists()) {
@@ -120,8 +136,6 @@ class MainActivity : AppCompatActivity() {
                                 startActivity(intent)
                             } catch (e: Exception) {
                                 Toast.makeText(mContext, e.message.toString(), Toast.LENGTH_SHORT).show()
-                                // If there's an error or no suitable app to handle the link, open the default browser
-                                //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com/appetizerandroid")))
                             }
                         }
                     }
@@ -131,8 +145,7 @@ class MainActivity : AppCompatActivity() {
                                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ytLink))
                                 startActivity(intent)
                             } catch (e: Exception) {
-                                // If there's an error or no suitable app to handle the link, open the default browser
-                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com/appetizerandroid")))
+                                Toast.makeText(mContext, e.message.toString(), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -142,8 +155,7 @@ class MainActivity : AppCompatActivity() {
                                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(twLink))
                                 startActivity(intent)
                             } catch (e: Exception) {
-                                // If there's an error or no suitable app to handle the link, open the default browser
-                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com/appetizerandroid")))
+                                Toast.makeText(mContext, e.message.toString(), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -153,8 +165,7 @@ class MainActivity : AppCompatActivity() {
                                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(whatsappLink))
                                 startActivity(intent)
                             } catch (e: Exception) {
-                                // If there's an error or no suitable app to handle the link, open the default browser
-                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com/appetizerandroid")))
+                                Toast.makeText(mContext, e.message.toString(), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -164,8 +175,7 @@ class MainActivity : AppCompatActivity() {
                                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(mailLink))
                                 startActivity(intent)
                             } catch (e: Exception) {
-                                // If there's an error or no suitable app to handle the link, open the default browser
-                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com/appetizerandroid")))
+                                Toast.makeText(mContext, e.message.toString(), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -175,6 +185,7 @@ class MainActivity : AppCompatActivity() {
                                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(instaLink))
                                 startActivity(intent)
                             } catch (e: Exception) {
+                                Toast.makeText(mContext, e.message.toString(), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

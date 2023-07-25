@@ -10,6 +10,7 @@ public class Constants  {
     ///////////////////////////// COLLECTIONS NAME //////////////////////////
 
     public var USERS_COLLECTION="Users"
+    public var SOCIAL_LINKS_COLLECTION="SocialLinks"
     public var ADMIN_COLLECTION="Admin"
     public var BIDS_COLLECTION="Bids"
     public var NOMINEE_COLLECTION="Nominees"

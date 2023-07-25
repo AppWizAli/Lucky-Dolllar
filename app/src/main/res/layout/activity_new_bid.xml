@@ -32,7 +32,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginHorizontal="6dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
@@ -40,13 +41,11 @@
                         android:layout_height="wrap_content"
                         android:text="Game"
                         android:textColor="@color/primary"
-                        android:layout_marginLeft="5dp"
                         android:textSize="20dp"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
-                        android:layout_marginRight="10dp"
                         android:textColor="@color/primary"
                         android:textSize="20dp"
                         android:text="گیم"/>
@@ -70,7 +69,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginHorizontal="6dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
@@ -78,13 +78,11 @@
                         android:layout_height="wrap_content"
                         android:text="Sub Game"
                         android:textColor="@color/primary"
-                        android:layout_marginLeft="5dp"
                         android:textSize="20dp"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
-                        android:layout_marginRight="10dp"
                         android:textColor="@color/primary"
                         android:textSize="20dp"
                         android:text="سب گیم"/>
@@ -109,7 +107,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="8dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
@@ -148,14 +146,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginVertical="5dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
                         android:gravity="center_horizontal"
                         android:layout_height="wrap_content"
                         android:text="Amount"
-                        android:layout_marginTop="5dp"
                         android:textColor="@color/primary"
                         android:layout_marginLeft="7dp"
                         android:textSize="20dp"/>
@@ -164,7 +161,6 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
                         android:textColor="@color/primary"
                         android:textSize="20dp"
                         android:text="رقم"/>
@@ -188,14 +184,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginVertical="5dp"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
                         android:gravity="center_horizontal"
                         android:layout_height="wrap_content"
-                        android:text="ID"
-                        android:layout_marginTop="5dp"
+                        android:text="Transaction ID"
                         android:textColor="@color/primary"
                         android:layout_marginLeft="7dp"
                         android:textSize="20dp"/>
@@ -204,10 +199,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="5dp"
                         android:textColor="@color/primary"
                         android:textSize="20dp"
-                        android:text="آئ ڈی"/>
+                        android:text="ٹرانزیکشن آئی ڈی"/>
                 </LinearLayout>
 
                 <EditText
@@ -232,7 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:text="Add Bid"
-
+                    android:backgroundTint="@color/primary"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="8dp"/>
 
@@ -254,7 +248,6 @@
             android:layout_marginBottom="20dp"
             android:layout_marginHorizontal="20dp"
             android:backgroundTint="@color/primary"
-
             android:text="Save All"/>
     </LinearLayout>
 

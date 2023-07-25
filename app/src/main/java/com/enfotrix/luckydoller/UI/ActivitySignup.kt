@@ -1,6 +1,7 @@
 package com.enfotrix.luckydoller.UI
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -34,10 +35,18 @@ class ActivitySignup : AppCompatActivity() {
         constants= Constants()
 
 
+
+        binding.tvLogin.setOnClickListener{
+            startActivity(Intent(mContext,ActivityLogin::class.java))
+            finish()
+        }
+        binding.imgBack.setOnClickListener{
+            startActivity(Intent(mContext,ActivityLogin::class.java))
+            finish()
+        }
+
+
         binding.btnProfileRegister.setOnClickListener {
-
-
-
 
             modelUser = ModelUser(
                 utils.cnicFormate(binding.etCNIC.editText?.text.toString()),
@@ -46,6 +55,7 @@ class ActivitySignup : AppCompatActivity() {
                 binding.etPhone.editText?.text.toString(),
                 binding.etPassword.editText?.text.toString())
             Save(modelUser)
+
         }
 
 
@@ -59,19 +69,38 @@ class ActivitySignup : AppCompatActivity() {
             .addOnCompleteListener{
                 if(it.isSuccessful){
                     utils.endLoadingAnimation()
-                    Toast.makeText(mContext, "User CNIC already exist!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext, "CNIC already exists", Toast.LENGTH_SHORT).show()
                 }
-                else {
-
+                else{
                     db.collection(constants.USERS_COLLECTION).add(modelUser)
                         .addOnCompleteListener{
                             utils.endLoadingAnimation()
                             if(it.isSuccessful){
                                 Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
                             }
+                }
+
+            }
+              /*      utils.endLoadingAnimation()
+                    Toast.makeText(mContext, "User CNIC already exist!", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    db.collection(constants.USERS_COLLECTION).add(modelUser)
+                        .addOnCompleteListener{
+                            utils.endLoadingAnimation()
+                            if(it.isSuccessful){
+                                Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
+
+                            }
+                        }
+                        .addOnFailureListener{
+                            Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT).show()
                         }
                 }
             }
+            .addOnFailureListener{
+                Toast.makeText(mContext, "Error While Signing Up", Toast.LENGTH_SHORT).show()
+            }*/
 
 
 

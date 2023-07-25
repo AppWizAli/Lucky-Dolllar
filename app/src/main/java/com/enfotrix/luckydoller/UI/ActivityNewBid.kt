@@ -106,9 +106,8 @@ class ActivityNewBid : AppCompatActivity() {
                     binding.etBidAmount.setError("Bid Amount must be a multiple of 5")
                 }
                 else {
-
-                    addBid()
-
+                    if(numberCounter==binding.etBidNumber.text.length) addBid()
+                    else Toast.makeText(mContext, "Incorrect number", Toast.LENGTH_SHORT).show()
 
                 }
             }
@@ -118,10 +117,11 @@ class ActivityNewBid : AppCompatActivity() {
 
         binding.btnSaveAll.setOnClickListener {
             if(bids.size>0){
-                if(numberCounter==binding.etBidNumber.text.length) saveBid()
-                else Toast.makeText(mContext, "Incorrect number", Toast.LENGTH_SHORT).show()
+                saveBid()
             }
-            else Toast.makeText(mContext, "Please add at least one bid!", Toast.LENGTH_SHORT).show()
+            else{
+                Toast.makeText(mContext, "Please add at least one bid!", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
@@ -132,6 +132,7 @@ class ActivityNewBid : AppCompatActivity() {
 
                 if(position==0) {
                     binding.etBidNumber.setText("")
+                    binding. etBidAmount.filters = arrayOf(InputFilter.LengthFilter(6))
                     val adapterGameSubCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, R.layout.item_spinner_gamectg, gameFirstSubCTG)
                     binding.spGameSubCtg.adapter= adapterGameSubCTG
 
@@ -174,6 +175,7 @@ class ActivityNewBid : AppCompatActivity() {
                 }
                 else if(position==1) {
                     binding.etBidNumber.setText("")
+                    binding. etBidAmount.filters = arrayOf(InputFilter.LengthFilter(6))
                     val adapterGameSubCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, R.layout.item_spinner_gamectg, gameSecondSubCTG)
                     binding.spGameSubCtg.adapter= adapterGameSubCTG
 

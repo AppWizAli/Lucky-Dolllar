@@ -4,7 +4,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.Toast
+import androidx.core.view.get
+import androidx.core.view.isEmpty
 import com.enfotrix.luckydoller.Constants
 import com.enfotrix.luckydoller.Models.ModelUser
 import com.enfotrix.luckydoller.SharedPrefManager
@@ -37,14 +40,23 @@ class ActivityLogin : AppCompatActivity() {
 
 
         binding.btnLogin.setOnClickListener {
+            if(TextUtils.isEmpty(binding.etCNIC.text.toString())){
+                binding.etCNIC.setError("Enter CNIC")
+            }
+            else if (TextUtils.isEmpty(binding.etPassword.text.toString())){
+                binding.etPassword.setError("Enter PIN")
+            }
+            else{
             login(
-            utils.cnicFormate(binding.etCNIC.editText?.text.toString()),
-            binding.etPassword.editText?.text.toString())
+            utils.cnicFormate(binding.etCNIC.text.toString()),
+            binding.etPassword.text.toString())
+            }
         }
 
         binding.tvSignUp.setOnClickListener {
 
             startActivity(Intent(mContext,ActivitySignup::class.java))
+            finish()
         }
 
     }
@@ -55,15 +67,21 @@ class ActivityLogin : AppCompatActivity() {
             .get()
             .addOnCompleteListener{ task->
                 if(task.isSuccessful){
+
+                    val modelUser:ModelUser?=null
+
+
                     for(document in task.result){
-                        modelUser=document.toObject(ModelUser::class.java)
+                        var modelUser=document.toObject(ModelUser::class.java)
                         modelUser.id=document.id
                     }
 
-                    if(modelUser.pin.equals(pin)){
+                    if(modelUser?.pin.equals(pin)){
 
 
-                        sharedPrefManager.saveLoginAuth(modelUser,modelUser.id, true)
+                        if (modelUser != null) {
+                            sharedPrefManager.saveLoginAuth(modelUser,modelUser.id, true)
+                        }
 
                         //Toast.makeText(mContext, "Login Successfull", Toast.LENGTH_SHORT).show()
 
@@ -74,6 +92,7 @@ class ActivityLogin : AppCompatActivity() {
 
                     }
                     else Toast.makeText(mContext, "Incorrect PIN", Toast.LENGTH_SHORT).show()
+
 
                 }
                 else{
