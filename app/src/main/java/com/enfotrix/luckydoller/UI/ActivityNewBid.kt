@@ -55,6 +55,8 @@ class ActivityNewBid : AppCompatActivity() {
     var bids = ArrayList<ModelBid>()
     private var db= Firebase.firestore
 
+    var numberCounter:Int=0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewBidBinding.inflate(layoutInflater)
@@ -116,7 +118,8 @@ class ActivityNewBid : AppCompatActivity() {
 
         binding.btnSaveAll.setOnClickListener {
             if(bids.size>0){
-                saveBid()
+                if(numberCounter==binding.etBidNumber.text.length) saveBid()
+                else Toast.makeText(mContext, "Incorrect number", Toast.LENGTH_SHORT).show()
             }
             else Toast.makeText(mContext, "Please add at least one bid!", Toast.LENGTH_SHORT).show()
         }
@@ -141,18 +144,25 @@ class ActivityNewBid : AppCompatActivity() {
                             if(position==0) {
                                 binding.etBidNumber.setText("")
                                 binding. etBidNumber.filters = arrayOf(InputFilter.LengthFilter(1))
+                                numberCounter=1
                             }
                             else if(position==1) {
                                 binding.etBidNumber.setText("")
                                 binding.etBidNumber.filters = arrayOf(InputFilter.LengthFilter(2))
+                                numberCounter=2
+
                             }
                             else if(position==2) {
                                 binding.etBidNumber.setText("")
                                 binding.etBidNumber.filters = arrayOf(InputFilter.LengthFilter(3))
+                                numberCounter=3
+
                             }
                             else if(position==3) {
                                 binding.etBidNumber.setText("")
                                 binding.etBidNumber.filters = arrayOf(InputFilter.LengthFilter(4))
+                                numberCounter=4
+
                             }
                         }
 
@@ -175,14 +185,20 @@ class ActivityNewBid : AppCompatActivity() {
                             if(position==0) {
                                 binding.etBidNumber.setText("")
                                 binding.etBidNumber.filters = arrayOf(InputFilter.LengthFilter(2))
+                                numberCounter=2
+
                             }
                             else if(position==1) {
                                 binding.etBidNumber.setText("")
                                 binding.etBidNumber.filters = arrayOf(InputFilter.LengthFilter(3))
+                                numberCounter=3
+
                             }
                             else if(position==2) {
                                 binding.etBidNumber.setText("")
                                 binding.etBidNumber.filters = arrayOf(InputFilter.LengthFilter(4))
+                                numberCounter=4
+
                             }
                         }
 
