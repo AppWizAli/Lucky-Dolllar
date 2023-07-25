@@ -151,6 +151,7 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
                                 etBidNumber.setText("")
                                 etBidNumber.filters = arrayOf(InputFilter.LengthFilter(1))
                             }
+
                             else if(position==1) {
                                 etBidNumber.setText("")
                                 etBidNumber.filters = arrayOf(InputFilter.LengthFilter(2))
