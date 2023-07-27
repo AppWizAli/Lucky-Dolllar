@@ -44,6 +44,9 @@ class ActivityLogin : AppCompatActivity() {
             if(TextUtils.isEmpty(binding.etCNIC.text.toString())){
                 binding.etCNIC.setError("Enter CNIC")
             }
+            else if (binding.etCNIC.text.toString().length < 13){
+                binding.etCNIC.setError("Invalid CNIC")
+            }
             else if (TextUtils.isEmpty(binding.etPassword.text.toString())){
                 binding.etPassword.setError("Enter PIN")
             }
@@ -87,7 +90,6 @@ class ActivityLogin : AppCompatActivity() {
                             }
 
                             //Toast.makeText(mContext, "Login Successfull", Toast.LENGTH_SHORT).show()
-
 
                             startActivity(Intent(mContext,MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
                             finish()

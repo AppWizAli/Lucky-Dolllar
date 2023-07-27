@@ -90,8 +90,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginLeft="5dp"
                         android:text="745"
-                        android:textColor="@color/primary"
-                        android:textSize="20dp" />
+                        android:textColor="@color/primary" />
 
 
 
@@ -101,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_column="4"
                     android:layout_row="0"
-                    android:layout_columnWeight="1"
+                    android:layout_columnWeight="2.5"
                     android:layout_rowWeight="1"
                     android:layout_marginRight="3dp"
                     android:orientation="vertical">
@@ -114,20 +113,10 @@
 
                         <TextView
                             android:textColor="@color/primary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_horizontal"
-                            android:textSize="12dp"
-                            android:gravity="center_vertical"
-                            android:layout_centerInParent="true"
-                            android:text="Rs"/>
-                        <TextView
-                            android:textColor="@color/primary"
                             android:id="@+id/tvGameBidAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:textSize="20dp"
                             android:layout_centerInParent="true"
                             android:text="500"/>
 
@@ -167,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_column="5"
                     android:layout_row="0"
-                    android:layout_columnWeight="1"
+                    android:layout_columnWeight="2"
                     android:layout_rowWeight="1"
                     android:layout_marginRight="3dp">
                     <TextView

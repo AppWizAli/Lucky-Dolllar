@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.enfotrix.luckydoller.Constants
 import com.enfotrix.luckydoller.Models.ModelUser
+import com.enfotrix.luckydoller.R
 import com.enfotrix.luckydoller.SharedPrefManager
 import com.enfotrix.luckydoller.Utils
 import com.enfotrix.luckydoller.databinding.ActivityMainBinding
@@ -47,8 +49,27 @@ class MainActivity : AppCompatActivity() {
         sharedPrefManager = SharedPrefManager(mContext)
 
 
-        listenForAnnouncements()
+        title = "KotlinApp"
+        val text: String =
+            "// LIVE Lucky Dollar.PK //// LIVE Lucky Dollar.PK //// LIVE LUCKY DOLLAR.PK//"
+        val textView: TextView = findViewById(R.id.tvAnnouncement)
+        textView.text = text
+        textView.isSelected = true
+
+
+
+
+        //listenForAnnouncements()
         listenForSocialLinks()
+
+
+        binding.cdLogout.setOnClickListener {
+            sharedPrefManager.logOut(isLoggedOut = false)
+            startActivity(Intent(mContext, ActivityLogin::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            })
+            finish()
+        }
 
 
         binding.cardResults.setOnClickListener{
@@ -81,12 +102,12 @@ class MainActivity : AppCompatActivity() {
             if (documentSnapshot != null && documentSnapshot.exists()) {
                 val announcement = documentSnapshot.getString("announcement")
                 if (!announcement.isNullOrEmpty()) {
-                    binding.tvAnnouncement.text = announcement
+                    binding.tvAnnouncement.setText(announcement)
                 } else {
-                    binding.tvAnnouncement.text = ""
+                    binding.tvAnnouncement.setText("")
                 }
             } else {
-                binding.tvAnnouncement.text = ""
+                binding.tvAnnouncement.setText("")
             }
         }
     }

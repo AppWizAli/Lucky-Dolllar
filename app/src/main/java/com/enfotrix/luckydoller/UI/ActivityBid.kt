@@ -2,6 +2,7 @@ package com.enfotrix.luckydoller.UI
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,11 +14,8 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.enfotrix.luckydoller.Adapter.BidAdapter
 import com.enfotrix.luckydoller.Adapter.BidViewPagerAdapter
 import com.enfotrix.luckydoller.Constants
@@ -29,7 +27,6 @@ import com.enfotrix.luckydoller.Utils
 import com.enfotrix.luckydoller.databinding.ActivityBidBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 
@@ -89,12 +86,14 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
             binding.tabLayout, binding.viewPager
         ) { tab,
             position ->
-            if(position==0) tab.text ="Active"
-            else if(position==1) tab.text="Close" }.attach()
+            if(position==0) tab.text ="Pending"
+            else if(position==1) tab.text="Active"
+            else if(position==2) tab.text="Close"
+        }.attach()
     }
 
     private fun setupViewPager() {
-        val adapter = BidViewPagerAdapter(this, 2)
+        val adapter = BidViewPagerAdapter(this, 3)
         binding.viewPager.adapter = adapter
     }
 
@@ -106,7 +105,7 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
             super.onBackPressed()
         } else {
             // Otherwise, select the previous step.
-            viewPager.currentItem = viewPager.currentItem - 1
+            viewPager.currentItem = viewPager.currentItem - 2
         }
     }
 
@@ -128,6 +127,8 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
         val etBidNumber = dialog.findViewById<EditText>(R.id.etBidNumber)
         val etBidAmount = dialog.findViewById<EditText>(R.id.etBidAmount)
         val btnBid = dialog.findViewById<Button>(R.id.btnBid)
+
+
 
         val adapterGameCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, R.layout.item_spinner_gamectg, gameCTG)
         spGameCtg.adapter= adapterGameCTG

@@ -8,6 +8,14 @@
     tools:context=".UI.ActivityLogin"
     android:background="@color/black_m">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_height="150dp"
+        app:lottie_rawRes="@raw/luckywheel"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"/>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,7 +24,7 @@
         android:textColor="#FFC107"
         android:textSize="35dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginVertical="30dp"/>
+        android:layout_marginBottom="15dp"/>
 
 
 

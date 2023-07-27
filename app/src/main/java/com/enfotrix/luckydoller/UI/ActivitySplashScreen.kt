@@ -28,8 +28,6 @@ class ActivitySplashScreen : AppCompatActivity() {
 
 
         mContext= this@ActivitySplashScreen;
-        actionBar?.hide()
-        supportActionBar?.hide()
         utils = Utils(mContext)
         constants= Constants()
         sharedPrefManager = SharedPrefManager(mContext)
@@ -41,6 +39,10 @@ class ActivitySplashScreen : AppCompatActivity() {
                 finish()
             }
             else if(sharedPrefManager.isLoggedIn()==false) {
+                startActivity(Intent(mContext,ActivityLogin::class.java))
+                finish()
+            }
+            else if (sharedPrefManager.logOut().equals(false)){
                 startActivity(Intent(mContext,ActivityLogin::class.java))
                 finish()
             }

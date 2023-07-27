@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,151 +18,201 @@
         app:cardCornerRadius="8dp"
         app:cardBackgroundColor="@color/gray"
         android:layout_marginHorizontal="50dp">
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentTop="true"
+            android:layout_margin="7dp"
             android:background="@color/gray"
             app:tabGravity="fill"
-            app:tabInlineLabel="true"
-            android:layout_margin="7dp"
             app:tabIndicator="@drawable/tab_indicator"
             app:tabIndicatorColor="@color/primary_n"
             app:tabIndicatorFullWidth="true"
             app:tabIndicatorGravity="stretch"
             app:tabIndicatorHeight="54dp"
+            app:tabInlineLabel="true"
             app:tabMode="fixed"
-            app:tabTextColor="@color/primary"
-
-
-            />
+            app:tabTextColor="@color/primary" />
 
     </androidx.cardview.widget.CardView>
-    <View
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="85dp"
-        android:background="@color/primary"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="110dp"
-        android:background="@color/primary"
-        />
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginTop="80dp"
-        android:orientation="horizontal">
-        <View
-            android:layout_width="2dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="7dp"
-            android:background="@color/primary"
-            />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        app:cardBackgroundColor="@color/primary_n"
+        android:layout_marginBottom="3dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="گیم"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_gravity="center_vertical"
-            android:textSize="17dp"/>
-        <View
-            android:layout_width="2dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="7dp"
-            android:background="@color/primary"
-            android:layout_marginLeft="5dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="سب گیم"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:textSize="17dp"/>
-        <View
-            android:layout_width="2dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="7dp"
-            android:background="@color/primary"
-            android:layout_marginLeft="5dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="نمبر"
-            android:layout_marginRight="20dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="18dp"
-            android:textSize="17dp"/>
-        <View
-            android:layout_width="2dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="7dp"
-            android:background="@color/primary"
-            android:layout_marginLeft="5dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="رقم"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="20dp"
-            android:textSize="17dp"/>
-        <View
-            android:layout_width="2dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="7dp"
-            android:background="@color/primary"
-            android:layout_marginLeft="5dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="تاریخ"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="23dp"
-            android:textSize="17dp"/>
-        <View
-            android:layout_width="2dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="7dp"
-            android:background="@color/primary"
-            android:layout_marginLeft="5dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="نتیجہ"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center_vertical"
-            android:textSize="17dp"/>
-        <View
-            android:layout_width="2dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="7dp"
-            android:layout_gravity="right"
-            android:background="@color/primary"
-            />
+            android:orientation="horizontal">
 
 
 
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:rowCount="1"
+                android:columnCount="8">
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_row="0"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_marginRight="3dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvGameCtg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="گیم"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold" />
+
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_row="0"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_marginRight="3dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvGameSubCtg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:text="سب گیم"
+                        android:textColor="@color/primary"
+                        android:textStyle="bold" />
+
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="3"
+                    android:layout_row="0"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:layout_marginRight="3dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvGameBidNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="5dp"
+                        android:text="نمبر"
+                        android:textColor="@color/primary" />
+
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="4"
+                    android:layout_row="0"
+                    android:layout_columnWeight="2.5"
+                    android:layout_rowWeight="1"
+                    android:layout_marginRight="3dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textColor="@color/primary"
+                            android:id="@+id/tvGameBidAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_centerInParent="true"
+                            android:text="رقم"/>
+
+                    </LinearLayout>
+
+
+
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="6"
+                    android:layout_row="0"
+                    android:layout_columnWeight="1"
+                    android:layout_rowWeight="1"
+                    android:gravity="center"
+                    android:layout_marginRight="3dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:textColor="@color/primary"
+                        android:id="@+id/tvGameResult"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:text="نتیجہ"/>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="5"
+                    android:layout_row="0"
+                    android:layout_columnWeight="2"
+                    android:layout_rowWeight="1"
+                    android:layout_marginRight="3dp">
+                    <TextView
+                        android:textColor="@color/primary"
+                        android:id="@+id/tvGameDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="تاریخ"/>
+                </LinearLayout>
 
 
 
 
 
+            </GridLayout>
+
+        </LinearLayout>
 
 
+    </androidx.cardview.widget.CardView>
 
-    </GridLayout>
 
 
 

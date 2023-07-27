@@ -15,14 +15,14 @@ import com.enfotrix.luckydoller.Models.ModelUser
 import com.enfotrix.luckydoller.R
 import com.enfotrix.luckydoller.SharedPrefManager
 import com.enfotrix.luckydoller.Utils
-import com.enfotrix.luckydoller.databinding.FragmentPendingBidsBinding
+import com.enfotrix.luckydoller.databinding.FragmentClosedBidsBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
-class FragmentPendingBids : Fragment() {
-    // Use proper data binding variable and inflate the layout
-    private var _binding: FragmentPendingBidsBinding? = null
+class FragmentClosedBids : Fragment() {
+
+    private var _binding: FragmentClosedBidsBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var mContext: Context
@@ -32,56 +32,50 @@ class FragmentPendingBids : Fragment() {
     private lateinit var constants: Constants
     private lateinit var sharedPrefManager : SharedPrefManager
 
-
     private var db= Firebase.firestore
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentPendingBidsBinding.inflate(inflater, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentClosedBidsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
-
-        mContext=requireContext()
+        mContext = requireContext()
         utils = Utils(mContext)
         constants= Constants()
         sharedPrefManager = SharedPrefManager(mContext)
 
-        binding.rvPendingBids.layoutManager = LinearLayoutManager(mContext)
-
-
+        binding.rvClosedBids.layoutManager = LinearLayoutManager(mContext)
 
         getResult()
 
         return root
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Set the binding to null when the view is destroyed to avoid leaks
         _binding = null
     }
 
-
-
-
     private fun getResult() {
+
         utils.startLoadingAnimation()
 
-        db.collection(constants.BIDS_COLLECTION).whereEqualTo("approve","Pending")
+        db.collection(constants.BIDS_COLLECTION).whereEqualTo("approve","Approved")
+            .whereEqualTo("status", "Closed")
             .get()
             .addOnCompleteListener { task ->
                 utils.endLoadingAnimation()
                 if (task.isSuccessful) {
                     val bids = ArrayList<ModelBid>()
-
                     for (bid in task.result) {
                         bids.add(bid.toObject<ModelBid>())
                     }
 
                     bids.sortByDescending { it.createdAt }
-                    binding.rvPendingBids.adapter = BidAdapter(bids)
+                    binding.rvClosedBids.adapter = BidAdapter(bids)
 
                     Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
                 } else {
@@ -92,7 +86,4 @@ class FragmentPendingBids : Fragment() {
                 Toast.makeText(mContext, "Error While Getting Result", Toast.LENGTH_SHORT).show()
             }
     }
-
-
-
 }

@@ -49,7 +49,7 @@ class FragmentActiveBids : Fragment() {
         constants= Constants()
         sharedPrefManager = SharedPrefManager(mContext)
 
-        binding.rvBids.layoutManager = LinearLayoutManager(mContext)
+        binding.rvActiveBids.layoutManager = LinearLayoutManager(mContext)
 
 
 
@@ -70,7 +70,7 @@ class FragmentActiveBids : Fragment() {
     private fun getResult() {
         utils.startLoadingAnimation()
 
-        db.collection(constants.BIDS_COLLECTION)
+        db.collection(constants.BIDS_COLLECTION).whereEqualTo("approve","Approved")
             .whereEqualTo("status", "Active")
             .get()
             .addOnCompleteListener { task ->
@@ -83,7 +83,7 @@ class FragmentActiveBids : Fragment() {
                     }
 
                     bids.sortByDescending { it.createdAt }
-                    binding.rvBids.adapter = BidAdapter(bids)
+                    binding.rvActiveBids.adapter = BidAdapter(bids)
 
                     Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
                 } else {

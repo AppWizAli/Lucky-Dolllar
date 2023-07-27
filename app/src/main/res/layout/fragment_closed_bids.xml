@@ -3,11 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.FragmentActiveBids">
-
+    tools:context=".Fragments.FragmentClosedBids">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvActiveBids"
+        android:id="@+id/rvClosedBids"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

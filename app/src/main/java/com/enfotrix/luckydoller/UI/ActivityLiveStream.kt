@@ -5,6 +5,7 @@ import android.R
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -24,6 +25,7 @@ import com.enfotrix.luckydoller.SharedPrefManager
 import com.enfotrix.luckydoller.Utils
 import com.enfotrix.luckydoller.databinding.ActivityLiveStreamBinding
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -66,6 +68,9 @@ class ActivityLiveStream : AppCompatActivity() {
 
     private var continuousRunnable: Runnable? = null
 
+    private var socialLinksListener: ListenerRegistration? = null
+
+
     private var db= Firebase.firestore
     private lateinit var binding : ActivityLiveStreamBinding
 
@@ -78,6 +83,11 @@ class ActivityLiveStream : AppCompatActivity() {
         utils = Utils(mContext)
         constants= Constants()
         sharedPrefManager = SharedPrefManager(mContext)
+
+
+
+        listenForSocialLinks()
+
 
 
 
@@ -270,6 +280,42 @@ class ActivityLiveStream : AppCompatActivity() {
         continuousRunnable?.run()
     }
 
+
+    private fun listenForSocialLinks() {
+        val socialLinksRef = db.collection(constants.SOCIAL_LINKS_COLLECTION)
+            .document("4o7GvF2Fyaf33gljZAqf")
+        socialLinksListener = socialLinksRef.addSnapshotListener { documentSnapshot, error ->
+            if (error != null) {
+                Toast.makeText(mContext, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                return@addSnapshotListener
+            }
+            if (documentSnapshot != null && documentSnapshot.exists()) {
+                val ytLink = documentSnapshot.getString("yt")
+                val whatsappLink = documentSnapshot.getString("whatsapp")
+                if (!ytLink.isNullOrEmpty()) {
+                    binding.youtube.setOnClickListener {
+                        openLink(ytLink)
+                    }
+                }
+                if (!whatsappLink.isNullOrEmpty()) {
+                    binding.whatsapp.setOnClickListener {
+                        openLink(whatsappLink)
+                    }
+                }
+            }
+        }
+    }
+    private fun stopListeningForSocialLinks() {
+        socialLinksListener?.remove()
+    }
+    private fun openLink(url: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(mContext, "Error While Opening Link: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
 
 
 }

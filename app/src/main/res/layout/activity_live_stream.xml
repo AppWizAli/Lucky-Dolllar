@@ -166,6 +166,7 @@
                 android:layout_centerVertical="true"/>
 
             <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/youtube"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 app:lottie_autoPlay="true"
@@ -237,7 +238,7 @@
                 android:layout_centerVertical="true"/>
 
             <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/youtube"
+                android:id="@+id/whatsapp"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 app:lottie_autoPlay="true"
