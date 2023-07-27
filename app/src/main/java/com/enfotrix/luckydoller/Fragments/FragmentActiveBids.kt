@@ -67,30 +67,35 @@ class FragmentActiveBids : Fragment() {
 
 
 
-
     private fun getResult() {
-
-
         utils.startLoadingAnimation()
-        db.collection(constants.BIDS_COLLECTION).get()
-            .addOnCompleteListener{
+
+        db.collection(constants.BIDS_COLLECTION)
+            .whereEqualTo("status", "Active")
+            .get()
+            .addOnCompleteListener { task ->
                 utils.endLoadingAnimation()
-                if(it.isSuccessful){
+                if (task.isSuccessful) {
+                    val bids = ArrayList<ModelBid>()
 
-                    var bids = ArrayList<ModelBid>()
+                    for (bid in task.result) {
+                        bids.add(bid.toObject<ModelBid>())
+                    }
 
-                    for(bid in it.result) bids.add( bid.toObject<ModelBid>())
                     bids.sortByDescending { it.createdAt }
-                    binding.rvBids.adapter= BidAdapter( bids)
-
+                    binding.rvBids.adapter = BidAdapter(bids)
 
                     Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(mContext, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
-
-
-
+            .addOnFailureListener{
+                Toast.makeText(mContext, "Error While Getting Result", Toast.LENGTH_SHORT).show()
+            }
     }
+
+
 
 
 }

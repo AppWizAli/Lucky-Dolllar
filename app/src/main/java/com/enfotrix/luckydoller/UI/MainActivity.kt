@@ -12,6 +12,7 @@ import com.enfotrix.luckydoller.SharedPrefManager
 import com.enfotrix.luckydoller.Utils
 import com.enfotrix.luckydoller.databinding.ActivityMainBinding
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -28,6 +29,11 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    private var announcementListener: ListenerRegistration? = null
+    private var socialLinksListener: ListenerRegistration? = null
+
+
+
 
 
     private var db= Firebase.firestore
@@ -41,6 +47,10 @@ class MainActivity : AppCompatActivity() {
         sharedPrefManager = SharedPrefManager(mContext)
 
 
+        listenForAnnouncements()
+        listenForSocialLinks()
+
+
         binding.cardResults.setOnClickListener{
             startActivity(Intent(mContext, ActivityResult::class.java))
         }
@@ -51,158 +61,97 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(mContext, ActivityNewBid::class.java))
         }
 
-/*
-        binding.facebook.setOnClickListener{
-            try {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse())
-                startActivity(intent)
-            } catch (e: Exception) {
-                startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("http://www.facebook.com/appetizerandroid")
-                    )
-                )
+    }
+
+
+    ///////////////////// FUNCTION FOR LIVE ANNOUNCEMENT /////////////////
+    private fun listenForAnnouncements() {
+        val adminAnnouncementRef = db.collection(constants.ADMIN_COLLECTION)
+            .document("Dg33Yix08jocNtRCPF2D")
+
+        announcementListener = adminAnnouncementRef.addSnapshotListener { documentSnapshot, error ->
+            if (error != null) {
+                Toast.makeText(mContext, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                return@addSnapshotListener
+            }
+
+            if (documentSnapshot != null && documentSnapshot.exists()) {
+                val announcement = documentSnapshot.getString("announcement")
+                if (!announcement.isNullOrEmpty()) {
+                    binding.tvAnnouncement.text = announcement
+                } else {
+                    binding.tvAnnouncement.text = ""
+                }
+            } else {
+                binding.tvAnnouncement.text = ""
             }
         }
-
-*/
-
-      /*  val documentReference = db.collection("SocialLinks").document("4o7GvF2Fyaf33gljZAqf")
-        documentReference.get()
-            .addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.exists()) {
-                    val fbLink = documentSnapshot.getString("fb")
-                    val ytLink = documentSnapshot.getString("yt")
-                    if (!fbLink.isNullOrEmpty()) {
-                        binding.facebook.setOnClickListener {
-                            try {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(fbLink))
-                                startActivity(intent)
-                            } catch (e: Exception) {
-                                // If there's an error or no suitable app to handle the link, open the default browser
-                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com/appetizerandroid")))
-                            }
-                        }
-                    }
-                    if (!ytLink.isNullOrEmpty()) {
-                        binding.youtube.setOnClickListener {
-                            try {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ytLink))
-                                startActivity(intent)
-                            } catch (e: Exception) {
-                                // If there's an error or no suitable app to handle the link, open the default browser
-                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com/appetizerandroid")))
-                            }
-                        }
-                    }
-                }
-            }
- */
-
-        db.collection(constants.ADMIN_COLLECTION).document("Dg33Yix08jocNtRCPF2D")
-            .get()
-            .addOnSuccessListener {
-                if(it.exists()){
-                    val announcement = it.getString("announcement")
-
-                    if(!announcement.isNullOrEmpty()){
-                        binding.tvAnnouncement.setText(announcement)
-                    }
-
-                }
-            }.addOnFailureListener{
-                Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT).show()
-            }
-
-
-        db.collection(constants.SOCIAL_LINKS_COLLECTION).document("4o7GvF2Fyaf33gljZAqf")
-         .get()
-            .addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.exists()) {
-
-                    val fbLink = documentSnapshot.getString("fb")
-                    val ytLink = documentSnapshot.getString("yt")
-                    val twLink = documentSnapshot.getString("tw")
-                    val whatsappLink = documentSnapshot.getString("whatsapp")
-                    val mailLink = documentSnapshot.getString("mail")
-                    val instaLink = documentSnapshot.getString("ig")
-
-
-                    if (!fbLink.isNullOrEmpty()) {
-                        binding.facebook.setOnClickListener {
-                            try {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(fbLink))
-                                startActivity(intent)
-                            } catch (e: Exception) {
-                                Toast.makeText(mContext, e.message.toString(), Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                    if (!ytLink.isNullOrEmpty()) {
-                        binding.youtube.setOnClickListener {
-                            try {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ytLink))
-                                startActivity(intent)
-                            } catch (e: Exception) {
-                                Toast.makeText(mContext, e.message.toString(), Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                    if (!twLink.isNullOrEmpty()) {
-                        binding.twitter.setOnClickListener {
-                            try {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(twLink))
-                                startActivity(intent)
-                            } catch (e: Exception) {
-                                Toast.makeText(mContext, e.message.toString(), Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                    if (!whatsappLink.isNullOrEmpty()) {
-                        binding.whatsapp.setOnClickListener {
-                            try {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(whatsappLink))
-                                startActivity(intent)
-                            } catch (e: Exception) {
-                                Toast.makeText(mContext, e.message.toString(), Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                    if (!mailLink.isNullOrEmpty()) {
-                        binding.mail.setOnClickListener {
-                            try {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(mailLink))
-                                startActivity(intent)
-                            } catch (e: Exception) {
-                                Toast.makeText(mContext, e.message.toString(), Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                    if (!instaLink.isNullOrEmpty()) {
-                        binding.instagram.setOnClickListener {
-                            try {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(instaLink))
-                                startActivity(intent)
-                            } catch (e: Exception) {
-                                Toast.makeText(mContext, e.message.toString(), Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-
-
-
-
-
-                }
-            }.addOnFailureListener{
-                Toast.makeText(mContext, "Error While Opening Link", Toast.LENGTH_SHORT).show()
-            }
-
-
-
-
-
-
     }
+    private fun stopListeningForAnnouncements() {
+        announcementListener?.remove()
+    }
+
+
+    ///////////////// FUNCTION FOR LIVE LINKS //////////////////////////
+
+    private fun listenForSocialLinks() {
+        val socialLinksRef = db.collection(constants.SOCIAL_LINKS_COLLECTION)
+            .document("4o7GvF2Fyaf33gljZAqf")
+        socialLinksListener = socialLinksRef.addSnapshotListener { documentSnapshot, error ->
+            if (error != null) {
+                Toast.makeText(mContext, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                return@addSnapshotListener
+            }
+            if (documentSnapshot != null && documentSnapshot.exists()) {
+                val fbLink = documentSnapshot.getString("fb")
+                val ytLink = documentSnapshot.getString("yt")
+                val twLink = documentSnapshot.getString("tw")
+                val whatsappLink = documentSnapshot.getString("whatsapp")
+                val mailLink = documentSnapshot.getString("mail")
+                val instaLink = documentSnapshot.getString("ig")
+                if (!fbLink.isNullOrEmpty()) {
+                    binding.facebook.setOnClickListener {
+                        openLink(fbLink)
+                    }
+                }
+                if (!ytLink.isNullOrEmpty()) {
+                    binding.youtube.setOnClickListener {
+                        openLink(ytLink)
+                    }
+                }
+                if (!twLink.isNullOrEmpty()) {
+                    binding.twitter.setOnClickListener {
+                        openLink(twLink)
+                    }
+                }
+                if (!whatsappLink.isNullOrEmpty()) {
+                    binding.whatsapp.setOnClickListener {
+                        openLink(whatsappLink)
+                    }
+                }
+                if (!mailLink.isNullOrEmpty()) {
+                    binding.mail.setOnClickListener {
+                        openLink(mailLink)
+                    }
+                }
+                if (!instaLink.isNullOrEmpty()) {
+                    binding.instagram.setOnClickListener {
+                        openLink(instaLink)
+                    }
+                }
+            }
+        }
+    }
+    private fun stopListeningForSocialLinks() {
+        socialLinksListener?.remove()
+    }
+    private fun openLink(url: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(mContext, "Error While Opening Link: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }
