@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enfotrix.luckydoller.Adapter.BidAdapter
 import com.enfotrix.luckydoller.Constants
+import com.enfotrix.luckydoller.Models.Admin
 import com.enfotrix.luckydoller.Models.ModelBid
 import com.enfotrix.luckydoller.Models.ModelResult
 import com.enfotrix.luckydoller.Models.ModelUser
@@ -125,8 +126,6 @@ class ActivityNewBid : AppCompatActivity() {
         }
 
 
-
-
         binding.spGameCtg.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
@@ -218,7 +217,9 @@ class ActivityNewBid : AppCompatActivity() {
                 Toast.makeText(this@ActivityBid, "value is $positonInt", Toast.LENGTH_SHORT).show()*/
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
         })
 
 
@@ -234,7 +235,8 @@ class ActivityNewBid : AppCompatActivity() {
             binding.etBidNumber.text.toString(),
             binding.etBidAmount.text.toString(),
             "Active",
-            binding.etBidTransactionID.text.toString()
+            binding.etBidTransactionID.text.toString(),
+            "Pending"
             )
         )
         bids.sortByDescending { it.createdAt }
@@ -270,6 +272,7 @@ class ActivityNewBid : AppCompatActivity() {
             binding.spGameCtg.selectedItem.toString(),
             binding.spGameSubCtg.selectedItem.toString(),
             numberList,
+
             binding.etBidAmount.text.toString(),
             "Active",
             binding.etBidTransactionID.text.toString()
@@ -282,53 +285,16 @@ class ActivityNewBid : AppCompatActivity() {
 
 
         utils.startLoadingAnimation()
-
-        db.collection(constants.ADMIN_COLLECTION).get()
+        db.collection(constants.ADMIN_COLLECTION).document("Dg33Yix08jocNtRCPF2D").get()
             .addOnCompleteListener{
                 if(it.isSuccessful){
-                    var bidStatus:String=""
-                    for(admin in it.result){
-
-                        bidStatus= admin.getString("bidStatus").toString()
-
-                    }
-
-                    if(bidStatus=="Active"){
-
-
-                        saveDataToFirestore(bids)
-                        /*for(bid in bids){
-
-                            db.collection(constants.BIDS_COLLECTION).add(bid)
-                                .addOnCompleteListener{
-                                    if(it.isSuccessful){
-
-                                    }
-                                }
-                        }
-
-                        // t1
-                        Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(mContext, MainActivity::class.java))
-                        finish()
-                        utils.endLoadingAnimation()*/
-
-
-
-
-
-
-
-
-
-                    }
-                    else{
+                    val admin = it.result.toObject<Admin>()
+                    if(admin?.bidStatus.equals("Active")) saveDataToFirestore(bids)
+                    else {
+                        utils.endLoadingAnimation()
                         Toast.makeText(mContext, "Bidding has been closed by admin ", Toast.LENGTH_SHORT).show()
-
-                        ////////////////// Red Colour Validation Code For Status //////////////////////
-//                        val tvGameStatus = findViewById<TextView>(R.id.tvGameStatus)
-//                        tvGameStatus.setTextColor(ContextCompat.getColor(mContext, R.color.red))
                     }
+
 
 
                 }

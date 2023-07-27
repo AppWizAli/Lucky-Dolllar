@@ -1,12 +1,263 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".UI.ActivityLiveStream">
 
 
+    <TextView
+        android:id="@+id/tvServerResult"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-</LinearLayout>
+    <TextView
+        android:id   ="@+id/tvResult"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+    <ImageView
+        android:id="@+id/img1"
+        android:layout_width="wrap_content"
+        android:layout_height="140dp"
+        android:src="@drawable/logo_coped"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lay"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/img1"
+        android:orientation="vertical">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cd1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LIVE"
+                    android:textSize="20dp"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:elevation="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+
+                    <androidx.media3.ui.PlayerView
+                        android:id="@+id/palyerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        app:use_controller="false"
+                        app:show_buffering="when_playing"/>
+
+
+
+                    <VideoView
+                        android:id="@+id/videView"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"/>
+                    <TextView
+                        android:text="////LIVE Lucky Dollar.PK/////"
+                        android:id="@+id/tvInfo"
+                        android:layout_width="fill_parent"
+                        android:gravity="center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:textColor="@color/red_m"
+                        android:background="@color/primary"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:paddingLeft="15dip"
+                        android:paddingRight="15dip"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:freezesText="true"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lay2"
+        android:layout_below="@+id/lay"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/lay4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Earn money by watching"
+                    android:textSize="18dp"
+                    android:textColor="@color/secondary_m"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ویڈیو دیکھ کر پیسے کمائیں"
+                    android:textSize="20dp"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:drawableTint="@color/primary" />
+
+
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_arrow_forward_24"
+                android:tint="@color/primary"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/lay4"
+                android:layout_centerVertical="true"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:lottie_autoPlay="true"
+                android:layout_marginRight="20dp"
+                app:lottie_loop="true"
+                android:layout_alignParentRight="true"
+                app:lottie_rawRes="@raw/youtube"/>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lay2"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/lay5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="For more details and booking"
+                    android:textSize="18dp"
+                    android:textColor="#CD56DA"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    />
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="گیم بکنگ کے لیے"
+                    android:textSize="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+
+                    android:layout_centerVertical="true"
+                    android:drawableTint="@color/primary" />
+
+
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_arrow_forward_24"
+                android:tint="@color/primary"
+                android:layout_toRightOf="@+id/lay5"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/youtube"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:lottie_autoPlay="true"
+                android:layout_marginRight="20dp"
+                app:lottie_loop="true"
+                android:layout_alignParentRight="true"
+                app:lottie_rawRes="@raw/whatsapp"/>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

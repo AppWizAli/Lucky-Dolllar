@@ -11,6 +11,7 @@ class ModelBid  @JvmOverloads constructor(
     var amount: String = "",
     var status : String = "",
     var transactionID: String = "",
+    var approve: String = "", //Pending
     var result: String = "",
     var id: String = "",
     val createdAt: Timestamp = Timestamp.now() // Creation timestamp

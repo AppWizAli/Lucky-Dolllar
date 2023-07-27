@@ -60,6 +60,9 @@ class MainActivity : AppCompatActivity() {
         binding.cardNewBid.setOnClickListener{
             startActivity(Intent(mContext, ActivityNewBid::class.java))
         }
+        binding.cardLiveStream.setOnClickListener{
+            startActivity(Intent(mContext, ActivityLiveStream::class.java))
+        }
 
     }
 

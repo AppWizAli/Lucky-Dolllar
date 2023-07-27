@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.view.get
 import androidx.core.view.isEmpty
 import com.enfotrix.luckydoller.Constants
+import com.enfotrix.luckydoller.Models.Admin
 import com.enfotrix.luckydoller.Models.ModelUser
 import com.enfotrix.luckydoller.SharedPrefManager
 import com.enfotrix.luckydoller.Utils
@@ -48,7 +49,7 @@ class ActivityLogin : AppCompatActivity() {
             }
             else{
             login(
-            utils.cnicFormate(binding.etCNIC.text.toString()),
+                utils.cnicFormate(binding.etCNIC.text.toString()),
             binding.etPassword.text.toString())
             }
         }
@@ -56,45 +57,56 @@ class ActivityLogin : AppCompatActivity() {
         binding.tvSignUp.setOnClickListener {
 
             startActivity(Intent(mContext,ActivitySignup::class.java))
-            finish()
         }
 
     }
 
     fun login(cnic: String, pin: String) {
-        db.collection(constants.USERS_COLLECTION).whereEqualTo(constants.USER_CNIC, cnic)
+
+        utils.startLoadingAnimation()
+        db.collection(constants.USERS_COLLECTION).whereEqualTo(constants.USER_CNIC,cnic)
             .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    var modelUser: ModelUser? = null
-                    for (document in task.result) {
-                        modelUser = document.toObject(ModelUser::class.java)
-                        modelUser.id = document.id
-                    }
-                    if (modelUser != null) {
-                        if (modelUser.pin == pin) {
-                            sharedPrefManager.saveLoginAuth(modelUser, modelUser.id, true)
-                            startActivity(
-                                Intent(mContext, MainActivity::class.java)
-                                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                            )
-                            finish()
-                        } else {
-                            Toast.makeText(mContext, "Incorrect PIN", Toast.LENGTH_SHORT).show()
+            .addOnCompleteListener{ task->
+                if(task.isSuccessful){
+                    utils.endLoadingAnimation()
+                    if(task.result.size()>0){
+
+
+                        var modelUser:ModelUser?=null
+                        for(document in task.result){
+                            modelUser=document.toObject(ModelUser::class.java)
+                            modelUser.id=document.id
                         }
-                    } else {
-                        Toast.makeText(mContext, "CNIC Incorrect", Toast.LENGTH_LONG).show()
+
+                        //Toast.makeText(mContext, pin+" "+modelUser?.pin, Toast.LENGTH_SHORT).show()
+                        if(modelUser?.pin.equals(pin)){
+
+
+                            if (modelUser != null) {
+                                sharedPrefManager.saveLoginAuth(modelUser,modelUser.id, true)
+                            }
+
+                            //Toast.makeText(mContext, "Login Successfull", Toast.LENGTH_SHORT).show()
+
+
+                            startActivity(Intent(mContext,MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
+                            finish()
+
+
+                        }
+                        else Toast.makeText(mContext, "Incorrect PIN", Toast.LENGTH_SHORT).show()
+
                     }
-                } else {
-                    Toast.makeText(mContext, "Error: ${task.exception?.message}", Toast.LENGTH_LONG)
-                        .show()
+                    else Toast.makeText(mContext,"CNIC Incorrect",Toast.LENGTH_LONG).show()
+
+
+
+
+
                 }
+
             }
-            .addOnFailureListener{
-                Toast.makeText(mContext, "Error", Toast.LENGTH_SHORT).show()
-            }
+
+
     }
-
-
-
 }
