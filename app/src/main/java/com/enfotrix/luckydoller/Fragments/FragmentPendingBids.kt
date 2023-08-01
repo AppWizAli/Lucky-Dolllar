@@ -59,7 +59,6 @@ class FragmentPendingBids : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Set the binding to null when the view is destroyed to avoid leaks
         _binding = null
     }
 
@@ -83,7 +82,7 @@ class FragmentPendingBids : Fragment() {
                     bids.sortByDescending { it.createdAt }
                     binding.rvPendingBids.adapter = BidAdapter(bids)
 
-                    Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext, "loading", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(mContext, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }

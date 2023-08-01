@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import com.enfotrix.luckydoller.Constants
 import com.enfotrix.luckydoller.R
 import com.enfotrix.luckydoller.SharedPrefManager
@@ -26,7 +27,7 @@ class ActivitySplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-
+        supportActionBar?.hide()
         mContext= this@ActivitySplashScreen;
         utils = Utils(mContext)
         constants= Constants()

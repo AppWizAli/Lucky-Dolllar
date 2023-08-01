@@ -54,6 +54,7 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
         binding = ActivityBidBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mContext=this@ActivityBid
+        supportActionBar?.hide()
         utils = Utils(mContext)
         constants= Constants()
         sharedPrefManager = SharedPrefManager(mContext)

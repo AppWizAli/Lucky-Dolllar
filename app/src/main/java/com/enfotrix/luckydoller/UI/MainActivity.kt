@@ -1,9 +1,13 @@
 package com.enfotrix.luckydoller.UI
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.view.Window
+import android.view.animation.LinearInterpolator
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +38,9 @@ class MainActivity : AppCompatActivity() {
     private var announcementListener: ListenerRegistration? = null
     private var socialLinksListener: ListenerRegistration? = null
 
+    private lateinit var marqueeRunnable: Runnable
+    private val handler = Handler()
+
 
 
 
@@ -42,14 +49,30 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+
         setContentView(binding.root)
+        supportActionBar?.hide()
         mContext=this@MainActivity
         utils = Utils(mContext)
         constants= Constants()
         sharedPrefManager = SharedPrefManager(mContext)
 
 
-        title = "KotlinApp"
+
+
+        val textView1: TextView = findViewById(R.id.tvMarqee)
+
+        // Set the text for marquee
+        val marqueeText = "ANNOUNCEMENT !!"
+        textView1.text = marqueeText
+
+        marqueeRunnable = Runnable {
+            startMarquee(textView1)
+        }
+
+
+
         val text: String =
             "// LIVE Lucky Dollar.PK //// LIVE Lucky Dollar.PK //// LIVE LUCKY DOLLAR.PK//"
         val textView: TextView = findViewById(R.id.tvAnnouncement)
@@ -177,5 +200,39 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(mContext, "Error While Opening Link: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
+
+
+    private fun startMarquee(textView: TextView) {
+        textView.post {
+            val textViewWidth = textView.width
+            val textWidth = textView.paint.measureText(textView.text.toString())
+
+            val animator = ValueAnimator.ofFloat(-textWidth, textViewWidth.toFloat())
+            animator.addUpdateListener {
+                val value = it.animatedValue as Float
+                textView.translationX = value
+            }
+            animator.repeatMode = ValueAnimator.RESTART
+            animator.repeatCount = ValueAnimator.INFINITE
+            animator.interpolator = LinearInterpolator()
+            animator.duration = (textWidth / textViewWidth * 20000).toLong() // Adjust the scrolling speed here
+            animator.start()
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(marqueeRunnable)
+    }
+
+
+
+
+
+
+
+
+
 
 }

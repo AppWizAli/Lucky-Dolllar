@@ -85,7 +85,7 @@ class FragmentActiveBids : Fragment() {
                     bids.sortByDescending { it.createdAt }
                     binding.rvActiveBids.adapter = BidAdapter(bids)
 
-                    Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext, "loading", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(
                         mContext,

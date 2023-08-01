@@ -63,6 +63,7 @@ class ActivityNewBid : AppCompatActivity() {
         binding = ActivityNewBidBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mContext=this@ActivityNewBid
+        supportActionBar?.hide()
         utils = Utils(mContext)
         constants= Constants()
         sharedPrefManager = SharedPrefManager(mContext)
@@ -106,6 +107,11 @@ class ActivityNewBid : AppCompatActivity() {
                 else if (bidAmount % 5 != 0.0) {
                     binding.etBidAmount.setError("Bid Amount must be a multiple of 5")
                 }
+                else if (binding.etBidTransactionID.length()<4)
+                {
+                    binding.etBidTransactionID.setError("Enter correct transaction Id")
+                }
+
                 else {
                     if(numberCounter==binding.etBidNumber.text.length) addBid()
                     else Toast.makeText(mContext, "Incorrect number", Toast.LENGTH_SHORT).show()
@@ -348,7 +354,9 @@ class ActivityNewBid : AppCompatActivity() {
 
         // t1
         utils.endLoadingAnimation()
-        Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
+        runOnUiThread {
+            Toast.makeText(this@ActivityNewBid, "Saved", Toast.LENGTH_SHORT).show()
+        }
         startActivity(Intent(mContext, MainActivity::class.java))
         finish()
     }

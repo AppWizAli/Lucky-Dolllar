@@ -78,7 +78,7 @@ class FragmentClosedBids : Fragment() {
                     bids.sortByDescending { it.createdAt }
                     binding.rvClosedBids.adapter = BidAdapter(bids)
 
-                    Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext, "loading", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(mContext, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }

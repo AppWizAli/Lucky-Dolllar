@@ -54,6 +54,7 @@ class ActivityResult : AppCompatActivity() {
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mContext=this@ActivityResult
+        supportActionBar?.hide()
         utils = Utils(mContext)
         constants= Constants()
         sharedPrefManager = SharedPrefManager(mContext)

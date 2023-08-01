@@ -10,6 +10,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.media3.common.MediaItem
@@ -79,6 +81,8 @@ class ActivityLiveStream : AppCompatActivity() {
           super.onCreate(savedInstanceState)
         binding = ActivityLiveStreamBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
         mContext=this@ActivityLiveStream
         utils = Utils(mContext)
         constants= Constants()
@@ -141,7 +145,7 @@ class ActivityLiveStream : AppCompatActivity() {
             }*/
 
 
-        val colorFrom = resources.getColor(R.color.system_primary_light)
+        val colorFrom = resources.getColor(R.color.system_primary_fixed)
         val colorTo = resources.getColor(R.color.holo_blue_dark)
         val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
         colorAnimation.addUpdateListener { animator -> binding.tv1.setTextColor(animator.animatedValue as Int) }

@@ -11,6 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LUCKY DOLLAR"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardGetResult"
@@ -99,6 +110,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
 
@@ -139,7 +151,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="30dp"
+                    android:textSize="25dp"
                     android:textColor="@color/primary"
                     android:text="1st"
                     android:layout_marginLeft="30dp"
@@ -334,7 +346,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="30dp"
+                    android:textSize="25dp"
                     android:text="1st"
                     android:textColor="@color/primary"
                     android:layout_marginLeft="30dp"
