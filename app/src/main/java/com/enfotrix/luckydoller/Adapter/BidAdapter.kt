@@ -20,6 +20,7 @@ class BidAdapter( val data: List<ModelBid>) : RecyclerView.Adapter<BidAdapter.Vi
 
     var constant= Constants()
 
+    //////////////fgfgfsggf./////////////////
     interface OnItemClickListener {
         fun onItemClick(ModelBid: ModelBid)
         fun onDeleteClick(ModelBid: ModelBid)
