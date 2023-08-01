@@ -27,7 +27,6 @@ class ActivityLogin : AppCompatActivity() {
         private lateinit var constants: Constants
         private lateinit var sharedPrefManager : SharedPrefManager
 
-
         private var db= Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {

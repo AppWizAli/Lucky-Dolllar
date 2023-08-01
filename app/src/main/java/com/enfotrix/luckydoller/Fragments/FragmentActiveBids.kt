@@ -21,6 +21,7 @@ import com.enfotrix.luckydoller.databinding.FragmentActiveBidsBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+
 class FragmentActiveBids : Fragment() {
 
     // Use proper data binding variable and inflate the layout
@@ -32,27 +33,26 @@ class FragmentActiveBids : Fragment() {
     private lateinit var modelUser: ModelUser
     private lateinit var modelBid: ModelBid
     private lateinit var constants: Constants
-    private lateinit var sharedPrefManager : SharedPrefManager
+    private lateinit var sharedPrefManager: SharedPrefManager
 
 
-    private var db= Firebase.firestore
+    private var db = Firebase.firestore
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentActiveBidsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
-
-        mContext=requireContext()
+        mContext = requireContext()
         utils = Utils(mContext)
-        constants= Constants()
+        constants = Constants()
         sharedPrefManager = SharedPrefManager(mContext)
 
         binding.rvActiveBids.layoutManager = LinearLayoutManager(mContext)
-
-
-
         getResult()
 
         return root
@@ -66,12 +66,12 @@ class FragmentActiveBids : Fragment() {
     }
 
 
-
     private fun getResult() {
         utils.startLoadingAnimation()
 
-        db.collection(constants.BIDS_COLLECTION).whereEqualTo("approve","Approved")
+        db.collection(constants.BIDS_COLLECTION).whereEqualTo("approve", "Approved")
             .whereEqualTo("status", "Active")
+            .whereEqualTo("userID",sharedPrefManager.getToken())
             .get()
             .addOnCompleteListener { task ->
                 utils.endLoadingAnimation()
@@ -87,15 +87,17 @@ class FragmentActiveBids : Fragment() {
 
                     Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(mContext, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        mContext,
+                        "Error: ${task.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
-            .addOnFailureListener{
+            .addOnFailureListener {
                 Toast.makeText(mContext, "Error While Getting Result", Toast.LENGTH_SHORT).show()
             }
     }
-
-
 
 
 }

@@ -65,6 +65,7 @@ class FragmentClosedBids : Fragment() {
 
         db.collection(constants.BIDS_COLLECTION).whereEqualTo("approve","Approved")
             .whereEqualTo("status", "Closed")
+            .whereEqualTo("userID",sharedPrefManager.getToken())
             .get()
             .addOnCompleteListener { task ->
                 utils.endLoadingAnimation()

@@ -68,8 +68,8 @@ class FragmentPendingBids : Fragment() {
 
     private fun getResult() {
         utils.startLoadingAnimation()
-
         db.collection(constants.BIDS_COLLECTION).whereEqualTo("approve","Pending")
+            .whereEqualTo("userID",sharedPrefManager.getToken())
             .get()
             .addOnCompleteListener { task ->
                 utils.endLoadingAnimation()

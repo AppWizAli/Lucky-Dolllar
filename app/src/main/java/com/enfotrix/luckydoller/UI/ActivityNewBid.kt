@@ -227,12 +227,15 @@ class ActivityNewBid : AppCompatActivity() {
 
     private fun addBid() {
 
+        val token= sharedPrefManager.getToken()
 
         bids.add( ModelBid(
-            sharedPrefManager.getToken(),
+
+            token,
             binding.spGameCtg.selectedItem.toString(),
             binding.spGameSubCtg.selectedItem.toString(),
             binding.etBidNumber.text.toString(),
+
             binding.etBidAmount.text.toString(),
             "Active",
             binding.etBidTransactionID.text.toString(),

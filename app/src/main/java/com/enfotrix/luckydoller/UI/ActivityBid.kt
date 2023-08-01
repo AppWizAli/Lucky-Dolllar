@@ -69,11 +69,9 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
         gameFirstSubCTG.add("آکرہ")
         gameFirstSubCTG.add("ٹنڈولا")
         gameFirstSubCTG.add("پنگہورا")
-
         gameSecondSubCTG.add("آکرہ")
         gameSecondSubCTG.add("ٹنڈولا")
         gameSecondSubCTG.add("پنگہورا")
-
     }
 
 
@@ -224,7 +222,7 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
                 etBidNumber.text.toString(),
                 etBidAmount.text.toString(),
                 "Active")
-            saveBid(modelBid)*/
+                saveBid(modelBid)*/
 
         }
 
