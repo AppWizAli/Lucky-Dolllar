@@ -97,6 +97,4 @@ public class Constants  {
     public var FROM_APPROVED_INVESTMENT_REQ= "FragmentApprovedInvestmentReq"
 
 
-
-
 }

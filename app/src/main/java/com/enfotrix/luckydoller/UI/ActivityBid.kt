@@ -52,7 +52,7 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBidBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding.root)              //initialization of the bojects of the other classes
         mContext=this@ActivityBid
         supportActionBar?.hide()
         utils = Utils(mContext)

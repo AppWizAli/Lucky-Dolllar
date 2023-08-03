@@ -34,10 +34,8 @@ class ActivitySignup : AppCompatActivity() {
 
         binding.tvLogin.setOnClickListener {
             startActivity(
-                Intent(
-                    mContext,
-                    ActivityLogin::class.java
-                ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                Intent(mContext, ActivityLogin::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             )
             finish()
         }
@@ -55,22 +53,19 @@ class ActivitySignup : AppCompatActivity() {
 
             if (TextUtils.isEmpty(binding.etFirstName.text.toString())) {
                 binding.etFirstName.setError("Enter Your Name")
-            }
-            else if(!isNameValid(binding.etFirstName.text.toString()))
-            {
+            } else if (!isNameValid(binding.etFirstName.text.toString())) {
                 binding.etFirstName.setError("Enter valid name ")
-            }
-
-            else if (TextUtils.isEmpty(binding.etLastName.text.toString())) {
+            } else if (TextUtils.isEmpty(binding.etLastName.text.toString())) {
                 binding.etLastName.setError("Enter Father Name")
-            }
-            else if(!isNameValid(binding.etLastName.text.toString()))
-            {
+            } else if (!isNameValid(binding.etLastName.text.toString())) {
                 binding.etLastName.setError("Enter valid name ")
-            }
-            else if (TextUtils.isEmpty(binding.etCNIC.text.toString())) {
+            } else if (TextUtils.isEmpty(binding.etCNIC.text.toString())) {
                 binding.etCNIC.setError("Enter CNIC")
             } else if (binding.etCNIC.text.toString().length < 13) {
+                binding.etCNIC.setError("Invalid CNIC")
+            }
+
+            else if (!isCnicValid(binding.etCNIC.text.toString())) {
                 binding.etCNIC.setError("Invalid CNIC")
             } else if (TextUtils.isEmpty(binding.etPhone.text.toString())) {
                 binding.etPhone.setError("Enter Phone Number")
@@ -79,7 +74,7 @@ class ActivitySignup : AppCompatActivity() {
             } else if (TextUtils.isEmpty(binding.etPassword.text.toString())) {
                 binding.etPassword.setError("Enter Your Pin")
             } else if (!isPasswordValid(binding.etPassword.text.toString())) {
-                binding.etPassword.setError("Enter Strong password ")
+                binding.etPassword.setError("Passeord should be of 6 digits")
             } else {
                 modelUser = ModelUser(
                     utils.cnicFormate(binding.etCNIC.text.toString()),
@@ -135,30 +130,37 @@ class ActivitySignup : AppCompatActivity() {
     }
 
     fun isPasswordValid(password: String): Boolean {
-         var flag=false
-        if(password.length ==6 )
-            flag=true
-          return flag
+        var flag = false
+        if (password.length == 6)
+            flag = true
+        return flag
     }
-
 
 
     fun isNameValid(name: String): Boolean {
         // Rule 1: Name length should be between 3 and 17 characters (inclusive)
-        if (name.length < 3 || name.length > 17) {
+        if (name.length < 3 && name.length < 17) {
             return false
         }
 
         // Rule 2: Name should contain only English alphabets (a-z or A-Z)
-        val alphabetsRegex = Regex("^[a-zA-Z]+$")
+        val alphabetsRegex = Regex("^[a-zA-Z ]+$")
         if (!name.matches(alphabetsRegex)) {
             return false
         }
+
 
         // If all rules are satisfied, the name is valid
         return true
     }
 
+    fun isCnicValid(cnic: String): Boolean {
+        var flag = true
+        if (cnic.all { it == '0' }) {
+            flag = false
+        }
+        return flag
+    }
 
 
 }

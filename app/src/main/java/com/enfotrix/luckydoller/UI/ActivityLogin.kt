@@ -69,46 +69,43 @@ class ActivityLogin : AppCompatActivity() {
         utils.startLoadingAnimation()
         db.collection(constants.USERS_COLLECTION).whereEqualTo(constants.USER_CNIC,cnic)
             .get()
-            .addOnCompleteListener{ task->
-                if(task.isSuccessful){
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
                     utils.endLoadingAnimation()
-                    if(task.result.size()>0){
+                    if (task.result.size() > 0) {
 
 
-                        var modelUser:ModelUser?=null
-                        for(document in task.result){
-                            modelUser=document.toObject(ModelUser::class.java)
-                            modelUser.id=document.id
+                        var modelUser: ModelUser? = null
+                        for (document in task.result) {
+                            modelUser = document.toObject(ModelUser::class.java)
+                            modelUser.id = document.id
                         }
 
                         //Toast.makeText(mContext, pin+" "+modelUser?.pin, Toast.LENGTH_SHORT).show()
-                        if(modelUser?.pin.equals(pin)){
+                        if (modelUser?.pin.equals(pin)) {
 
 
                             if (modelUser != null) {
-                                sharedPrefManager.saveLoginAuth(modelUser,modelUser.id, true)
+                                sharedPrefManager.saveLoginAuth(modelUser, modelUser.id, true)
                             }
 
                             //Toast.makeText(mContext, "Login Successfull", Toast.LENGTH_SHORT).show()
 
-                            startActivity(Intent(mContext,MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
+                            startActivity(
+                                Intent(
+                                    mContext,
+                                    MainActivity::class.java
+                                ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            )
                             finish()
 
+                        } else Toast.makeText(mContext, "Incorrect PIN", Toast.LENGTH_SHORT).show()
 
-                        }
-                        else Toast.makeText(mContext, "Incorrect PIN", Toast.LENGTH_SHORT).show()
-
-                    }
-                    else Toast.makeText(mContext,"CNIC Incorrect",Toast.LENGTH_LONG).show()
-
-
-
-
+                    } else Toast.makeText(mContext, "CNIC Incorrect", Toast.LENGTH_LONG).show()
 
                 }
 
             }
-
-
     }
+
 }

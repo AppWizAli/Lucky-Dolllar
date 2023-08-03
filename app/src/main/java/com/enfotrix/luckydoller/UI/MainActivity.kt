@@ -33,18 +33,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var constants: Constants
     private lateinit var sharedPrefManager : SharedPrefManager
 
-
-
     private var announcementListener: ListenerRegistration? = null
     private var socialLinksListener: ListenerRegistration? = null
-
-    private lateinit var marqueeRunnable: Runnable
-    private val handler = Handler()
-
-
-
-
-
     private var db= Firebase.firestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,19 +47,14 @@ class MainActivity : AppCompatActivity() {
         utils = Utils(mContext)
         constants= Constants()
         sharedPrefManager = SharedPrefManager(mContext)
-
+        listenForAnnouncements()
 
 
 
         val textView1: TextView = findViewById(R.id.tvMarqee)
-
-        // Set the text for marquee
         val marqueeText = "ANNOUNCEMENT !!"
         textView1.text = marqueeText
 
-        marqueeRunnable = Runnable {
-            startMarquee(textView1)
-        }
 
 
 
@@ -94,7 +79,6 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-
         binding.cardResults.setOnClickListener{
             startActivity(Intent(mContext, ActivityResult::class.java))
         }
@@ -115,7 +99,6 @@ class MainActivity : AppCompatActivity() {
     private fun listenForAnnouncements() {
         val adminAnnouncementRef = db.collection(constants.ADMIN_COLLECTION)
             .document("Dg33Yix08jocNtRCPF2D")
-
         announcementListener = adminAnnouncementRef.addSnapshotListener { documentSnapshot, error ->
             if (error != null) {
                 Toast.makeText(mContext, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
@@ -202,29 +185,12 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun startMarquee(textView: TextView) {
-        textView.post {
-            val textViewWidth = textView.width
-            val textWidth = textView.paint.measureText(textView.text.toString())
-
-            val animator = ValueAnimator.ofFloat(-textWidth, textViewWidth.toFloat())
-            animator.addUpdateListener {
-                val value = it.animatedValue as Float
-                textView.translationX = value
-            }
-            animator.repeatMode = ValueAnimator.RESTART
-            animator.repeatCount = ValueAnimator.INFINITE
-            animator.interpolator = LinearInterpolator()
-            animator.duration = (textWidth / textViewWidth * 20000).toLong() // Adjust the scrolling speed here
-            animator.start()
-        }
-    }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-        handler.removeCallbacks(marqueeRunnable)
-    }
+
+
+
+
 
 
 

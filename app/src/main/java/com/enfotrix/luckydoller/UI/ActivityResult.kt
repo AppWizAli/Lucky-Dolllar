@@ -59,14 +59,9 @@ class ActivityResult : AppCompatActivity() {
         constants= Constants()
         sharedPrefManager = SharedPrefManager(mContext)
 
-
-
-
-
         setData()
 
         binding.btnGetResult.setOnClickListener { getResult() }
-
 
     }
 
@@ -138,9 +133,6 @@ class ActivityResult : AppCompatActivity() {
                     )
                     binding.spGameSubCtg.adapter = adapterGameSubCTG
                 }
-
-
-
 
             }
 
@@ -242,7 +234,6 @@ class ActivityResult : AppCompatActivity() {
         binding.tvESecondNumber.text=""
         binding.tvEThirdNumber.text=""
         binding.tvEFourthNumber.text=""
-
 
         utils.startLoadingAnimation()
         db.collection(constants.RESULT_COLLECTION)

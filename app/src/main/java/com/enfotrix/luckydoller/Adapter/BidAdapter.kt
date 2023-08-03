@@ -20,7 +20,6 @@ class BidAdapter( val data: List<ModelBid>) : RecyclerView.Adapter<BidAdapter.Vi
 
     var constant= Constants()
 
-    //////////////fgfgfsggf./////////////////
     interface OnItemClickListener {
         fun onItemClick(ModelBid: ModelBid)
         fun onDeleteClick(ModelBid: ModelBid)
@@ -36,14 +35,11 @@ class BidAdapter( val data: List<ModelBid>) : RecyclerView.Adapter<BidAdapter.Vi
 
         fun bind(modelBid: ModelBid) {
 
-
-
             itemBinding.tvGameBidAmount.text=modelBid.amount
             itemBinding.tvGameBidNumber.text=modelBid.number
             itemBinding.tvGameCtg.text=modelBid.gameCtg
             itemBinding.tvGameDate.text= SimpleDateFormat("hh:mm a dd/MM/yy", Locale.getDefault()).format(modelBid.createdAt.toDate()).toString()
             itemBinding.tvGameResult.text=modelBid.result
-            //itemBinding.tvGameStatus.text=modelBid.status
             itemBinding.tvGameSubCtg.text=modelBid.gameSubCtg
 
 
