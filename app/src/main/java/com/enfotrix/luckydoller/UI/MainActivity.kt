@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mContext: Context
     private lateinit var binding : ActivityMainBinding
     private lateinit var modelUser: ModelUser
+    private lateinit var phoneNumber:String
+    private lateinit var emailAddress:String
     private lateinit var constants: Constants
     private lateinit var sharedPrefManager : SharedPrefManager
 
@@ -92,6 +94,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(mContext, ActivityLiveStream::class.java))
         }
 
+
+        binding.whatsapp.setOnClickListener {
+                      openWhatsApp()
+                   }
+
+        binding.mail.setOnClickListener {
+                      openEmail()
+                    }
+
     }
 
 
@@ -136,8 +147,8 @@ class MainActivity : AppCompatActivity() {
                 val fbLink = documentSnapshot.getString("fb")
                 val ytLink = documentSnapshot.getString("yt")
                 val twLink = documentSnapshot.getString("tw")
-                val whatsappLink = documentSnapshot.getString("whatsapp")
-                val mailLink = documentSnapshot.getString("mail")
+                phoneNumber = documentSnapshot.getString("whatsapp").toString()
+                emailAddress = documentSnapshot.getString("mail").toString()
                 val instaLink = documentSnapshot.getString("ig")
                 if (!fbLink.isNullOrEmpty()) {
                     binding.facebook.setOnClickListener {
@@ -154,16 +165,16 @@ class MainActivity : AppCompatActivity() {
                         openLink(twLink)
                     }
                 }
-                if (!whatsappLink.isNullOrEmpty()) {
-                    binding.whatsapp.setOnClickListener {
-                        openLink(whatsappLink)
-                    }
-                }
-                if (!mailLink.isNullOrEmpty()) {
-                    binding.mail.setOnClickListener {
-                        openLink(mailLink)
-                    }
-                }
+//                if (!whatsappLink.isNullOrEmpty()) {
+//                    binding.whatsapp.setOnClickListener {
+//                        openLink(whatsappLink)
+//                    }
+             //   }
+//                if (!mailLink.isNullOrEmpty()) {
+//                    binding.mail.setOnClickListener {
+//                        openLink(mailLink)
+//                    }
+//                }
                 if (!instaLink.isNullOrEmpty()) {
                     binding.instagram.setOnClickListener {
                         openLink(instaLink)
@@ -189,15 +200,26 @@ class MainActivity : AppCompatActivity() {
 
 
 
+                ///FOR OPENING OF WHATSAPP ////
+    private fun openWhatsApp() {
+//        val phoneNumber = "+923036307725" // Replace with the phone number you want to chat with
+        val message = "Hello, this is a custom message" // Replace with the message you want to send
 
+        val uri = Uri.parse("https://api.whatsapp.com/send?phone=$phoneNumber&text=$message")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+    }
 
+    ///FOR OPENING OF Email ////
 
+    private fun openEmail() {
+        val subject = "Hello, this is the email subject" // Replace with the email subject
+        val message = "This is the email message body" // Replace with the email message body
 
-
-
-
-
-
+        val uri = Uri.parse("mailto:$emailAddress?subject=$subject&body=$message")
+        val intent = Intent(Intent.ACTION_SENDTO, uri)
+        startActivity(intent)
+    }
 
 
 
