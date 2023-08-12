@@ -1,6 +1,7 @@
 package com.enfotrix.luckydoller.UI
 
 import android.animation.ValueAnimator
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -8,9 +9,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.Window
 import android.view.animation.LinearInterpolator
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.enfotrix.luckydoller.Constants
 import com.enfotrix.luckydoller.Models.ModelUser
 import com.enfotrix.luckydoller.R
@@ -67,18 +70,15 @@ class MainActivity : AppCompatActivity() {
         textView.isSelected = true
 
 
-
-
         //listenForAnnouncements()
         listenForSocialLinks()
 
 
         binding.cdLogout.setOnClickListener {
-            sharedPrefManager.logOut(isLoggedOut = false)
-            startActivity(Intent(mContext, ActivityLogin::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            })
-            finish()
+
+
+                showLogoutDialog()
+
         }
 
         binding.cardResults.setOnClickListener{
@@ -198,8 +198,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
                 ///FOR OPENING OF WHATSAPP ////
     private fun openWhatsApp() {
 //        val phoneNumber = "+923036307725" // Replace with the phone number you want to chat with
@@ -220,6 +218,32 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_SENDTO, uri)
         startActivity(intent)
     }
+
+    private fun showLogoutDialog()
+    {
+        val dialog = Dialog(mContext)
+        dialog.setContentView(R.layout.dialog_for_logout)
+        dialog.setCancelable(true)
+        val textTitle = dialog.findViewById<TextView>(R.id.textTitle)
+        val buttonYes = dialog.findViewById<Button>(R.id.buttonYes)
+        val buttonNo = dialog.findViewById<Button>(R.id.buttonNo)
+        buttonYes.setOnClickListener {
+
+            sharedPrefManager.logOut(isLoggedOut = false)
+            startActivity(Intent(mContext, ActivityLogin::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            })
+            finish()
+        }
+
+        buttonNo.setOnClickListener {
+            // Handle the "No" button click (cancel logout)
+            dialog.dismiss()
+        }
+        dialog.show()
+
+    }
+
 
 
 

@@ -87,7 +87,8 @@ class ActivityNewBid : AppCompatActivity() {
         val adapterGameCTG: ArrayAdapter<String> = ArrayAdapter<String>(applicationContext, R.layout.item_spinner_gamectg, gameCTG)
         binding.spGameCtg.adapter= adapterGameCTG
 
-
+        var amount=binding.ammount.text.toString()
+        var Ammount=amount.substring(0,1)
         binding.btnBid.setOnClickListener {
             if (TextUtils.isEmpty(binding.etBidNumber.text.toString())) {
                 binding.etBidNumber.setError("Enter Bid Number")
@@ -104,12 +105,20 @@ class ActivityNewBid : AppCompatActivity() {
                 if (bidAmount == 0.0) {
                     binding.etBidAmount.setError("Bid Amount cannot be zero")
                 }
+                else if(Ammount=="0")
+                {
+
+                }
                 else if (bidAmount % 5 != 0.0) {
                     binding.etBidAmount.setError("Bid Amount must be a multiple of 5")
                 }
                 else if (binding.etBidTransactionID.length()<4)
                 {
                     binding.etBidTransactionID.setError("Enter correct transaction Id")
+                }
+                else if (Ammount=="0")
+                {
+                    binding.ammount.setError("Ammount should not start from 0")
                 }
 
                 else {

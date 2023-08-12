@@ -8,19 +8,16 @@
     android:orientation="vertical"
     tools:context=".UI.ActivityLiveStream">
 
-
     <TextView
         android:id="@+id/tvServerResult"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
     <TextView
         android:id   ="@+id/tvResult"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
 
 
     <ImageView
@@ -74,29 +71,46 @@
                         app:show_buffering="when_playing"/>
 
 
-
                     <VideoView
                         android:id="@+id/videView"
                         android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="250dp"/>
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvInfo"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:gravity="center_horizontal"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:singleLine="true"-->
+<!--                        android:ellipsize="marquee"-->
+<!--                        android:textColor="@color/red_m"-->
+<!--                        android:background="@color/primary"-->
+<!--                        android:marqueeRepeatLimit="marquee_forever"-->
+<!--                        android:scrollHorizontally="true"-->
+<!--                        android:paddingLeft="15dip"-->
+<!--                        android:paddingRight="15dip"-->
+<!--                        android:focusable="true"-->
+<!--                        android:focusableInTouchMode="true"-->
+<!--                       />-->
                     <TextView
-                        android:text="////LIVE Lucky Dollar.PK/////"
                         android:id="@+id/tvInfo"
-                        android:layout_width="fill_parent"
-                        android:gravity="center_horizontal"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
+                        android:layout_centerInParent="true"
                         android:ellipsize="marquee"
-                        android:textColor="@color/red_m"
-                        android:background="@color/primary"
+                        android:fadingEdge="horizontal"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
-                        android:paddingLeft="15dip"
-                        android:paddingRight="15dip"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:freezesText="true"/>
+                        android:singleLine="true"
+                        android:text="hussain"
+                        android:textIsSelectable="true"
+                        android:textColor="@color/red_m"
+                        android:textAlignment="center"
+                        android:background="@color/primary"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
                 </LinearLayout>
 
             </RelativeLayout>

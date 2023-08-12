@@ -12,6 +12,7 @@ import android.os.Handler
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.media3.common.MediaItem
@@ -39,6 +40,11 @@ import java.util.TimeZone
 
 class ActivityLiveStream : AppCompatActivity() {
 
+
+    private lateinit var first:String
+    private lateinit var second:String
+    private lateinit var third:String
+    private lateinit var fourth:String
 
     private val playWhenReady = true
     private val playbackPosition: Long = 0
@@ -78,94 +84,206 @@ class ActivityLiveStream : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-          super.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
         binding = ActivityLiveStreamBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        mContext=this@ActivityLiveStream
+        mContext = this@ActivityLiveStream
         utils = Utils(mContext)
-        constants= Constants()
+        constants = Constants()
         sharedPrefManager = SharedPrefManager(mContext)
+//        getResults()
 
-
-
-        listenForSocialLinks()
-
-
-
+        /////get results here firstly    / /
 
 
 
 
+        db.collection("tempResult").document("Dg33Yix08jocNtRCPF2D").get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val documentSnapshot = task.result
 
-        db.collection("tempResult").document("Dg33Yix08jocNtRCPF2D")
-            .addSnapshotListener { snapshot, firebaseFirestoreException ->
-                firebaseFirestoreException?.let {
-                    Toast.makeText(this@ActivityLiveStream, it.message.toString(), Toast.LENGTH_SHORT).show()
-                    return@addSnapshotListener
-                }
+                    if (documentSnapshot != null && documentSnapshot.exists()) {
+                        // Retrieve the value of the numeric fields
+                        val firstNumber = documentSnapshot.getString("numberFirst")?.toString() ?: "0"
+                        val secondNumber = documentSnapshot.getString("numberSecond")?.toString() ?: "0"
+                        val thirdNumber = documentSnapshot.getString("numberThird")?.toString() ?: "0"
+                        val fourthNumber = documentSnapshot.getString("numberFourth")?.toString() ?: "0"
 
-                snapshot?.let { document ->
-                    val modelResult = document.toObject<ModelResult>()
-                    val time: Timestamp? = modelResult?.createdAt
+                        // Log the values for debugging
 
-                    if (time != null) {
-                        // Stop previous Runnable if it exists
-                        continuousRunnable?.let { handler.removeCallbacks(it) }
 
-                        // Start the new Runnable
-                        checkTimeContinuously(time)
+                        // Now you can use the value of the fields as strings
+                        first = firstNumber
+                        second = secondNumber
+                        third = thirdNumber
+                        fourth = fourthNumber
+
+
+
+
+                        val text: String =
+                            "/// LIVE Lucky Dollar.PK ///"
+                        val textView: TextView = binding.tvInfo
+                        textView.text = text
+                        textView.isSelected = true
+
+
+                        listenForSocialLinks()
+
+                        db.collection("tempResult").document("Dg33Yix08jocNtRCPF2D")
+                            .addSnapshotListener { snapshot, firebaseFirestoreException ->
+                                firebaseFirestoreException?.let {
+                                    Toast.makeText(
+                                        this@ActivityLiveStream,
+                                        it.message.toString(),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    return@addSnapshotListener
+                                }
+
+                                snapshot?.let { document ->
+                                    val modelResult = document.toObject<ModelResult>()
+                                    val time: Timestamp? = modelResult?.createdAt
+
+                                    if (time != null) {
+                                        // Stop previous Runnable if it exists
+                                        continuousRunnable?.let { handler.removeCallbacks(it) }
+
+                                        // Start the new Runnable
+                                        checkTimeContinuously(time)
+                                    }
+                                }
+                            }
+
+
+                        //val path = "android.resource://"+packageName+"/"+R.raw.test_video
+
+                        //////////////////HERE IS SUBSTRING CONVERSION//////////////////////
+
+
+                        val s1 = first.substring(0, 1)
+                        val s2 = first.substring(1, 2)
+                        val s3 = first.substring(2, 3)
+                        val s4 = first.substring(3, 4)
+
+
+                        val s5 = second.substring(0, 1)
+                        val s6 = second.substring(1, 2)
+                        val s7 = second.substring(2, 3)
+                        val s8 = second.substring(3, 4)
+
+
+                        val s9 = third.substring(0, 1)
+                        val s10 = third.substring(1, 2)
+                        val s11 = third.substring(2, 3)
+                        val s12 = third.substring(3, 4)
+
+
+                        val s13 = fourth.substring(0, 1)
+                        val s14 = fourth.substring(1, 2)
+                        val s15 = fourth.substring(2, 3)
+                        val s16 = fourth.substring(3, 4)
+
+
+                        binding.videView.setVideoURI(getID(s1))
+
+
+
+//                      if(s1=="8"){
+//
+//                          val resourceId1 = resources.getIdentifier("video1", "raw", packageName)
+//                          val path = "android.resource://" + packageName + "/" + resourceId1
+//                          binding.videView.setVideoURI(Uri.parse(path))
+//                          binding.videView.visibility=View.GONE
+//                          if(s2=="9")
+//                          {
+//                              val resourceId1 = resources.getIdentifier("video1", "raw", packageName)
+//                              val path = "android.resource://" + packageName + "/" + resourceId1
+//                              binding.videView.setVideoURI(Uri.parse(path))
+//                              binding.videView.visibility=View.GONE
+//                          }
+//                      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        /* binding.btnSwitch.setOnClickListener {
+                             player?.pause()
+                             binding.palyerView.visibility= View.GONE
+                             binding.videView.visibility=View.VISIBLE
+                             binding.videView.start()
+
+                         }
+                         binding.btnContinue.setOnClickListener {
+                             player?.play()
+                             binding.palyerView.visibility= View.VISIBLE
+                             binding.videView.visibility=View.GONE
+                             binding.videView.start()
+
+                         }*/
+
+
+                        val colorFrom = resources.getColor(R.color.system_primary_fixed)
+                        val colorTo = resources.getColor(R.color.holo_blue_dark)
+                        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
+                        colorAnimation.addUpdateListener { animator -> binding.tv1.setTextColor(animator.animatedValue as Int) }
+                        colorAnimation.start()
+
+
+
+                        val dataSourceFactory: DataSource.Factory = DefaultHttpDataSource.Factory()
+                        val hlsMediaSource = HlsMediaSource.Factory(dataSourceFactory)
+                            .createMediaSource(MediaItem.fromUri("https://live.relentlessinnovations.net:1936/afghannobel/afghannobel/playlist.m3u8"))
+
+                        player = ExoPlayer.Builder(mContext).build()
+                        binding.palyerView.player= player
+                        player?.setMediaSource(hlsMediaSource)
+                        player?.prepare()
+                        player?.play()
+
+
+
+
+
+
+
+
+
+
+                        // Display the values using Toast
+                        Toast.makeText(this, "First number: $firstNumber", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Second number: $secondNumber", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Third number: $thirdNumber", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Fourth number: $fourthNumber", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // Document doesn't exist
+                        Toast.makeText(this, "Document doesn't exist", Toast.LENGTH_SHORT).show()
                     }
+                } else {
+                    // Task was not successful
+                    Toast.makeText(this, "Task failed", Toast.LENGTH_SHORT).show()
                 }
             }
-
-
-
-
-        //val path = "android.resource://"+packageName+"/"+R.raw.test_video
-        val resourceId = resources.getIdentifier("test_video", "raw", packageName)
-        val path = "android.resource://" + packageName + "/" + resourceId
-        binding.videView.setVideoURI(Uri.parse(path))
-        binding.videView.visibility=View.GONE
-
-           /* binding.btnSwitch.setOnClickListener {
-                player?.pause()
-                binding.palyerView.visibility= View.GONE
-                binding.videView.visibility=View.VISIBLE
-                binding.videView.start()
-
-            }
-            binding.btnContinue.setOnClickListener {
-                player?.play()
-                binding.palyerView.visibility= View.VISIBLE
-                binding.videView.visibility=View.GONE
-                binding.videView.start()
-
-            }*/
-
-
-        val colorFrom = resources.getColor(R.color.system_primary_fixed)
-        val colorTo = resources.getColor(R.color.holo_blue_dark)
-        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
-        colorAnimation.addUpdateListener { animator -> binding.tv1.setTextColor(animator.animatedValue as Int) }
-        colorAnimation.start()
-
-
-
-        val dataSourceFactory: DataSource.Factory = DefaultHttpDataSource.Factory()
-        val hlsMediaSource = HlsMediaSource.Factory(dataSourceFactory)
-            .createMediaSource(MediaItem.fromUri("https://live.relentlessinnovations.net:1936/afghannobel/afghannobel/playlist.m3u8"))
-
-        player = ExoPlayer.Builder(mContext).build()
-        binding.palyerView.player= player
-        player?.setMediaSource(hlsMediaSource)
-        player?.prepare()
-        player?.play()
-
-
-
-
 
     }
 
@@ -302,7 +420,7 @@ class ActivityLiveStream : AppCompatActivity() {
                 }
                 if (!whatsappLink.isNullOrEmpty()) {
                     binding.whatsapp.setOnClickListener {
-                        openLink(whatsappLink)
+                        openWhatsApp(whatsappLink)
                     }
                 }
             }
@@ -320,5 +438,64 @@ class ActivityLiveStream : AppCompatActivity() {
         }
     }
 
+    private fun openWhatsApp(phoneNumber:String) {
+//        val phoneNumber = "+923036307725" // Replace with the phone number you want to chat with
+        val message = "Hello, this is a custom message" // Replace with the message you want to send
+
+        val uri = Uri.parse("https://api.whatsapp.com/send?phone=$phoneNumber&text=$message")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
+    }
+
+//    private fun getResults() {
+//        db.collection("tempResult").document("Dg33Yix08jocNtRCPF2D").get()
+//            .addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    val documentSnapshot = task.result
+//
+//                    if (documentSnapshot != null && documentSnapshot.exists()) {
+//                        // Retrieve the value of the numeric fields
+//                        val firstNumber = documentSnapshot.getString("numberFirst")?.toString() ?: "0"
+//                        val secondNumber = documentSnapshot.getString("numberSecond")?.toString() ?: "0"
+//                        val thirdNumber = documentSnapshot.getString("numberThird")?.toString() ?: "0"
+//                        val fourthNumber = documentSnapshot.getString("numberFourth")?.toString() ?: "0"
+//
+//                        // Log the values for debugging
+//
+//
+//                        // Now you can use the value of the fields as strings
+//                        first = firstNumber
+//                        second = secondNumber
+//                        third = thirdNumber
+//                        fourth = fourthNumber
+//
+//                        // Display the values using Toast
+//                        Toast.makeText(this, "First number: $firstNumber", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this, "Second number: $secondNumber", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this, "Third number: $thirdNumber", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this, "Fourth number: $fourthNumber", Toast.LENGTH_SHORT).show()
+//                    } else {
+//                        // Document doesn't exist
+//                        Toast.makeText(this, "Document doesn't exist", Toast.LENGTH_SHORT).show()
+//                    }
+//                } else {
+//                    // Task was not successful
+//                    Toast.makeText(this, "Task failed", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//    }
+
+
+
 
 }
+
+
+
+
+
+
+
+
+
+

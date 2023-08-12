@@ -78,6 +78,7 @@ class SharedPrefManager(context: Context) {
 
     fun logOut(isLoggedOut: Boolean = false) {
         editor.putBoolean("isLoggedIn", isLoggedOut)
+        sharedPref.edit().clear().apply()           ///Clear all the previous preferences on logout time
         editor.commit()
     }
 

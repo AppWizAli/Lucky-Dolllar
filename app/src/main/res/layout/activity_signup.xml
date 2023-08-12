@@ -107,9 +107,11 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLastName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:maxLines="1"
+                    android:visibility="gone"
+                    android:text="king"
                     android:lines="1"
                     android:background="@color/primary_n"
                     />
@@ -136,6 +138,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:maxLines="1"
+                    android:layout_marginBottom="8dp"
                     android:lines="1"
                     android:background="@color/primary_n"
                     android:inputType="number"
@@ -162,6 +165,8 @@
                     android:layout_height="match_parent"
                     android:maxLines="1"
                     android:lines="1"
+                    android:layout_marginBottom="8dp"
+
                     android:background="@color/primary_n"
                     android:inputType="number"
                     android:maxLength="11"/>
