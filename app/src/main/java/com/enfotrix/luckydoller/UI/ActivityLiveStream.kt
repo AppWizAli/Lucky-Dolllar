@@ -163,48 +163,25 @@ class ActivityLiveStream : AppCompatActivity() {
                         //////////////////HERE IS SUBSTRING CONVERSION//////////////////////
 
 
-                        val s1 = first.substring(0, 1)
-                        val s2 = first.substring(1, 2)
-                        val s3 = first.substring(2, 3)
-                        val s4 = first.substring(3, 4)
 
 
-                        val s5 = second.substring(0, 1)
-                        val s6 = second.substring(1, 2)
-                        val s7 = second.substring(2, 3)
-                        val s8 = second.substring(3, 4)
+                        val resourceId1 = resources.getIdentifier("video1", "raw", packageName)
+                        val path = "android.resource://" + packageName + "/" + resourceId1
+                        binding.videView.setVideoURI(Uri.parse(path))
+                        binding.videView.visibility=View.GONE
 
 
-                        val s9 = third.substring(0, 1)
-                        val s10 = third.substring(1, 2)
-                        val s11 = third.substring(2, 3)
-                        val s12 = third.substring(3, 4)
+                      /*if(s1=="8"){
 
 
-                        val s13 = fourth.substring(0, 1)
-                        val s14 = fourth.substring(1, 2)
-                        val s15 = fourth.substring(2, 3)
-                        val s16 = fourth.substring(3, 4)
-
-
-                        binding.videView.setVideoURI(getID(s1))
-
-
-
-//                      if(s1=="8"){
-//
-//                          val resourceId1 = resources.getIdentifier("video1", "raw", packageName)
-//                          val path = "android.resource://" + packageName + "/" + resourceId1
-//                          binding.videView.setVideoURI(Uri.parse(path))
-//                          binding.videView.visibility=View.GONE
-//                          if(s2=="9")
-//                          {
-//                              val resourceId1 = resources.getIdentifier("video1", "raw", packageName)
-//                              val path = "android.resource://" + packageName + "/" + resourceId1
-//                              binding.videView.setVideoURI(Uri.parse(path))
-//                              binding.videView.visibility=View.GONE
-//                          }
-//                      }
+                          if(s2=="9")
+                          {
+                              val resourceId1 = resources.getIdentifier("video1", "raw", packageName)
+                              val path = "android.resource://" + packageName + "/" + resourceId1
+                              binding.videView.setVideoURI(Uri.parse(path))
+                              binding.videView.visibility=View.GONE
+                          }
+                      }*/
 
 
 
@@ -271,10 +248,10 @@ class ActivityLiveStream : AppCompatActivity() {
 
 
                         // Display the values using Toast
-                        Toast.makeText(this, "First number: $firstNumber", Toast.LENGTH_SHORT).show()
-                        Toast.makeText(this, "Second number: $secondNumber", Toast.LENGTH_SHORT).show()
-                        Toast.makeText(this, "Third number: $thirdNumber", Toast.LENGTH_SHORT).show()
-                        Toast.makeText(this, "Fourth number: $fourthNumber", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this, "First number: $firstNumber", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this, "Second number: $secondNumber", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this, "Third number: $thirdNumber", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this, "Fourth number: $fourthNumber", Toast.LENGTH_SHORT).show()
                     } else {
                         // Document doesn't exist
                         Toast.makeText(this, "Document doesn't exist", Toast.LENGTH_SHORT).show()
@@ -344,6 +321,12 @@ class ActivityLiveStream : AppCompatActivity() {
 
 
 
+
+                /*val resourceId1 = resources.getIdentifier(videoNumber, "raw", packageName)
+                val path = "android.resource://" + packageName + "/" + resourceId1
+                binding.videView.setVideoURI(Uri.parse(path))
+                binding.videView.start()*/
+
                 val formattedTimeMillis = time.seconds * 1000
                 val currentTimeMillis = currentTime.seconds * 1000
                 val timeDifference = currentTimeMillis - formattedTimeMillis
@@ -352,31 +335,68 @@ class ActivityLiveStream : AppCompatActivity() {
                 // Here, you can compare the 'time' parameter with the current time ('formattedCurrentTime')
                 // and perform any necessary actions based on the comparison.
                 // For example:
-                if (timeDifference > 0 && timeDifference < threeMinutesMillis && isHelloToastShown==true) {
-                    // Perform the action when the current time matches the desired time.
-                    // For example, show a toast or update the UI.
-                    //Toast.makeText(mContext, "Hello", Toast.LENGTH_SHORT).show()
+                val s5 = second.substring(0, 1)
+                val s6 = second.substring(1, 2)
+                val s7 = second.substring(2, 3)
+                val s8 = second.substring(3, 4)
+
+
+                val s9 = third.substring(0, 1)
+                val s10 = third.substring(1, 2)
+                val s11 = third.substring(2, 3)
+                val s12 = third.substring(3, 4)
+
+
+                val s13 = fourth.substring(0, 1)
+                val s14 = fourth.substring(1, 2)
+                val s15 = fourth.substring(2, 3)
+                val s16 = fourth.substring(3, 4)
+                if (timeDifference in 1 until threeMinutesMillis && isHelloToastShown) {
+
 
                     player?.pause()
-                    binding.palyerView.visibility= View.GONE
-                    binding.videView.visibility=View.VISIBLE
+                    binding.palyerView.visibility = View.GONE
+                    binding.videView.visibility = View.VISIBLE
                     binding.videView.start()
+
+                    val substrings = listOf(
+                        first.substring(0, 1),first.substring(1, 2), first.substring(2, 3), first.substring(3, 4),
+                        second.substring(0, 1),second.substring(1, 2), second.substring(2, 3), second.substring(3, 4),
+                        third.substring(0, 1),third.substring(1, 2), third.substring(2, 3), third.substring(3, 4),
+                        fourth.substring(0, 1),fourth.substring(1, 2), fourth.substring(2, 3), fourth.substring(3, 4)
+                    )
+
 
 
                     binding.videView.setOnCompletionListener {
 
+                        for (s in substrings) {
+                            val videoNumber = "_"+s.toIntOrNull()?.toString() ?: "0"
+                            val resourceId = resources.getIdentifier(videoNumber, "raw", packageName)
+                            val path = "android.resource://" + packageName + "/" + resourceId
+                            binding.videView.setVideoURI(Uri.parse(path))
+                            binding.videView.start()
 
-                        binding.palyerView.visibility= View.VISIBLE
-                        binding.videView.visibility=View.GONE
-                        binding.videView.stopPlayback()
+                            binding.videView.setOnCompletionListener {
+                                binding.videView.stopPlayback()
 
-                        player?.play()
+
+                                if (s == substrings.last()) {
+                                    binding.palyerView.visibility = View.VISIBLE
+                                    binding.videView.visibility = View.GONE
+                                    player?.play()
+
+                                    handler.removeCallbacks(this)
+                                    isHelloToastShown = false
+                                }
+                            }
+                        }
+
+                        binding.tvResult.text = formattedCurrentTime.toString()
+
 
                     }
 
-                    binding.tvResult.text = formattedCurrentTime.toString()
-                    handler.removeCallbacks(this)
-                    isHelloToastShown = false
 
 
                 }

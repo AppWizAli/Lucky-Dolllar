@@ -229,6 +229,9 @@ class ActivityBid : AppCompatActivity() , BidAdapter.OnItemClickListener{
 
         dialog.show()
 
+
+
+
     }
 
     private fun saveBid(modelBid: ModelBid) {
