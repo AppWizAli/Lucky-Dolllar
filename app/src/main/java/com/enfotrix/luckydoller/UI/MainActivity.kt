@@ -4,6 +4,8 @@ import android.animation.ValueAnimator
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -224,6 +226,8 @@ class MainActivity : AppCompatActivity() {
         val dialog = Dialog(mContext)
         dialog.setContentView(R.layout.dialog_for_logout)
         dialog.setCancelable(true)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         val textTitle = dialog.findViewById<TextView>(R.id.textTitle)
         val buttonYes = dialog.findViewById<Button>(R.id.buttonYes)
         val buttonNo = dialog.findViewById<Button>(R.id.buttonNo)

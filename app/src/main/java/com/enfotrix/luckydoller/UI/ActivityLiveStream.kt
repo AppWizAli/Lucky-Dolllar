@@ -335,22 +335,8 @@ class ActivityLiveStream : AppCompatActivity() {
                 // Here, you can compare the 'time' parameter with the current time ('formattedCurrentTime')
                 // and perform any necessary actions based on the comparison.
                 // For example:
-                val s5 = second.substring(0, 1)
-                val s6 = second.substring(1, 2)
-                val s7 = second.substring(2, 3)
-                val s8 = second.substring(3, 4)
 
 
-                val s9 = third.substring(0, 1)
-                val s10 = third.substring(1, 2)
-                val s11 = third.substring(2, 3)
-                val s12 = third.substring(3, 4)
-
-
-                val s13 = fourth.substring(0, 1)
-                val s14 = fourth.substring(1, 2)
-                val s15 = fourth.substring(2, 3)
-                val s16 = fourth.substring(3, 4)
                 if (timeDifference in 1 until threeMinutesMillis && isHelloToastShown) {
 
 
@@ -365,8 +351,6 @@ class ActivityLiveStream : AppCompatActivity() {
                         third.substring(0, 1),third.substring(1, 2), third.substring(2, 3), third.substring(3, 4),
                         fourth.substring(0, 1),fourth.substring(1, 2), fourth.substring(2, 3), fourth.substring(3, 4)
                     )
-
-
 
                     binding.videView.setOnCompletionListener {
 
@@ -396,7 +380,6 @@ class ActivityLiveStream : AppCompatActivity() {
 
 
                     }
-
 
 
                 }

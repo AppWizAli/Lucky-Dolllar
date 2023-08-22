@@ -122,7 +122,12 @@ class ActivityNewBid : AppCompatActivity() {
                 }
 
                 else {
-                    if(numberCounter==binding.etBidNumber.text.length) addBid()
+                    if(numberCounter==binding.etBidNumber.text.length) {
+                        addBid()
+                        binding.etBidNumber.text.clear()
+
+                    }
+
                     else Toast.makeText(mContext, "Incorrect number", Toast.LENGTH_SHORT).show()
 
                 }

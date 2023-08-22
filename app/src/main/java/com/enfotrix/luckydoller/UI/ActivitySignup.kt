@@ -9,7 +9,9 @@ import android.widget.Toast
 import com.enfotrix.luckydoller.Constants
 import com.enfotrix.luckydoller.Models.ModelUser
 import com.enfotrix.luckydoller.R
+import com.enfotrix.luckydoller.SharedPrefManager
 import com.enfotrix.luckydoller.Utils
+import com.enfotrix.luckydoller.databinding.ActivityMainBinding
 import com.enfotrix.luckydoller.databinding.ActivitySignupBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -19,6 +21,8 @@ class ActivitySignup : AppCompatActivity() {
     private lateinit var utils: Utils
     private lateinit var mContext: Context
     private lateinit var binding: ActivitySignupBinding
+    private lateinit var sharedPrefManager: SharedPrefManager
+
     private lateinit var modelUser: ModelUser
     private lateinit var constants: Constants
     private var db = Firebase.firestore
@@ -31,6 +35,8 @@ class ActivitySignup : AppCompatActivity() {
         mContext = this@ActivitySignup
         utils = Utils(mContext)
         constants = Constants()
+        sharedPrefManager = SharedPrefManager(this)
+
 
         binding.tvLogin.setOnClickListener {
             startActivity(
@@ -120,11 +126,11 @@ class ActivitySignup : AppCompatActivity() {
                                 utils.endLoadingAnimation()
                                 if (it.isSuccessful) {
                                     Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
-
+                                    sharedPrefManager.saveLoginAuth(modelUser,modelUser.id, true)
                                     startActivity(
                                         Intent(
                                             mContext,
-                                            ActivityLogin::class.java
+                                            MainActivity::class.java
                                         ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                                     )
                                     finish()
