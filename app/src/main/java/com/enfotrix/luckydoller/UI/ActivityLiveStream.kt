@@ -32,6 +32,10 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -129,7 +133,16 @@ class ActivityLiveStream : AppCompatActivity() {
                         textView.text = text
                         textView.isSelected = true
 
+                        val modelResult = documentSnapshot.toObject<ModelResult>()
+                        val time: Timestamp? = modelResult?.createdAt
 
+                        if (time != null) {
+                            // Stop previous Runnable if it exists
+                            continuousRunnable?.let { handler.removeCallbacks(it) }
+
+                            // Start the new Runnable
+                            checkTimeContinuously(time)
+                        }
                         listenForSocialLinks()
 
                         db.collection("tempResult").document("Dg33Yix08jocNtRCPF2D")
@@ -164,11 +177,12 @@ class ActivityLiveStream : AppCompatActivity() {
 
 
 
+                        /////***************************************************************/////
 
-                        val resourceId1 = resources.getIdentifier("video1", "raw", packageName)
-                        val path = "android.resource://" + packageName + "/" + resourceId1
-                        binding.videView.setVideoURI(Uri.parse(path))
-                        binding.videView.visibility=View.GONE
+                        //val resourceId1 = resources.getIdentifier("video1", "raw", packageName)
+                        //val path = "android.resource://" + packageName + "/" + resourceId1
+                       // binding.videView.setVideoURI(Uri.parse(path))
+                        //binding.videView.visibility=View.GONE
 
 
                       /*if(s1=="8"){
@@ -352,17 +366,27 @@ class ActivityLiveStream : AppCompatActivity() {
                         fourth.substring(0, 1),fourth.substring(1, 2), fourth.substring(2, 3), fourth.substring(3, 4)
                     )
 
+                    val resourceId = resources.getIdentifier("intro", "raw", packageName)
+                    val path = "android.resource://" + packageName + "/" + resourceId
+                    binding.videView.setVideoURI(Uri.parse(path))
+                    binding.videView.start()
+
+
+
                     binding.videView.setOnCompletionListener {
 
-                        for (s in substrings) {
+                        /*for (s in substrings) {
                             val videoNumber = "_"+s.toIntOrNull()?.toString() ?: "0"
+
                             val resourceId = resources.getIdentifier(videoNumber, "raw", packageName)
                             val path = "android.resource://" + packageName + "/" + resourceId
                             binding.videView.setVideoURI(Uri.parse(path))
                             binding.videView.start()
 
+
+
                             binding.videView.setOnCompletionListener {
-                                binding.videView.stopPlayback()
+                                //binding.videView.stopPlayback()
 
 
                                 if (s == substrings.last()) {
@@ -374,9 +398,73 @@ class ActivityLiveStream : AppCompatActivity() {
                                     isHelloToastShown = false
                                 }
                             }
+                        }*/
+
+
+
+                        val scope = CoroutineScope(Dispatchers.Main)
+
+                        scope.launch {
+                            var counter:Int=1
+                            for (s in substrings) {
+                                val videoNumber = "_${s.toIntOrNull()?.toString() ?: "0"}"
+                                val resourceId = resources.getIdentifier(videoNumber, "raw", packageName)
+                                val path = "android.resource://" + packageName + "/" + resourceId
+
+
+
+
+
+
+                                binding.videView.setVideoURI(Uri.parse(path))
+                                binding.videView.start()
+
+                                val completionDeferred = CompletableDeferred<Unit>()
+                                binding.videView.setOnCompletionListener {
+
+
+
+                                    if(counter==1) binding.r1.text= s.toString()
+                                    else if(counter==2) binding.r2.text= s.toString()
+                                    else if(counter==3) binding.r3.text= s.toString()
+                                    else if(counter==4) binding.r4.text= s.toString()
+                                    else if(counter==5) binding.r5.text= s.toString()
+                                    else if(counter==6) binding.r6.text= s.toString()
+                                    else if(counter==7) binding.r7.text= s.toString()
+                                    else if(counter==8) binding.r8.text= s.toString()
+                                    else if(counter==9) binding.r9.text= s.toString()
+                                    else if(counter==10) binding.r10.text= s.toString()
+                                    else if(counter==11) binding.r11.text= s.toString()
+                                    else if(counter==12) binding.r12.text= s.toString()
+                                    else if(counter==13) binding.r13.text= s.toString()
+                                    else if(counter==14) binding.r14.text= s.toString()
+                                    else if(counter==15) binding.r15.text= s.toString()
+                                    else if(counter==16) binding.r16.text= s.toString()
+
+                                    binding.videView.stopPlayback()
+                                    completionDeferred.complete(Unit)
+                                    counter++
+                                }
+
+                                completionDeferred.await() // Pause the loop until video completes
+
+                                // Continue with the next iteration
+                            }
+
+                            // All videos have been played
+                            binding.palyerView.visibility = View.VISIBLE
+                            binding.videView.visibility = View.GONE
+                            player?.play()
+
+                            //handler.removeCallbacks(this)
+                            isHelloToastShown = false
                         }
 
                         binding.tvResult.text = formattedCurrentTime.toString()
+
+
+
+
 
 
                     }
@@ -393,7 +481,7 @@ class ActivityLiveStream : AppCompatActivity() {
                 }*/
 
                 // Schedule the next check after a specific interval (e.g., 1 second)
-                handler.postDelayed(this, 1000) // 1000 milliseconds = 1 second
+                //handler.postDelayed(this, 1000) // 1000 milliseconds = 1 second
 
 
 

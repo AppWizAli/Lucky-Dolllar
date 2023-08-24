@@ -187,9 +187,6 @@ class ActivityResult : AppCompatActivity() {
                     spGameSubCtg.adapter = adapterGameSubCTG
                 }
 
-
-
-
             }
 
 
@@ -212,7 +209,6 @@ class ActivityResult : AppCompatActivity() {
                 spGameSubCtg.selectedItem.toString(),
                 convertTimestampToDate(cvDate.date)
             )*/
-
         }
 
         dialog.show()
@@ -251,7 +247,6 @@ class ActivityResult : AppCompatActivity() {
 
                         if(date_.equals(date)){
 
-
                             if(result.result.equals("1")){
                                 binding.tvdateTimeResult.text="("+SimpleDateFormat("hh:mm dd/MM/yyyy", Locale.getDefault()).format(result.createdAt!!.toDate()).toString()+")"
 
@@ -268,12 +263,7 @@ class ActivityResult : AppCompatActivity() {
                                 binding.tvEThirdNumber.text=result.numberThird
                                 binding.tvEFourthNumber.text=result.numberFourth
                             }
-
-
-
                         }
-
-
 
                         /*if(document.toObject(ModelBid::class.java).equals("Morning")){
                         }

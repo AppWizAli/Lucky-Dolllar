@@ -13,6 +13,7 @@ import com.enfotrix.luckydoller.SharedPrefManager
 import com.enfotrix.luckydoller.Utils
 import com.enfotrix.luckydoller.databinding.ActivityMainBinding
 import com.enfotrix.luckydoller.databinding.ActivitySignupBinding
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -121,10 +122,16 @@ class ActivitySignup : AppCompatActivity() {
                         utils.endLoadingAnimation()
                         Toast.makeText(mContext, "CNIC already exists", Toast.LENGTH_SHORT).show()
                     } else {
-                        db.collection(constants.USERS_COLLECTION).add(modelUser)
+
+                        val docRef:DocumentReference= db.collection(constants.USERS_COLLECTION).document()
+                        modelUser.id=docRef.id
+                            docRef.set(modelUser)
                             .addOnCompleteListener {
                                 utils.endLoadingAnimation()
                                 if (it.isSuccessful) {
+
+
+
                                     Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
                                     sharedPrefManager.saveLoginAuth(modelUser,modelUser.id, true)
                                     startActivity(
