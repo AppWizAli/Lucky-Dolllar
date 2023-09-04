@@ -103,6 +103,7 @@ class ActivityLiveStream : AppCompatActivity() {
 
 
 
+
         db.collection("tempResult").document("Dg33Yix08jocNtRCPF2D").get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -401,6 +402,7 @@ class ActivityLiveStream : AppCompatActivity() {
                         }*/
 
 
+                        binding.layResult.visibility=View.VISIBLE
 
                         val scope = CoroutineScope(Dispatchers.Main)
 
@@ -411,11 +413,6 @@ class ActivityLiveStream : AppCompatActivity() {
                                 val resourceId = resources.getIdentifier(videoNumber, "raw", packageName)
                                 val path = "android.resource://" + packageName + "/" + resourceId
 
-
-
-
-
-
                                 binding.videView.setVideoURI(Uri.parse(path))
                                 binding.videView.start()
 
@@ -424,7 +421,9 @@ class ActivityLiveStream : AppCompatActivity() {
 
 
 
-                                    if(counter==1) binding.r1.text= s.toString()
+                                    if(counter==1){
+                                        binding.r1.text= s.toString()
+                                    }
                                     else if(counter==2) binding.r2.text= s.toString()
                                     else if(counter==3) binding.r3.text= s.toString()
                                     else if(counter==4) binding.r4.text= s.toString()
@@ -444,6 +443,19 @@ class ActivityLiveStream : AppCompatActivity() {
                                     binding.videView.stopPlayback()
                                     completionDeferred.complete(Unit)
                                     counter++
+
+
+                                    //set by list length counter
+                                    /*if (s == substrings.last()) {
+                                        binding.palyerView.visibility = View.VISIBLE
+                                        binding.videView.visibility = View.GONE
+                                        player?.play()
+
+                                        binding.layResult.visibility=View.GONE
+                                        //handler.removeCallbacks(this@ActivityLiveStream)
+                                        isHelloToastShown = false
+                                    }*/
+
                                 }
 
                                 completionDeferred.await() // Pause the loop until video completes
