@@ -57,8 +57,8 @@ class ActivitySignup : AppCompatActivity() {
         }
         binding.btnProfileRegister.setOnClickListener {
 
-            val phone=binding.etPhone.text.toString()
-            val Cphone=phone.substring(0,2)
+            val phone = binding.etPhone.text.toString()
+            val Cphone = phone.substring(0, 2)
             if (TextUtils.isEmpty(binding.etFirstName.text.toString())) {
                 binding.etFirstName.setError("Enter Your Name")
             } else if (!isNameValid(binding.etFirstName.text.toString())) {
@@ -71,25 +71,16 @@ class ActivitySignup : AppCompatActivity() {
                 binding.etCNIC.setError("Enter CNIC")
             } else if (binding.etCNIC.text.toString().length < 13) {
                 binding.etCNIC.setError("Invalid CNIC")
-            }
-
-            else if (!isCnicValid(binding.etCNIC.text.toString())) {
+            } else if (!isCnicValid(binding.etCNIC.text.toString())) {
                 binding.etCNIC.setError("Invalid CNIC")
-            }
-
-            else if (TextUtils.isEmpty(binding.etPhone.text.toString())) {
+            } else if (TextUtils.isEmpty(binding.etPhone.text.toString())) {
                 binding.etPhone.setError("Enter Phone Number")
             } else if (binding.etPhone.text.toString().length < 11) {
                 binding.etPhone.setError("Invalid Phone Number")
-            }
-            else if (Cphone!="03")
-            {
+            } else if (Cphone != "03") {
                 binding.etPhone.setError("Invalid Phone Number")
 
-            }
-
-
-            else if (TextUtils.isEmpty(binding.etPassword.text.toString())) {
+            } else if (TextUtils.isEmpty(binding.etPassword.text.toString())) {
                 binding.etPassword.setError("Enter Your Pin")
             } else if (!isPasswordValid(binding.etPassword.text.toString())) {
                 binding.etPassword.setError("Passeord should be of 6 digits")
@@ -123,17 +114,17 @@ class ActivitySignup : AppCompatActivity() {
                         Toast.makeText(mContext, "CNIC already exists", Toast.LENGTH_SHORT).show()
                     } else {
 
-                        val docRef:DocumentReference= db.collection(constants.USERS_COLLECTION).document()
-                        modelUser.id=docRef.id
-                            docRef.set(modelUser)
+                        val docRef: DocumentReference =
+                            db.collection(constants.USERS_COLLECTION).document()
+                        modelUser.id = docRef.id
+                        Toast.makeText(mContext, "" + docRef.id, Toast.LENGTH_SHORT).show()
+                        docRef.set(modelUser)
                             .addOnCompleteListener {
                                 utils.endLoadingAnimation()
                                 if (it.isSuccessful) {
-
-
-
+                                    modelUser.id = docRef.id
                                     Toast.makeText(mContext, "Saved!", Toast.LENGTH_SHORT).show()
-                                    sharedPrefManager.saveLoginAuth(modelUser,modelUser.id, true)
+                                    sharedPrefManager.saveLoginAuth(modelUser, modelUser.id, true)
                                     startActivity(
                                         Intent(
                                             mContext,
@@ -157,7 +148,6 @@ class ActivitySignup : AppCompatActivity() {
     }
 
     fun isNameValid(name: String): Boolean {
-        // Rule 1: Name length should be between 3 and 17 characters (inclusive)
         if (name.length < 3 && name.length < 17) {
             return false
         }
@@ -169,7 +159,7 @@ class ActivitySignup : AppCompatActivity() {
         }
 
 
-       /////// If all rules are satisfied, the name is valid
+        /////// If all rules are satisfied, the name is valid
         return true
     }
 
