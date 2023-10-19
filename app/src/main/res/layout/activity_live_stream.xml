@@ -276,7 +276,7 @@
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
-                        android:text="hussain"
+                        android:text="Lucky Doller"
                         android:textIsSelectable="true"
                         android:textColor="@color/red_m"
                         android:textAlignment="center"
