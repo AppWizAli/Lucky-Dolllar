@@ -38,7 +38,7 @@ class BidAdapter( val data: List<ModelBid>) : RecyclerView.Adapter<BidAdapter.Vi
             itemBinding.tvGameBidAmount.text=modelBid.amount
             itemBinding.tvGameBidNumber.text=modelBid.number
             itemBinding.tvGameCtg.text=modelBid.gameCtg
-            itemBinding.tvGameDate.text= SimpleDateFormat("hh:mm a dd/MM/yy", Locale.getDefault()).format(modelBid.createdAt.toDate()).toString()
+            itemBinding.tvGameDate.text= modelBid.createdAt
             itemBinding.tvGameResult.text=modelBid.result
             itemBinding.tvGameSubCtg.text=modelBid.gameSubCtg
 
