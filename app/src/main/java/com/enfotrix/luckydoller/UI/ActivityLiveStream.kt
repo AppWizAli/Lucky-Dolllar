@@ -9,6 +9,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -443,8 +444,12 @@ class ActivityLiveStream : AppCompatActivity() {
             val scope = CoroutineScope(Dispatchers.Main)
 
             scope.launch {
+
+
                 var counter:Int=1
                 for (s in substrings) {
+
+                    binding.layResultScreen.visibility=View.GONE
                     val videoNumber = "_${s.toIntOrNull()?.toString() ?: "0"}"
                     val resourceId = resources.getIdentifier(videoNumber, "raw", packageName)
                     val path = "android.resource://" + packageName + "/" + resourceId
@@ -457,9 +462,7 @@ class ActivityLiveStream : AppCompatActivity() {
 
 
 
-                        if(counter==1){
-                            binding.r1.text= s.toString()
-                        }
+                        if(counter==1){ binding.r1.text= s.toString() }
                         else if(counter==2) binding.r2.text= s.toString()
                         else if(counter==3) binding.r3.text= s.toString()
                         else if(counter==4) binding.r4.text= s.toString()
@@ -475,8 +478,33 @@ class ActivityLiveStream : AppCompatActivity() {
                         else if(counter==14) binding.r14.text= s.toString()
                         else if(counter==15) binding.r15.text= s.toString()
                         else if(counter==16) binding.r16.text= s.toString()
-
                         binding.videView.stopPlayback()
+
+
+                        if (counter == 4 || counter == 8 || counter == 12 || counter == 16) {
+                            if (counter == 4) {
+                                binding.tvResultScreenFist.text = binding.r1.text.toString() + binding.r2.text.toString() + binding.r3.text.toString() + binding.r4.text.toString()
+                            } else if (counter == 8) {
+                                binding.tvResultScreenScondF.text = binding.r5.text.toString() + binding.r6.text.toString() + binding.r7.text.toString() + binding.r8.text.toString()
+                            } else if (counter == 12) {
+                                binding.tvResultScreenScondS.text = binding.r9.text.toString() + binding.r10.text.toString() + binding.r11.text.toString() + binding.r12.text.toString()
+                            } else if (counter == 16) {
+                                binding.tvResultScreenScondT.text = binding.r13.text.toString() + binding.r14.text.toString() + binding.r15.text.toString() + binding.r16.text.toString()
+                            }
+
+                            // Hide the layout initially
+                            binding.layResultScreen.visibility = View.GONE
+
+                            // Use a Handler to show it with a delay on the UI thread
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                binding.layResultScreen.visibility = View.VISIBLE
+                            }, 5000)
+
+
+                        } else {
+                            binding.layResultScreen.visibility = View.GONE
+                        }
+
                         completionDeferred.complete(Unit)
                         counter++
 
