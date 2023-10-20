@@ -954,9 +954,6 @@ class ActivityLiveStream : AppCompatActivity() {
 
 
 
-
-
-
 }
 
 
