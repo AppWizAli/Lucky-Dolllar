@@ -6,6 +6,7 @@ import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -13,8 +14,10 @@ import android.os.Looper
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.widget.MediaController
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.media3.common.MediaItem
 import androidx.media3.datasource.DataSource
@@ -47,10 +50,10 @@ import java.util.concurrent.CountDownLatch
 class ActivityLiveStream : AppCompatActivity() {
 
 
-    private  var first:String=""
-    private  var second:String=""
-    private  var third:String=""
-    private  var fourth:String=""
+    private var first: String = ""
+    private var second: String = ""
+    private var third: String = ""
+    private var fourth: String = ""
 
     private val playWhenReady = true
     private val playbackPosition: Long = 0
@@ -58,14 +61,8 @@ class ActivityLiveStream : AppCompatActivity() {
     var urlStream: String? = null
 
 
-
-
     private val playerView: PlayerView? = null
     private var player: ExoPlayer? = null
-
-
-
-
 
 
     private var isHelloToastShown = true
@@ -75,7 +72,8 @@ class ActivityLiveStream : AppCompatActivity() {
     private lateinit var mContext: Context
     private lateinit var modelUser: ModelUser
     private lateinit var constants: Constants
-    private lateinit var sharedPrefManager : SharedPrefManager
+    private lateinit var sharedPrefManager: SharedPrefManager
+
     // Define a Handler to manage the runnable execution
     val handler = Handler()
 
@@ -85,9 +83,10 @@ class ActivityLiveStream : AppCompatActivity() {
     private var socialLinksListener: ListenerRegistration? = null
 
 
-    private var db= Firebase.firestore
-    private lateinit var binding : ActivityLiveStreamBinding
+    private var db = Firebase.firestore
+    private lateinit var binding: ActivityLiveStreamBinding
 
+    @RequiresApi(34)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -99,15 +98,26 @@ class ActivityLiveStream : AppCompatActivity() {
         constants = Constants()
         sharedPrefManager = SharedPrefManager(mContext)
 
-        /////get results here firstly    / /
+   /*     /////get results here firstly    / /
+        val mediaController = MediaController(this)
+        mediaController.setAnchorView(binding.spinnervideo)
+        binding.spinnervideo.setMediaController(mediaController)*/
 
+       /* val resourceId = resources.getIdentifier("_spinner", "raw", packageName)
+        val path = "android.resource://" + packageName + "/" + resourceId
+        binding.spinnervideo.setVideoURI(Uri.parse(path))
+        binding.spinnervideo.setOnCompletionListener {
+            // Loop the video when it reaches the end
+            binding.spinnervideo.start()
+        }
 
-        val colorFrom = resources.getColor(R.color.system_primary_fixed)
-        val colorTo = resources.getColor(R.color.holo_blue_dark)
+        binding.spinnervideo.start()*/
+
+        val colorFrom = Color.parseColor("#FFD8E2F0")
+        val colorTo = Color.parseColor("#FFD8E2F0")
         val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
         colorAnimation.addUpdateListener { animator -> binding.tv1.setTextColor(animator.animatedValue as Int) }
         colorAnimation.start()
-
 
 
         val dataSourceFactory: DataSource.Factory = DefaultHttpDataSource.Factory()
@@ -115,11 +125,11 @@ class ActivityLiveStream : AppCompatActivity() {
             .createMediaSource(MediaItem.fromUri("https://live.relentlessinnovations.net:1936/afghannobel/afghannobel/playlist.m3u8"))
 
         player = ExoPlayer.Builder(mContext).build()
-        binding.palyerView.player= player
+        binding.palyerView.player = player
         player?.setMediaSource(hlsMediaSource)
         player?.prepare()
-        player?.play()
 
+        player?.play()
 
 
         var toastShown = false // Add this flag as a class member
@@ -138,8 +148,13 @@ class ActivityLiveStream : AppCompatActivity() {
                 snapshot?.let { document ->
                     val modelResult = document.toObject<ModelResult>()
                     val time: Timestamp? = modelResult?.createdAt
+                    val currentDate = time?.toDate()
+                    val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
+                    val formattedTime = timeFormat.format(currentDate)
+                 //   Toast.makeText(mContext, formattedTime+"Firebase Time", Toast.LENGTH_SHORT).show()
 
                     if (time != null) {
+
 
 
                         val firstNumber = document.getString("numberFirst")?.toString() ?: "0"
@@ -157,23 +172,37 @@ class ActivityLiveStream : AppCompatActivity() {
                         fourth = fourthNumber
 
 
-                        // Get the current time as a Timestamp
+                        // Get the current timestamp
                         val currentTime = Timestamp.now()
+                        val currentDate = currentTime.toDate()
+                        val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
+                        val formattedTime = timeFormat.format(currentDate)
+
 
                         // Calculate the time difference in seconds
                         val timeDifference = Math.abs(currentTime.seconds - time.seconds)
 
-                        if (timeDifference <= 180 && currentTime.seconds > time.seconds) {
-                            if (!toastShown) {
-                                toastShown = true
-                                // Show the toast message
-                                Toast.makeText(
-                                    mContext,
-                                    "Time from Firestore matches system time or is within a 3-minute window!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+
+                        if(timeDifference>180   )
+                        {
+
+                     player?.play()
+                            binding.layplayerview.visibility = View.VISIBLE
+
+
+                            binding.layvideView.visibility = View.GONE
+                        }
+                        else
+                        {
+                            binding.layplayerview.visibility = View.VISIBLE
+
+
+                            binding.layvideView.visibility = View.GONE
+                        }
+                       if (timeDifference <= 180 && currentTime.seconds > time.seconds) {
+
                                 ShowResult()
-                            }
+
                         } else if (currentTime.seconds < time.seconds) {
                             // Calculate the delay until the time matches
                             val delayMillis = (time.seconds - currentTime.seconds) * 1000
@@ -181,12 +210,8 @@ class ActivityLiveStream : AppCompatActivity() {
                             if (!toastShown) {
                                 Handler().postDelayed({
                                     toastShown = true
-                                    // Show the toast message
-                                    Toast.makeText(
-                                        mContext,
-                                        "Toast message",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+
+
 
                                     ShowResult()
                                 }, delayMillis)
@@ -195,189 +220,6 @@ class ActivityLiveStream : AppCompatActivity() {
                     }
                 }
             }
-
-
-
-
-
-
-//        db.collection("tempResult").document("Dg33Yix08jocNtRCPF2D")
-//            .get()
-//            .addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    val documentSnapshot = task.result
-//
-//                    if (documentSnapshot != null && documentSnapshot.exists()) {
-//                        // Retrieve the value of the numeric fields
-//                        val firstNumber = documentSnapshot.getString("numberFirst")?.toString() ?: "0"
-//                        val secondNumber = documentSnapshot.getString("numberSecond")?.toString() ?: "0"
-//                        val thirdNumber = documentSnapshot.getString("numberThird")?.toString() ?: "0"
-//                        val fourthNumber = documentSnapshot.getString("numberFourth")?.toString() ?: "0"
-//
-//                        // Log the values for debugging
-//
-//
-//                        // Now you can use the value of the fields as strings
-//                        first = firstNumber
-//                        second = secondNumber
-//                        third = thirdNumber
-//                        fourth = fourthNumber
-//
-//
-//
-//
-//                        val text: String = "/// LIVE Lucky Dollar.PK ///"
-//                        val textView: TextView = binding.tvInfo
-//                        textView.text = text
-//                        textView.isSelected = true
-//
-//                        val modelResult = documentSnapshot.toObject<ModelResult>()
-//                        val time: Timestamp? = modelResult?.createdAt
-//
-//                        if (time != null) {
-//                            // Stop previous Runnable if it exists
-//                            continuousRunnable?.let { handler.removeCallbacks(it) }
-//
-//                            // Start the new Runnable
-//                            checkTimeContinuously(time)
-//                        }
-//                        listenForSocialLinks()
-//
-//
-//
-//
-//                        //val path = "android.resource://"+packageName+"/"+R.raw.test_video
-//
-//                        //////////////////HERE IS SUBSTRING CONVERSION//////////////////////
-//
-//
-//
-//                        /////***************************************************************/////
-//
-//                        //val resourceId1 = resources.getIdentifier("video1", "raw", packageName)
-//                        //val path = "android.resource://" + packageName + "/" + resourceId1
-//                       // binding.videView.setVideoURI(Uri.parse(path))
-//                        //binding.videView.visibility=View.GONE
-//
-//
-//                      /*if(s1=="8"){
-//
-//
-//                          if(s2=="9")
-//                          {
-//                              val resourceId1 = resources.getIdentifier("video1", "raw", packageName)
-//                              val path = "android.resource://" + packageName + "/" + resourceId1
-//                              binding.videView.setVideoURI(Uri.parse(path))
-//                              binding.videView.visibility=View.GONE
-//                          }
-//                      }*/
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//                        /* binding.btnSwitch.setOnClickListener {
-//                             player?.pause()
-//                             binding.palyerView.visibility= View.GONE
-//                             binding.videView.visibility=View.VISIBLE
-//                             binding.videView.start()
-//
-//                         }
-//                         binding.btnContinue.setOnClickListener {
-//                             player?.play()
-//                             binding.palyerView.visibility= View.VISIBLE
-//                             binding.videView.visibility=View.GONE
-//                             binding.videView.start()
-//
-//                         }*/
-//
-//
-//                        val colorFrom = resources.getColor(R.color.system_primary_fixed)
-//                        val colorTo = resources.getColor(R.color.holo_blue_dark)
-//                        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
-//                        colorAnimation.addUpdateListener { animator -> binding.tv1.setTextColor(animator.animatedValue as Int) }
-//                        colorAnimation.start()
-//
-//
-//
-//                        val dataSourceFactory: DataSource.Factory = DefaultHttpDataSource.Factory()
-//                        val hlsMediaSource = HlsMediaSource.Factory(dataSourceFactory)
-//                            .createMediaSource(MediaItem.fromUri("https://live.relentlessinnovations.net:1936/afghannobel/afghannobel/playlist.m3u8"))
-//
-//                        player = ExoPlayer.Builder(mContext).build()
-//                        binding.palyerView.player= player
-//                        player?.setMediaSource(hlsMediaSource)
-//                        player?.prepare()
-//                        player?.play()
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//                        // Display the values using Toast
-//                        //Toast.makeText(this, "First number: $firstNumber", Toast.LENGTH_SHORT).show()
-//                        //Toast.makeText(this, "Second number: $secondNumber", Toast.LENGTH_SHORT).show()
-//                        //Toast.makeText(this, "Third number: $thirdNumber", Toast.LENGTH_SHORT).show()
-//                        //Toast.makeText(this, "Fourth number: $fourthNumber", Toast.LENGTH_SHORT).show()
-//                    } else {
-//                        // Document doesn't exist
-//                        Toast.makeText(this, "Document doesn't exist", Toast.LENGTH_SHORT).show()
-//                    }
-//                } else {
-//                    // Task was not successful
-//                    Toast.makeText(this, "Task failed", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-
-
-
-//        db.collection("tempResult").document("Dg33Yix08jocNtRCPF2D")
-//            .addSnapshotListener { snapshot, firebaseFirestoreException ->
-//                firebaseFirestoreException?.let {
-//                    Toast.makeText(
-//                        this@ActivityLiveStream,
-//                        it.message.toString(),
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                    return@addSnapshotListener
-//                }
-//
-//                snapshot?.let { document ->
-//                    val modelResult = document.toObject<ModelResult>()
-//                    val time: Timestamp? = modelResult?.createdAt
-//
-//                    if (time != null) {
-//                        // Stop previous Runnable if it exists
-//                        continuousRunnable?.let { handler.removeCallbacks(it) }
-//
-//                        Toast.makeText(mContext, time.toString(), Toast.LENGTH_SHORT).show()
-//                        // Start the new Runnable
-//                        checkTimeContinuously(time)
-//                    }
-//                }
-//            }
 
 
     }
@@ -405,10 +247,12 @@ class ActivityLiveStream : AppCompatActivity() {
             player?.pause()
         }
     }
+
     override fun onPause() {
         super.onPause()
         pausePlayer()
     }
+
     override fun onResume() {
         super.onResume()
         if (player != null && !player!!.isPlaying) {
@@ -418,16 +262,32 @@ class ActivityLiveStream : AppCompatActivity() {
 
 
     fun ShowResult() {
+        binding.layResult.visibility=View.VISIBLE
         player?.pause()
-        binding.palyerView.visibility = View.GONE
-        binding.videView.visibility = View.VISIBLE
+
+        binding.layplayerview.visibility = View.GONE
+
+
+        binding.layvideView.visibility = View.VISIBLE
         binding.videView.start()
 
         val substrings = listOf(
-            first.substring(0, 1), first.substring(1, 2), first.substring(2, 3), first.substring(3, 4),
-            second.substring(0, 1), second.substring(1, 2), second.substring(2, 3), second.substring(3, 4),
-            third.substring(0, 1), third.substring(1, 2), third.substring(2, 3), third.substring(3, 4),
-            fourth.substring(0, 1), fourth.substring(1, 2), fourth.substring(2, 3), fourth.substring(3, 4)
+            first.substring(0, 1),
+            first.substring(1, 2),
+            first.substring(2, 3),
+            first.substring(3, 4),
+            second.substring(0, 1),
+            second.substring(1, 2),
+            second.substring(2, 3),
+            second.substring(3, 4),
+            third.substring(0, 1),
+            third.substring(1, 2),
+            third.substring(2, 3),
+            third.substring(3, 4),
+            fourth.substring(0, 1),
+            fourth.substring(1, 2),
+            fourth.substring(2, 3),
+            fourth.substring(3, 4)
         )
 
         //Intro Start
@@ -439,17 +299,17 @@ class ActivityLiveStream : AppCompatActivity() {
 
         // after intro completion
         binding.videView.setOnCompletionListener {
-            binding.layResult.visibility=View.VISIBLE
+            binding.layResult.visibility = View.VISIBLE
 
             val scope = CoroutineScope(Dispatchers.Main)
 
             scope.launch {
 
 
-                var counter:Int=1
+                var counter: Int = 1
                 for (s in substrings) {
 
-                    binding.layResultScreen.visibility=View.GONE
+                    binding.layResultScreen.visibility = View.GONE
                     val videoNumber = "_${s.toIntOrNull()?.toString() ?: "0"}"
                     val resourceId = resources.getIdentifier(videoNumber, "raw", packageName)
                     val path = "android.resource://" + packageName + "/" + resourceId
@@ -461,35 +321,65 @@ class ActivityLiveStream : AppCompatActivity() {
                     binding.videView.setOnCompletionListener {
 
 
-
-                        if(counter==1){ binding.r1.text= s.toString() }
-                        else if(counter==2) binding.r2.text= s.toString()
-                        else if(counter==3) binding.r3.text= s.toString()
-                        else if(counter==4) binding.r4.text= s.toString()
-                        else if(counter==5) binding.r5.text= s.toString()
-                        else if(counter==6) binding.r6.text= s.toString()
-                        else if(counter==7) binding.r7.text= s.toString()
-                        else if(counter==8) binding.r8.text= s.toString()
-                        else if(counter==9) binding.r9.text= s.toString()
-                        else if(counter==10) binding.r10.text= s.toString()
-                        else if(counter==11) binding.r11.text= s.toString()
-                        else if(counter==12) binding.r12.text= s.toString()
-                        else if(counter==13) binding.r13.text= s.toString()
-                        else if(counter==14) binding.r14.text= s.toString()
-                        else if(counter==15) binding.r15.text= s.toString()
-                        else if(counter==16) binding.r16.text= s.toString()
+                        if (counter == 1) {
+                            binding.r1.text = s.toString()
+                        } else if (counter == 2) binding.r2.text = s.toString()
+                        else if (counter == 3) binding.r3.text = s.toString()
+                        else if (counter == 4) binding.r4.text = s.toString()
+                        else if (counter == 5) binding.r5.text = s.toString()
+                        else if (counter == 6) binding.r6.text = s.toString()
+                        else if (counter == 7) binding.r7.text = s.toString()
+                        else if (counter == 8) binding.r8.text = s.toString()
+                        else if (counter == 9) binding.r9.text = s.toString()
+                        else if (counter == 10) binding.r10.text = s.toString()
+                        else if (counter == 11) binding.r11.text = s.toString()
+                        else if (counter == 12) binding.r12.text = s.toString()
+                        else if (counter == 13) binding.r13.text = s.toString()
+                        else if (counter == 14) binding.r14.text = s.toString()
+                        else if (counter == 15) binding.r15.text = s.toString()
+                        else if (counter == 16) binding.r16.text = s.toString()
                         binding.videView.stopPlayback()
-
-
+// Check the condition for counter
                         if (counter == 4 || counter == 8 || counter == 12 || counter == 16) {
+                            // Stop the video playback
+                            binding.videView.pause()
+
                             if (counter == 4) {
-                                binding.tvResultScreenFist.text = binding.r1.text.toString() + binding.r2.text.toString() + binding.r3.text.toString() + binding.r4.text.toString()
+                                binding.tvResultScreenFist.text =
+                                    binding.r1.text.toString() + binding.r2.text.toString() + binding.r3.text.toString() + binding.r4.text.toString()
                             } else if (counter == 8) {
-                                binding.tvResultScreenScondF.text = binding.r5.text.toString() + binding.r6.text.toString() + binding.r7.text.toString() + binding.r8.text.toString()
+                                binding.tvResultScreenScondF.text =
+                                    binding.r5.text.toString() + binding.r6.text.toString() + binding.r7.text.toString() + binding.r8.text.toString()
                             } else if (counter == 12) {
-                                binding.tvResultScreenScondS.text = binding.r9.text.toString() + binding.r10.text.toString() + binding.r11.text.toString() + binding.r12.text.toString()
+                                binding.tvResultScreenScondS.text =
+                                    binding.r9.text.toString() + binding.r10.text.toString() + binding.r11.text.toString() + binding.r12.text.toString()
                             } else if (counter == 16) {
-                                binding.tvResultScreenScondT.text = binding.r13.text.toString() + binding.r14.text.toString() + binding.r15.text.toString() + binding.r16.text.toString()
+                                binding.tvResultScreenScondT.text =
+                                    binding.r13.text.toString() + binding.r14.text.toString() + binding.r15.text.toString() + binding.r16.text.toString()
+                            }
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                binding.layResultScreen.visibility = View.VISIBLE
+                                binding.videView.start()
+                            }, 3000)
+                        } else {
+                            binding.layResultScreen.visibility = View.GONE
+                            binding.videView.start()
+                        }
+
+
+                    /*    if (counter == 4 || counter == 8 || counter == 12 || counter == 16) {
+                            if (counter == 4) {
+                                binding.tvResultScreenFist.text =
+                                    binding.r1.text.toString() + binding.r2.text.toString() + binding.r3.text.toString() + binding.r4.text.toString()
+                            } else if (counter == 8) {
+                                binding.tvResultScreenScondF.text =
+                                    binding.r5.text.toString() + binding.r6.text.toString() + binding.r7.text.toString() + binding.r8.text.toString()
+                            } else if (counter == 12) {
+                                binding.tvResultScreenScondS.text =
+                                    binding.r9.text.toString() + binding.r10.text.toString() + binding.r11.text.toString() + binding.r12.text.toString()
+                            } else if (counter == 16) {
+                                binding.tvResultScreenScondT.text =
+                                    binding.r13.text.toString() + binding.r14.text.toString() + binding.r15.text.toString() + binding.r16.text.toString()
                             }
 
                             // Hide the layout initially
@@ -503,11 +393,10 @@ class ActivityLiveStream : AppCompatActivity() {
 
                         } else {
                             binding.layResultScreen.visibility = View.GONE
-                        }
+                        }*/
 
                         completionDeferred.complete(Unit)
                         counter++
-
 
 
                     }
@@ -518,8 +407,8 @@ class ActivityLiveStream : AppCompatActivity() {
                 }
 
                 // All videos have been played
-                binding.palyerView.visibility = View.VISIBLE
-                binding.videView.visibility = View.GONE
+                binding.layplayerview.visibility = View.VISIBLE
+                binding.layvideView.visibility = View.GONE
                 player?.play()
 
                 //handler.removeCallbacks(this)
@@ -531,8 +420,8 @@ class ActivityLiveStream : AppCompatActivity() {
 
     /*fun ShowResult() {
         player?.pause()
-        binding.palyerView.visibility = View.GONE
-        binding.videView.visibility = View.VISIBLE
+        binding.layplayerview.visibility = View.GONE
+        binding.layvideView.visibility = View.VISIBLE
         binding.videView.start()
 
         val substrings = listOf(
@@ -582,8 +471,8 @@ class ActivityLiveStream : AppCompatActivity() {
 
             // All videos have been played
             // continue the live stream
-            binding.palyerView.visibility = View.VISIBLE
-            binding.videView.visibility = View.GONE
+            binding.layplayerview.visibility = View.VISIBLE
+            binding.layvideView.visibility = View.GONE
             player?.play()
         }
     }*/
@@ -593,8 +482,8 @@ class ActivityLiveStream : AppCompatActivity() {
 
 
         player?.pause()
-        binding.palyerView.visibility = View.GONE
-        binding.videView.visibility = View.VISIBLE
+        binding.layplayerview.visibility = View.GONE
+        binding.layvideView.visibility = View.VISIBLE
         binding.videView.start()
 
         val substrings = listOf(
@@ -663,8 +552,8 @@ class ActivityLiveStream : AppCompatActivity() {
             //final case
             // All videos have been played
             // continue the live stream
-            binding.palyerView.visibility = View.VISIBLE
-            binding.videView.visibility = View.GONE
+            binding.layplayerview.visibility = View.VISIBLE
+            binding.layvideView.visibility = View.GONE
             player?.play()
 
 
@@ -698,8 +587,6 @@ class ActivityLiveStream : AppCompatActivity() {
                 binding.tvResult.text = formattedCurrentTime.toString()
 
 
-
-
                 /*val resourceId1 = resources.getIdentifier(videoNumber, "raw", packageName)
                 val path = "android.resource://" + packageName + "/" + resourceId1
                 binding.videView.setVideoURI(Uri.parse(path))
@@ -719,15 +606,27 @@ class ActivityLiveStream : AppCompatActivity() {
 
 
                     player?.pause()
-                    binding.palyerView.visibility = View.GONE
-                    binding.videView.visibility = View.VISIBLE
+                    binding.layplayerview.visibility = View.GONE
+                    binding.layvideView.visibility = View.VISIBLE
                     binding.videView.start()
 
                     val substrings = listOf(
-                        first.substring(0, 1),first.substring(1, 2), first.substring(2, 3), first.substring(3, 4),
-                        second.substring(0, 1),second.substring(1, 2), second.substring(2, 3), second.substring(3, 4),
-                        third.substring(0, 1),third.substring(1, 2), third.substring(2, 3), third.substring(3, 4),
-                        fourth.substring(0, 1),fourth.substring(1, 2), fourth.substring(2, 3), fourth.substring(3, 4)
+                        first.substring(0, 1),
+                        first.substring(1, 2),
+                        first.substring(2, 3),
+                        first.substring(3, 4),
+                        second.substring(0, 1),
+                        second.substring(1, 2),
+                        second.substring(2, 3),
+                        second.substring(3, 4),
+                        third.substring(0, 1),
+                        third.substring(1, 2),
+                        third.substring(2, 3),
+                        third.substring(3, 4),
+                        fourth.substring(0, 1),
+                        fourth.substring(1, 2),
+                        fourth.substring(2, 3),
+                        fourth.substring(3, 4)
                     )
 
                     val resourceId = resources.getIdentifier("intro", "raw", packageName)
@@ -754,8 +653,8 @@ class ActivityLiveStream : AppCompatActivity() {
 
 
                                 if (s == substrings.last()) {
-                                    binding.palyerView.visibility = View.VISIBLE
-                                    binding.videView.visibility = View.GONE
+                                    binding.layplayerview.visibility = View.VISIBLE
+                                    binding.layvideView.visibility = View.GONE
                                     player?.play()
 
                                     handler.removeCallbacks(this)
@@ -765,15 +664,16 @@ class ActivityLiveStream : AppCompatActivity() {
                         }*/
 
 
-                        binding.layResult.visibility=View.VISIBLE
+                        binding.layResult.visibility = View.VISIBLE
 
                         val scope = CoroutineScope(Dispatchers.Main)
 
                         scope.launch {
-                            var counter:Int=1
+                            var counter: Int = 1
                             for (s in substrings) {
                                 val videoNumber = "_${s.toIntOrNull()?.toString() ?: "0"}"
-                                val resourceId = resources.getIdentifier(videoNumber, "raw", packageName)
+                                val resourceId =
+                                    resources.getIdentifier(videoNumber, "raw", packageName)
                                 val path = "android.resource://" + packageName + "/" + resourceId
 
                                 binding.videView.setVideoURI(Uri.parse(path))
@@ -783,25 +683,23 @@ class ActivityLiveStream : AppCompatActivity() {
                                 binding.videView.setOnCompletionListener {
 
 
-
-                                    if(counter==1){
-                                        binding.r1.text= s.toString()
-                                    }
-                                    else if(counter==2) binding.r2.text= s.toString()
-                                    else if(counter==3) binding.r3.text= s.toString()
-                                    else if(counter==4) binding.r4.text= s.toString()
-                                    else if(counter==5) binding.r5.text= s.toString()
-                                    else if(counter==6) binding.r6.text= s.toString()
-                                    else if(counter==7) binding.r7.text= s.toString()
-                                    else if(counter==8) binding.r8.text= s.toString()
-                                    else if(counter==9) binding.r9.text= s.toString()
-                                    else if(counter==10) binding.r10.text= s.toString()
-                                    else if(counter==11) binding.r11.text= s.toString()
-                                    else if(counter==12) binding.r12.text= s.toString()
-                                    else if(counter==13) binding.r13.text= s.toString()
-                                    else if(counter==14) binding.r14.text= s.toString()
-                                    else if(counter==15) binding.r15.text= s.toString()
-                                    else if(counter==16) binding.r16.text= s.toString()
+                                    if (counter == 1) {
+                                        binding.r1.text = s.toString()
+                                    } else if (counter == 2) binding.r2.text = s.toString()
+                                    else if (counter == 3) binding.r3.text = s.toString()
+                                    else if (counter == 4) binding.r4.text = s.toString()
+                                    else if (counter == 5) binding.r5.text = s.toString()
+                                    else if (counter == 6) binding.r6.text = s.toString()
+                                    else if (counter == 7) binding.r7.text = s.toString()
+                                    else if (counter == 8) binding.r8.text = s.toString()
+                                    else if (counter == 9) binding.r9.text = s.toString()
+                                    else if (counter == 10) binding.r10.text = s.toString()
+                                    else if (counter == 11) binding.r11.text = s.toString()
+                                    else if (counter == 12) binding.r12.text = s.toString()
+                                    else if (counter == 13) binding.r13.text = s.toString()
+                                    else if (counter == 14) binding.r14.text = s.toString()
+                                    else if (counter == 15) binding.r15.text = s.toString()
+                                    else if (counter == 16) binding.r16.text = s.toString()
 
                                     binding.videView.stopPlayback()
                                     completionDeferred.complete(Unit)
@@ -810,8 +708,8 @@ class ActivityLiveStream : AppCompatActivity() {
 
                                     //set by list length counter
                                     /*if (s == substrings.last()) {
-                                        binding.palyerView.visibility = View.VISIBLE
-                                        binding.videView.visibility = View.GONE
+                                        binding.layplayerview.visibility = View.VISIBLE
+                                        binding.layvideView.visibility = View.GONE
                                         player?.play()
 
                                         binding.layResult.visibility=View.GONE
@@ -827,8 +725,8 @@ class ActivityLiveStream : AppCompatActivity() {
                             }
 
                             // All videos have been played
-                            binding.palyerView.visibility = View.VISIBLE
-                            binding.videView.visibility = View.GONE
+                            binding.layplayerview.visibility = View.VISIBLE
+                            binding.layvideView.visibility = View.GONE
                             player?.play()
 
                             //handler.removeCallbacks(this)
@@ -836,10 +734,6 @@ class ActivityLiveStream : AppCompatActivity() {
                         }
 
                         binding.tvResult.text = formattedCurrentTime.toString()
-
-
-
-
 
 
                     }
@@ -857,7 +751,6 @@ class ActivityLiveStream : AppCompatActivity() {
 
                 // Schedule the next check after a specific interval (e.g., 1 second)
                 //handler.postDelayed(this, 1000) // 1000 milliseconds = 1 second
-
 
 
             }
@@ -892,19 +785,22 @@ class ActivityLiveStream : AppCompatActivity() {
             }
         }
     }
+
     private fun stopListeningForSocialLinks() {
         socialLinksListener?.remove()
     }
+
     private fun openLink(url: String) {
         try {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         } catch (e: Exception) {
-            Toast.makeText(mContext, "Error While Opening Link: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(mContext, "Error While Opening Link: ${e.message}", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
-    private fun openWhatsApp(phoneNumber:String) {
+    private fun openWhatsApp(phoneNumber: String) {
 //        val phoneNumber = "+923036307725" // Replace with the phone number you want to chat with
         val message = "Hello, this is a custom message" // Replace with the message you want to send
 
@@ -950,8 +846,6 @@ class ActivityLiveStream : AppCompatActivity() {
 //                }
 //            }
 //    }
-
-
 
 
 }

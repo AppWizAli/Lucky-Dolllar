@@ -18,12 +18,28 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+<LinearLayout
+    android:id="@+id/lay11"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:orientation="vertical">
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/spinnervideo"
+        android:layout_width="150dp"
+        android:backgroundTint="#1C1B1F"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/spinneranim"
+        android:layout_gravity="center"
+        android:layout_height="150dp" />
+</LinearLayout>
 
 
     <ImageView
         android:id="@+id/img1"
         android:layout_width="wrap_content"
         android:layout_height="140dp"
+        android:visibility="gone"
         android:src="@drawable/logo_coped"/>
 
     <LinearLayout
@@ -31,7 +47,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/lay"
         android:layout_marginTop="5dp"
-        android:layout_below="@+id/img1"
+        android:layout_below="@+id/lay11"
         android:orientation="vertical">
 
 
@@ -213,6 +229,7 @@
                     android:layout_width="match_parent"
                     android:background="#65E10D0D"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_alignParentBottom="true"
                     android:elevation="5dp"
                     android:paddingTop="4dp"
@@ -406,20 +423,39 @@
                     android:orientation="vertical">
 
 
+<RelativeLayout
+    android:id="@+id/layplayerview"
+    android:layout_width="match_parent"
+android:visibility="gone"
+    android:layout_height="230dp">
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/palyerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:use_controller="false"
+        app:show_buffering="when_playing"/>
+</RelativeLayout>
 
-                    <androidx.media3.ui.PlayerView
-                        android:id="@+id/palyerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        app:use_controller="false"
-                        app:show_buffering="when_playing"/>
 
+<RelativeLayout
+    android:id="@+id/layvideView"
+    android:layout_width="match_parent"
+   android:background="#1C1B1F"
+    android:layout_height="250dp">
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        app:lottie_rawRes="@raw/lstream"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
+    <VideoView
+        android:id="@+id/videView"
+android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"/>
+</RelativeLayout>
 
-                    <VideoView
-                        android:id="@+id/videView"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"/>
 <!--                    <TextView-->
 <!--                        android:id="@+id/tvInfo"-->
 <!--                        android:layout_width="match_parent"-->
