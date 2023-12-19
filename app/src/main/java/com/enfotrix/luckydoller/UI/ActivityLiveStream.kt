@@ -201,7 +201,9 @@ class ActivityLiveStream : AppCompatActivity() {
 
 
 
-//        db.collection("tempResult").document("Dg33Yix08jocNtRCPF2D")
+//        db.collection("tempResult").document("D
+    //
+    //Yix08jocNtRCPF2D")
 //            .get()
 //            .addOnCompleteListener { task ->
 //                if (task.isSuccessful) {
